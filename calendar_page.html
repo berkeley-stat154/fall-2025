@@ -38,7 +38,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b684d9b6a4fa27b07619d6024ea01d8c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ceb086ea1244840218fdee49e6b8bba5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -229,35 +229,284 @@ window.Quarto = {
 <section id="course-content-and-calendar" class="level2">
 <h2 class="anchored" data-anchor-id="course-content-and-calendar">Course Content and Calendar</h2>
 <p>This course is an introduction to the statistical concepts that underpin our understanding of modern machine learning.</p>
-<p>The core concepts are:</p>
-<ul>
-<li>A taxonomy of ML tasks
-<ul>
-<li>Inference versus prediction</li>
-<li>Regression models</li>
-<li>Classification models</li>
-<li>Unsupervised learning</li>
-</ul></li>
-<li>Loss minimization
-<ul>
-<li>Task–appropriate loss functions</li>
-<li>Generalization from empirical risk to population risk</li>
-<li>Estimating risk in practice</li>
-</ul></li>
-<li>Complexity
-<ul>
-<li>How to form classes of expressive models</li>
-<li>Implicit and explicit regulariziation</li>
-<li>The costs and benefits of complexity (e.g., the bias / variance tradeoff)</li>
-</ul></li>
-<li>Computation and estimation
-<ul>
-<li>Black-box optimization</li>
-<li>Stochastic optimization</li>
-<li>Automatic differentiation</li>
-</ul></li>
-</ul>
+<!--
+The core concepts are:
+
+- A taxonomy of ML tasks
+    - Inference versus prediction
+    - Regression models
+    - Classification models
+    - Unsupervised learning
+
+- Loss minimization
+  - Task--appropriate loss functions
+  - Generalization from empirical risk to population risk
+  - Estimating risk in practice
+
+- Complexity
+  - How to form classes of expressive models
+  - Implicit and explicit regulariziation
+  - The costs and benefits of complexity (e.g., the bias / variance tradeoff)
+
+- Computation and estimation 
+  - Black-box optimization
+  - Stochastic optimization
+  - Automatic differentiation
+
+-->
 <p><strong>The following schedule is aspirational and subject to change as we go.</strong></p>
+<table class="table-striped caption-top table">
+<caption>Calendar (tentative)</caption>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 39%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Day</th>
+<th>Note</th>
+<th>Topic</th>
+<th>Assignment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aug 28</td>
+<td>Thursday</td>
+<td></td>
+<td>Course policies</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Sep 2</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 1: Regression</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep 4</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 0</td>
+</tr>
+<tr class="even">
+<td>Sep 9</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep 11</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 0</td>
+</tr>
+<tr class="even">
+<td>Sep 16</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 2: Classification</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep 18</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 1</td>
+</tr>
+<tr class="even">
+<td>Sep 23</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep 25</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 1</td>
+</tr>
+<tr class="even">
+<td>Sep 30</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 3: Risk and Complexity</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 2</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 2</td>
+</tr>
+<tr class="even">
+<td>Oct 7</td>
+<td>Tuesday</td>
+<td>Recorded or guest lecture</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 9</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 2</td>
+</tr>
+<tr class="even">
+<td>Oct 14</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 16</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Oct 21</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 4: Optimization</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 23</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 3</td>
+</tr>
+<tr class="even">
+<td>Oct 28</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 30</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 3</td>
+</tr>
+<tr class="even">
+<td>Nov 4</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 6</td>
+<td>Thursday</td>
+<td>Recorded or guest lecture</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Nov 11</td>
+<td>Tuesday</td>
+<td>Administrative holiday</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 13</td>
+<td>Thursday</td>
+<td></td>
+<td>Unit 5: Kernels</td>
+<td>HW 4</td>
+</tr>
+<tr class="even">
+<td>Nov 18</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 20</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 4</td>
+</tr>
+<tr class="even">
+<td>Nov 25</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 26</td>
+<td>Wednesday</td>
+<td>Thanksgiving</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Nov 27</td>
+<td>Thursday</td>
+<td>Thanksgiving</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 28</td>
+<td>Friday</td>
+<td>Thanksgiving</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Dec 2</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 6: Trees and weak learners</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Dec 4</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 5</td>
+</tr>
+<tr class="even">
+<td>Dec 9</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Dec 11</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 5</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
