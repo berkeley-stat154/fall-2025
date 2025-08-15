@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistics 154/254: Modern Statistical Prediction and Machine Learning</title>
+<title>Statistics 154/254: Statistical Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -186,12 +186,6 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./calendar_page.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Calendar</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./course_policies.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Course Policies</span></a>
   </div>
@@ -231,11 +225,8 @@ window.Quarto = {
    
   <ul>
   <li><a href="#instructors" id="toc-instructors" class="nav-link active" data-scroll-target="#instructors">Instructors</a></li>
+  <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials">Materials</a></li>
   <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule">Schedule</a></li>
-  <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials">Materials</a>
-  <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -244,7 +235,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Statistics 154/254: Modern Statistical Prediction and Machine Learning</h1>
+<h1 class="title">Statistics 154/254: Statistical Machine Learning</h1>
 <p class="subtitle lead">UC Berkeley, Fall 2025</p>
 </div>
 
@@ -303,13 +294,6 @@ Important
 </div>
 <p>This website will contain lecture materials and assignments. Day-to-day announcements and discussion will be found in ED. (See links above.)</p>
 </section>
-<section id="schedule" class="level2">
-<h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
-<p>Lectures will be held Aug 28th 2025 – Dec 11th 2025 from 9:30am – 11 am in Valley Life Sciences 2060.</p>
-<p>Labs will be held on Fridays from 11:00am – 1:00pm and 3:00pm – 5:00pm in Evans 340.</p>
-<p>The tentative week-by-week course calendar <a href="./calendar_page.html">can be found here</a>.</p>
-<p>Here is a link to the <a href="https://classes.berkeley.edu/content/2025-fall-stat-154-001-lec-001">official course catalog entry.</a></p>
-</section>
 <section id="materials" class="level2">
 <h2 class="anchored" data-anchor-id="materials">Materials</h2>
 <p>The course will be based largely on a subset of the following texts:</p>
@@ -324,17 +308,270 @@ Important
 <li><a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/">Understanding Machine Learning: From Theory to Algorithms</a> Shalev-Shwartz, Ben-David</li>
 <li><a href="https://probml.github.io/pml-book/book1.html">Probabilistic Machine Learning: An Introduction</a> Murphy</li>
 </ul>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="./lectures/linalg_review.html">here</a>.</p>
+</section>
+<section id="schedule" class="level2">
+<h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
+<p>Lectures will be held Aug 28th 2025 – Dec 11th 2025 from 9:30am – 11 am in Valley Life Sciences 2060.</p>
+<p>Labs will be held on Fridays from 11:00am – 1:00pm and 3:00pm – 5:00pm in Evans 340.</p>
+<p>Here is a link to the <a href="https://classes.berkeley.edu/content/2025-fall-stat-154-001-lec-001">official course catalog entry.</a></p>
+<p>The tentative week-by-week course calendar is as follows. <!-- [can be found here](calendar_page.qmd).--> <strong>The following schedule is aspirational and subject to change as we go.</strong></p>
+<table class="table-striped caption-top table">
+<caption>Calendar (tentative)</caption>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 39%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Day</th>
+<th>Note</th>
+<th>Topic</th>
+<th>Assignment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Aug 28</td>
+<td>Thursday</td>
+<td></td>
+<td>Course policies</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Sep 2</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 1: Regression</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep 4</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 0</td>
+</tr>
+<tr class="even">
+<td>Sep 9</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep 11</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 0</td>
+</tr>
+<tr class="even">
+<td>Sep 16</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 2: Classification</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep 18</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 1</td>
+</tr>
+<tr class="even">
+<td>Sep 23</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep 25</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 1</td>
+</tr>
+<tr class="even">
+<td>Sep 30</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 3: Risk and Complexity</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 2</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 2</td>
+</tr>
+<tr class="even">
+<td>Oct 7</td>
+<td>Tuesday</td>
+<td>Recorded or guest lecture</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 9</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 2</td>
+</tr>
+<tr class="even">
+<td>Oct 14</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 16</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Oct 21</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 4: Optimization</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 23</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 3</td>
+</tr>
+<tr class="even">
+<td>Oct 28</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Oct 30</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 3</td>
+</tr>
+<tr class="even">
+<td>Nov 4</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 6</td>
+<td>Thursday</td>
+<td>Recorded or guest lecture</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Nov 11</td>
+<td>Tuesday</td>
+<td>Administrative holiday</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 13</td>
+<td>Thursday</td>
+<td></td>
+<td>Unit 5: Kernels</td>
+<td>HW 4</td>
+</tr>
+<tr class="even">
+<td>Nov 18</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 20</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 4</td>
+</tr>
+<tr class="even">
+<td>Nov 25</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 26</td>
+<td>Wednesday</td>
+<td>Thanksgiving</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Nov 27</td>
+<td>Thursday</td>
+<td>Thanksgiving</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nov 28</td>
+<td>Friday</td>
+<td>Thanksgiving</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Dec 2</td>
+<td>Tuesday</td>
+<td></td>
+<td>Unit 6: Trees and weak learners</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Dec 4</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>HW 5</td>
+</tr>
+<tr class="even">
+<td>Dec 9</td>
+<td>Tuesday</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Dec 11</td>
+<td>Thursday</td>
+<td></td>
+<td></td>
+<td>Quiz 5</td>
+</tr>
+</tbody>
+</table>
 <!-- I think quizzes.qmd needs to be linked to in order to refresh correctly. -->
 <p><a href="./quizzes/quizzes.html"></a></p>
 
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
