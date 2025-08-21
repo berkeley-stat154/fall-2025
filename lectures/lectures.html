@@ -155,8 +155,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course Policies</span></a>
+  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course schedule</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -183,6 +183,12 @@ window.Quarto = {
  <span class="menu-text">Quizzes</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Policies</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -193,8 +199,11 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#unit-1-regression-in-a-machine-learning-setting" id="toc-unit-1-regression-in-a-machine-learning-setting" class="nav-link" data-scroll-target="#unit-1-regression-in-a-machine-learning-setting">Unit 1: Regression in a machine learning setting</a>
+  <ul class="collapse">
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -221,28 +230,31 @@ window.Quarto = {
 </header>
 
 
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="lectures/linalg_review.qmd">here</a>.</p>
-<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
-</section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p><a href="../lectures/lecture_intro.html">Class introduction</a></p>
+<p><a href="../lectures/lecture_intro.html"><span class="math inline">\(\star\)</span> Class introduction</a></p>
+</section>
+<section id="unit-1-regression-in-a-machine-learning-setting" class="level1">
+<h1>Unit 1: Regression in a machine learning setting</h1>
+<ul>
+<li><a href="../lectures/unit1/unit1_ols_matrix_notation.html"><span class="math inline">\(\star\)</span> Linear regression in matrix notation (review)</a></li>
+<li><a href="../lectures/unit1/unit1_ols.html"><span class="math inline">\(\star\)</span> Linear regression in an ML setting</a></li>
+<li><a href="../lectures/unit1/unit1_splines.html"><span class="math inline">\(\star\)</span> Basis expansions and splines for linear regression</a></li>
+<li><a href="../lectures/unit1/unit1_biasvar.html"><span class="math inline">\(\star\)</span> Asymptotics and bias–variance tradeoff in linear regression</a></li>
+<li><a href="../lectures/unit1/unit1_l1l2.html"><span class="math inline">\(\star\)</span> L1 and L2 penalization</a></li>
+</ul>
 <!--
 
-# Unit 1: Regression in a machine learning setting
 
-- [Linear regression in matrix notation (review)](unit1/unit1_ols_matrix_notation.qmd)
-- [Linear regression in an ML setting](unit1/unit1_ols.qmd)
-- [Basis expansions and splines for linear regression](unit1/unit1_splines.qmd)
-- [Asymptotics and bias--variance tradeoff in linear regression](unit1/unit1_biasvar.qmd)
-- [L1 and L2 penalization](unit1/unit1_l1l2.qmd)
+# Unit 2: Classification
+
+- [Empirical loss minimization for classification](unit3/unit3_classification_loss.qmd)
+- [Trading off false positives and negatives](unit3/unit_3_false_positives_negatives.qmd)
+- [Perceptron algorithm](unit3/unit_3_perceptron.qmd)
+- [Support vector machines](unit3/unit_3_svm.qmd)
 
 
-# Unit 2: Risk and complexity
+# Unit 3: Risk and complexity
 
 - [Generalization error and uniform laws](unit2/unit2_generalization.qmd)
 - [Uniform laws for smooth function classes](unit2/unit2_ulln.qmd)
@@ -250,23 +262,9 @@ window.Quarto = {
 - [Held-out data and cross-validation](unit2/unit2_cv.qmd)
 
 
-# Unit 3: Classification
-
-- [Empirical loss minimization for classification](unit3/unit3_classification_loss.qmd)
-- [Trading off false positives and negatives](unit3/unit_3_false_positives_negatives.qmd)
-- [Perceptron algorithm](unit3/unit_3_perceptron.qmd)
-- [Support vector machines](unit3/unit_3_svm.qmd)
-
-# Floating unit: Optimization
+# Unit 4: Optimization and neural networks
 
 - [Optimization notes](optimization.qmd)
-
-
-# Unit 4: Trees and weak learners
-
-- [Classification and regression trees](unit4/unit4_cart.qmd)
-- [Bagging weak learners](unit4/unit4_bagging.qmd)
-- [Boosting weak learners](unit4/unit4_boosting.qmd)
 
 
 # Unit 5: Kernel methods
@@ -275,15 +273,24 @@ window.Quarto = {
 - [Valid kernels and inner products](unit5/unit5_validkernels.qmd)
 - [Reproducing kernel Hilbert spaces](unit5/unit5_rkhs.qmd)
 
+# Unit 6: Trees and weak learners
 
-# Extra content
+- [Classification and regression trees](unit4/unit4_cart.qmd)
+- [Bagging weak learners](unit4/unit4_bagging.qmd)
+- [Boosting weak learners](unit4/unit4_boosting.qmd)
 
-- [Linear algebra review materials](linalg_review.qmd)
 
 
 -->
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
+<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
+<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
+<p>A summary of the required linear algebra skills can be found <a href="lectures/linalg_review.qmd">here</a>.</p>
+<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
