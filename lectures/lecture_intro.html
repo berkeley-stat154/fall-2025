@@ -59,7 +59,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-ceb086ea1244840218fdee49e6b8bba5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3c26bda9cedcf6dcb30ec7dd6948e637.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -143,22 +143,24 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#obligatory-ml-intro-slide" id="toc-obligatory-ml-intro-slide" class="nav-link active" data-scroll-target="#obligatory-ml-intro-slide">Obligatory ML intro slide</a></li>
-  <li><a href="#what-is-machine-learning" id="toc-what-is-machine-learning" class="nav-link" data-scroll-target="#what-is-machine-learning">What is machine learning?</a></li>
+  <li><a href="#what-is-this-class" id="toc-what-is-this-class" class="nav-link active" data-scroll-target="#what-is-this-class">What is this class?</a></li>
+  <li><a href="#obligatory-ml-intro-slide" id="toc-obligatory-ml-intro-slide" class="nav-link" data-scroll-target="#obligatory-ml-intro-slide">Obligatory ML intro slide</a></li>
+  <li><a href="#a-simple-example" id="toc-a-simple-example" class="nav-link" data-scroll-target="#a-simple-example">A simple example</a></li>
   <li><a href="#plot-of-the-data" id="toc-plot-of-the-data" class="nav-link" data-scroll-target="#plot-of-the-data">Plot of the data</a></li>
-  <li><a href="#three-things-we-could-do-with-this-dataset" id="toc-three-things-we-could-do-with-this-dataset" class="nav-link" data-scroll-target="#three-things-we-could-do-with-this-dataset">Three things we could do with this dataset</a></li>
+  <li><a href="#three-things-we-could-do-with-this-dataset" id="toc-three-things-we-could-do-with-this-dataset" class="nav-link" data-scroll-target="#three-things-we-could-do-with-this-dataset">Three things we could do with this dataset</a>
+  <ul class="collapse">
   <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions:</a></li>
+  </ul></li>
+  <li><a href="#prediction-versus-inference" id="toc-prediction-versus-inference" class="nav-link" data-scroll-target="#prediction-versus-inference">Prediction versus inference</a></li>
+  <li><a href="#prediction-and-supervised-learning" id="toc-prediction-and-supervised-learning" class="nav-link" data-scroll-target="#prediction-and-supervised-learning">Prediction and supervised learning</a></li>
   <li><a href="#what-is-machine-learning-what-is-prediction" id="toc-what-is-machine-learning-what-is-prediction" class="nav-link" data-scroll-target="#what-is-machine-learning-what-is-prediction">What is machine learning? What is prediction?</a></li>
-  <li><a href="#what-is-machine-learning-what-is-prediction-1" id="toc-what-is-machine-learning-what-is-prediction-1" class="nav-link" data-scroll-target="#what-is-machine-learning-what-is-prediction-1">What is machine learning? What is prediction?</a></li>
-  <li><a href="#what-is-machine-learning-what-is-prediction-2" id="toc-what-is-machine-learning-what-is-prediction-2" class="nav-link" data-scroll-target="#what-is-machine-learning-what-is-prediction-2">What is machine learning? What is prediction?</a></li>
-  <li><a href="#what-is-classification" id="toc-what-is-classification" class="nav-link" data-scroll-target="#what-is-classification">What is classification?</a></li>
+  <li><a href="#classification-versus-regression" id="toc-classification-versus-regression" class="nav-link" data-scroll-target="#classification-versus-regression">Classification versus regression</a></li>
   <li><a href="#what-is-statistical" id="toc-what-is-statistical" class="nav-link" data-scroll-target="#what-is-statistical">What is statistical?</a></li>
   <li><a href="#what-is-statistical-1" id="toc-what-is-statistical-1" class="nav-link" data-scroll-target="#what-is-statistical-1">What is statistical?</a></li>
   <li><a href="#what-is-statistical-2" id="toc-what-is-statistical-2" class="nav-link" data-scroll-target="#what-is-statistical-2">What is statistical?</a></li>
   <li><a href="#what-is-modern" id="toc-what-is-modern" class="nav-link" data-scroll-target="#what-is-modern">What is modern?</a></li>
-  <li><a href="#what-is-modern-1" id="toc-what-is-modern-1" class="nav-link" data-scroll-target="#what-is-modern-1">What is modern?</a></li>
-  <li><a href="#what-is-modern-2" id="toc-what-is-modern-2" class="nav-link" data-scroll-target="#what-is-modern-2">What is modern?</a></li>
-  <li><a href="#class-organization" id="toc-class-organization" class="nav-link" data-scroll-target="#class-organization">Class organization</a></li>
+  <li><a href="#ml-theory-and-ml-engineering" id="toc-ml-theory-and-ml-engineering" class="nav-link" data-scroll-target="#ml-theory-and-ml-engineering">ML theory and ML engineering</a></li>
+  <li><a href="#the-bitter-lesson" id="toc-the-bitter-lesson" class="nav-link" data-scroll-target="#the-bitter-lesson">The bitter lesson</a></li>
   <li><a href="#bibliography" id="toc-bibliography" class="nav-link" data-scroll-target="#bibliography">Bibliography</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lecture_intro.pdf"><i class="bi bi-file-pdf"></i>Beamer</a></li></ul></div></nav>
@@ -191,16 +193,26 @@ window.Quarto = {
 </header>
 
 
+<section id="what-is-this-class" class="level1">
+<h1>What is this class?</h1>
+<p>This class is called “Modern Statistical Prediction and Machine Learning.”</p>
+<p>What do these words mean?</p>
+</section>
 <section id="obligatory-ml-intro-slide" class="level1">
 <h1>Obligatory ML intro slide</h1>
-<p>Machine learning (ML) does amazing things these days.</p>
-<p>Imagine some vacuous ML infographics here!</p>
-<p>Beginning with these complex applications can obscure what we mean by “statistical prediction.” So let’s begin with a much simpler example.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/gemini_ml.png" style="height:80.0%" class="figure-img"></p>
+<figcaption>Modern machine learning is amazing!</figcaption>
+</figure>
+</div>
 </section>
-<section id="what-is-machine-learning" class="level1">
-<h1>What is machine learning?</h1>
-<p>Every year, the US releases to the public a large data set containing information on births recorded in the country. This data set has been of interest to medical researchers who are studying the relation between habits and practices of expectant mothers and the birth of their children. This is a random sample of 1,000 cases from the data set released in 2014.</p>
-<div id="949a9a6b" class="cell" data-execution_count="3">
+<section id="a-simple-example" class="level1">
+<h1>A simple example</h1>
+<p>Beginning with these complex applications can obscure what we mean by “statistical prediction.” So let’s begin with a much simpler example.</p>
+<p>Every year, the US releases to the public a large data set containing information on births recorded in the country.</p>
+<p>This is a random sample of 1,000 cases from the 2014 data set.</p>
+<div id="49d3df1e" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown" data-execution_count="3">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -244,7 +256,7 @@ window.Quarto = {
 </section>
 <section id="plot-of-the-data" class="level1">
 <h1>Plot of the data</h1>
-<div id="50292f2f" class="cell" data-execution_count="4">
+<div id="8ac88a5d" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -256,39 +268,96 @@ window.Quarto = {
 </section>
 <section id="three-things-we-could-do-with-this-dataset" class="level1">
 <h1>Three things we could do with this dataset</h1>
-<ol type="1">
-<li>Regress <code>weight ~ 1 + mage + habit</code>. If <code>habit</code> is statistically significant, warn mothers not to smoke.</li>
-<li>Regress <code>weight ~ 1 + mage + habit</code>. For a given mother, compute the expected baby weight. If it is low, recommend extra monitoring during the pregnancy.</li>
-<li>Define a variable <code>low_weight = weight &lt; 4</code>. Run the logistic regression <code>low_weight ~ 1 + mage + habit</code>. For a given mother, compute the expected probability of low birth weight. If this probability is high, recommend extra monitoring during the preganancy.</li>
+<ol type="A">
+<li><ol type="1">
+<li>Regress <code>weight ~ 1 + mage + habit</code>.</li>
+<li>If <code>habit</code> is statistically significant, warn mothers not to smoke.</li>
+</ol></li>
+<li><ol type="1">
+<li>Regress <code>weight ~ 1 + mage + habit</code>.</li>
+<li>For a given mother, compute the expected baby weight. If it is low, recommend extra monitoring during the pregnancy.</li>
+</ol></li>
+<li><ol type="1">
+<li>Define a variable <code>low_weight = weight &lt; 4</code>.</li>
+<li>Run the logistic regression <code>low_weight ~ 1 + mage + habit</code>.</li>
+<li>For a given mother, compute the expected probability of low birth weight. If this probability is high, recommend extra monitoring during the preganancy.</li>
+</ol></li>
 </ol>
-</section>
-<section id="questions" class="level1">
-<h1>Questions:</h1>
-<p>This class is called “Modern Statistical Prediction and Machine Learning”</p>
+<section id="questions" class="level3">
+<h3 class="anchored" data-anchor-id="questions">Questions:</h3>
 <ol type="1">
-<li>Which (if any) of these tasks is machine learning?<br>
-</li>
-<li>Which (if any) of these tasks is prediction?<br>
-</li>
-<li>Which (if any) are classification?</li>
+<li>Which (if any) of these tasks is prediction?</li>
+<li>Which (if any) of these tasks is machine learning?</li>
 <li>Which (if any) is statistical?</li>
 <li>Which (if any) is modern?</li>
 </ol>
-<p><em>Be prepared to justify your answers.</em></p>
+<p><em>Be prepared to discuss and justify your answers.</em></p>
 </section>
-<section id="what-is-machine-learning-what-is-prediction" class="level1">
-<h1>What is machine learning? What is prediction?</h1>
-<ol type="1">
-<li>Which (if any) of these tasks is machine learning?<br>
-</li>
-<li>Which (if any) of these tasks is prediction?</li>
-</ol>
-<p>Tasks 2 and 3 are prediction. One might also call them machine learning.</p>
-<p>Task 1 is causal inference. <em>We will not study causal inference, and I will strongly discourage ever interpreting our models causally.</em></p>
-<p><strong>Note:</strong> I depart from ISL on this point! They sometimes try to do “inference,” and carelessly (in my opinion).</p>
 </section>
-<section id="what-is-machine-learning-what-is-prediction-1" class="level1">
-<h1>What is machine learning? What is prediction?</h1>
+<section id="prediction-versus-inference" class="level1">
+<h1>Prediction versus inference</h1>
+<p>This class will study <em>prediction</em>, which is different from <em>inference</em>.</p>
+<p>Note that examples A and B both use the same statistical procedure:</p>
+<ul>
+<li>Regress <code>weight ~ 1 + mage + habit</code>.</li>
+</ul>
+<p>But one is inference and one is prediction because of how you <em>use the model</em>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Prediction versus inference">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Prediction versus inference
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 53%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Prediction</th>
+<th style="text-align: center;">Inference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Predict baby weight and take an action</td>
+<td style="text-align: center;">Interpret the weight coefficient causally</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">You only care about <span class="math inline">\(\hat{f}(x_*)\)</span></td>
+<td style="text-align: center;">You give meaning to some components of <span class="math inline">\(\hat{f}(x_*)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Features correlated with the “true” features are just as good</td>
+<td style="text-align: center;">Correlation does not imply causation</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">The generative process may be misspecified</td>
+<td style="text-align: center;">The interpretation is only valid if the generative process is roughly correct</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This class is about <strong>prediction</strong> <em>not</em> <strong>inference</strong>!</p>
+</section>
+<section id="prediction-and-supervised-learning" class="level1">
+<h1>Prediction and supervised learning</h1>
+<div class="callout callout-style-default callout-tip callout-titled" title="Supervised learning">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Supervised learning
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In this course, “prediction” always take the following form:</p>
 <ul>
 <li>A fixed set of observed pairs <span class="math inline">\(\{(x_n, y_n)\}\)</span>, <span class="math inline">\(n=1,\ldots,N\)</span>.</li>
@@ -298,28 +367,56 @@ window.Quarto = {
 <p><span class="math display">\[\hat{f}(x_*) =: \hat{y}_*
 \overset{\textrm{(hopefully)}}{\approx} y_*
 \]</span>.</p>
-<p><strong>Exercise:</strong> Give some examples where “prediction” in this sense might not refer to the future.</p>
+<p>This is also called <strong>supervised learning</strong>.</p>
+</div>
+</div>
 </section>
-<section id="what-is-machine-learning-what-is-prediction-2" class="level1">
+<section id="what-is-machine-learning-what-is-prediction" class="level1">
 <h1>What is machine learning? What is prediction?</h1>
+<div class="callout callout-style-default callout-tip callout-titled" title="Machine learning">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Machine learning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Supervised learning is a large but proper subset of machine learning (ML).</p>
+<p>ML also (at least) encompasses reinforcement learning and unsupervised learning.</p>
+</div>
+</div>
+<p>This class will almost entirely focus on supervised learning, though I will try to work some unsupervised learning problems into the homework.</p>
 <p>Here are some classical contemporary ML applications:</p>
 <ul>
 <li>Recognizing digits from pixelized images</li>
 <li>Generating human–like text</li>
-<li>Learning to play Go</li>
 <li>Finding cancer cells in an MRI image</li>
 <li>Automatically identifying the topics in a NYT article</li>
 <li>Finding genes with similar patterns of expression</li>
+<li>Learning to play Go</li>
 </ul>
-<p>Some of these don’t appear to be supervised learning problems.</p>
-<p>This class will almost entirely focus on supervised learning, though I will try to work some unsupervised learning problems into the homework.</p>
+<p>Which of these are supervised learning? Which are not?</p>
 </section>
-<section id="what-is-classification" class="level1">
-<h1>What is classification?</h1>
-<p>Arguably, both tasks 2 and 3 are being used for prediction, since we are ultimately using our models to identify mothers who are at-risk for low birth weight babies.</p>
+<section id="classification-versus-regression" class="level1">
+<h1>Classification versus regression</h1>
+<p>Both tasks B and C are being used for “classification”, since we are ultimately using our models to identify mothers who are at-risk for low birth weight babies.</p>
 <p>However, in this class we will use these terms to describe the model, not the ultimate use.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Regression and classification">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Regression and classification
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>Regression</strong> will mean a case where <span class="math inline">\(y_n\)</span> takes values in <span class="math inline">\(\mathbb{R}^{}\)</span>.</p>
 <p><strong>Classification</strong> will mean a case where <span class="math inline">\(y_n\)</span> takes values in an unordered, finite set (in this class, typically <span class="math inline">\(\{0, 1\}\)</span>).</p>
+</div>
+</div>
 </section>
 <section id="what-is-statistical" class="level1">
 <h1>What is statistical?</h1>
@@ -335,12 +432,24 @@ window.Quarto = {
 </section>
 <section id="what-is-statistical-1" class="level1">
 <h1>What is statistical?</h1>
-<p>One way to imagine how the observed sample differs from the future population is to imagine that both are <em>independent and identically distributed</em> (IID) samples from the same population:</p>
+<p>One way to imagine how the observed sample differs from the future population is to imagine that both are <em>independent and identically distributed</em> (IID) samples from the same population.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Statistics for ML">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Statistics for ML
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><span class="math display">\[
 (x_n, y_n) \overset{\mathrm{IID}}{\sim}p(x, y) \quad\textrm{and}\quad
 (x_*, y_*) \sim p(x, y)
 \quad\textrm{for the same }p.
 \]</span></p>
+</div>
+</div>
 <p>An assumption of IID sampling is:</p>
 <ul>
 <li>Mathematically (fairly) tractable</li>
@@ -359,12 +468,27 @@ window.Quarto = {
 y_n = \boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \varepsilon_n
 \quad\textrm{for}\quad\varepsilon_n \overset{\mathrm{IID}}{\sim}\mathcal{N}\left(0, \sigma^2\right).
 \]</span></p>
-<p>In this class, we will never take such assumptions very seriously in real applications. The IID assumption is bad enough.</p>
-<p>However, studying what would happen <em>if such assumptions hold</em> can provide some nice intuition that we might hope generalizes.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Statistics for ML">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Statistics for ML
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>ML <em>does not assume</em> that we have access to the correct generative model!</p>
+<p><span class="math inline">\(\vspace{0.5em}\)</span></p>
+<p>In this sense, “statistical ML” can be thought of as the study of <strong>prediction methods</strong> under <strong>IID sampling</strong> and <strong>model misspecification</strong>.</p>
+</div>
+</div>
+<p>Despite this, studying what would happen <em>if such assumptions hold</em> can provide some nice intuition that we might hope generalizes.</p>
 </section>
 <section id="what-is-modern" class="level1">
 <h1>What is modern?</h1>
 <p><a href="https://www.argmin.net/p/apostasy-or-reformation">Ben Recht writes</a>:</p>
+<p><span class="math inline">\(\vspace{1em}\)</span></p>
 <blockquote class="blockquote">
 <p>Before 2015, I believed a list of truths about machine learning:</p>
 <ul>
@@ -376,21 +500,34 @@ y_n = \boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \varepsilon_n
 </ul>
 <p>None of these are true. Or certainly, none are universal truths. … Given all of this evidence, why did we teach our undergrads a paradigm completely invalidated by empirical evidence? I don’t have an answer to that question.</p>
 </blockquote>
+<p>Massive compute power, deep neural nets + stochastic gradient descent, and frictionless reproducibility have laid bare some major shortcomings in the theory we’ll be learning in this class.</p>
 </section>
-<section id="what-is-modern-1" class="level1">
-<h1>What is modern?</h1>
-<p>Let’s not pretend otherwise: massive compute power, deep neural nets + stochastic gradient descent, and frictionless reproducibility have laid bare some major shortcomings in the theory you’ll be learning in this class.</p>
-<p>So why learn this material?</p>
+<section id="ml-theory-and-ml-engineering" class="level1">
+<h1>ML theory and ML engineering</h1>
+<p>One might imagine two different kinds of ML course:</p>
 <ul>
-<li>You still need to understand the simple settings we will study in this class to understand contemporary debates about how and why modern ML works</li>
-<li>Classical concepts still provide good practical guidance outside massive datasets + computing environments</li>
-<li>“Statistical ML” should arguably be the place where you learn the best mathematical principles we have</li>
-<li>This course provides vocabulary you need to participate in most scholarly discussion of machine learning</li>
-<li>Theory does not need to be perfect to be useful! (Take economic theory for example.)</li>
+<li><strong>ML Engineering:</strong>
+<ul>
+<li>Coding best practices</li>
+<li>Optimization best practices</li>
+<li>Data pipelines</li>
+<li>Matching tasks with model classes</li>
+<li>Lots of real-world practice</li>
+</ul></li>
+<li><strong>ML Theory:</strong>
+<ul>
+<li>Articulate and criticize assumptions implicit in ML practice</li>
+<li>Identify the key tradeoffs in ML methods</li>
+<li>Thorough study of simple mathematical models that one might hope are proxies for more complex situations</li>
+<li>A clear and rigorous vocabulary for comparing and analyzing ML methods</li>
+<li>Capacity to quickly learn and think about ML methods you’ve never seen before</li>
+</ul></li>
 </ul>
+<p>Ideally, you need to learn both!</p>
+<p>This will be an <strong>ML theory</strong> class with a dose of <strong>ML engineering</strong> in the labs.</p>
 </section>
-<section id="what-is-modern-2" class="level1">
-<h1>What is modern?</h1>
+<section id="the-bitter-lesson" class="level1">
+<h1>The bitter lesson</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/llm_scaling.png" class="img-fluid figure-img" style="width:50.0%"></p>
@@ -398,23 +535,8 @@ y_n = \boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \varepsilon_n
 </figure>
 </div>
 <p>From <span class="citation" data-cites="kaplan:2020:scaling">Kaplan et al. (<a href="#ref-kaplan:2020:scaling" role="doc-biblioref">2020</a>)</span> Figure 1. The scaling of loss with compute is real, but slow!</p>
-<p>A reliance on brute force computation puts the power of ML in the hands moneyed institutions.</p>
-</section>
-<section id="class-organization" class="level1">
-<h1>Class organization</h1>
-<p>The class will focus on three types of problems:</p>
-<ul>
-<li>Supervised regression</li>
-<li>Supervised classification</li>
-<li>Unsupervised clustering</li>
-</ul>
-<p>And on these interlocking key concepts:</p>
-<ul>
-<li>Loss minimization and generalization</li>
-<li>Ways to generate and control model complexity</li>
-<li>Computation</li>
-</ul>
-<p>Each concept will be explored in the context of each problem. Hopefully you will see certain repetitive patterns emerge!</p>
+<p>A reliance on brute force computation puts the power of ML in the hands of private and wealthy institutions.</p>
+<p>If we are to escape this fate, theory will almost certainly have to play a role.</p>
 </section>
 <section id="bibliography" class="level1">
 
