@@ -124,14 +124,13 @@ window.Quarto = {
    
   <ul>
   <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#ordinary-least-squares-under-misspecification" id="toc-ordinary-least-squares-under-misspecification" class="nav-link" data-scroll-target="#ordinary-least-squares-under-misspecification">Ordinary least squares under misspecification</a></li>
   <li><a href="#regression-as-loss-minimization" id="toc-regression-as-loss-minimization" class="nav-link" data-scroll-target="#regression-as-loss-minimization">Regression as loss minimization</a></li>
   <li><a href="#linear-regression-and-least-squares-loss" id="toc-linear-regression-and-least-squares-loss" class="nav-link" data-scroll-target="#linear-regression-and-least-squares-loss">Linear regression and least squares loss</a>
   <ul class="collapse">
   <li><a href="#approximating-the-conditional-expectation" id="toc-approximating-the-conditional-expectation" class="nav-link" data-scroll-target="#approximating-the-conditional-expectation">Approximating the conditional expectation</a></li>
-  <li><a href="#linear-approximation" id="toc-linear-approximation" class="nav-link" data-scroll-target="#linear-approximation">Linear approximation</a></li>
-  <li><a href="#empirical-approximation" id="toc-empirical-approximation" class="nav-link" data-scroll-target="#empirical-approximation">Empirical approximation</a>
+  <li><a href="#linear-approximation" id="toc-linear-approximation" class="nav-link" data-scroll-target="#linear-approximation">Linear approximation</a>
   <ul class="collapse">
-  <li><a href="#consistency" id="toc-consistency" class="nav-link" data-scroll-target="#consistency">Consistency</a></li>
   <li><a href="#preview-of-uniform-laws" id="toc-preview-of-uniform-laws" class="nav-link" data-scroll-target="#preview-of-uniform-laws">Preview of uniform laws</a></li>
   </ul></li>
   </ul></li>
@@ -182,15 +181,64 @@ window.Quarto = {
 <li>Show consistency of OLS when we can use the LLN</li>
 </ul>
 </section>
-<section id="regression-as-loss-minimization" class="level1">
-<h1>Regression as loss minimization</h1>
+<section id="ordinary-least-squares-under-misspecification" class="level1">
+<h1>Ordinary least squares under misspecification</h1>
 <p>Suppose we observe IID data,</p>
 <p><span class="math display">\[
 \mathcal{D}:= \left\{ (\boldsymbol{x}_n, y_n) \textrm{ for }n=1,\ldots,N \right\}.
 \]</span></p>
-<p>Later, we expect to observe one (or more) values <span class="math inline">\(\boldsymbol{x}_\mathrm{new}\)</span>, but not the corresponding <span class="math inline">\(y_\mathrm{new}\)</span>. We’ll assume (tenuously!<br>
-unrealistically) that the pair <span class="math inline">\((\boldsymbol{x}_\mathrm{new}, y_\mathrm{new})\)</span> come from the same distribution as the data, and are independent of the data.</p>
-<p>To guess <span class="math inline">\(y_\mathrm{new}\)</span>, we want a function <span class="math inline">\(f(\boldsymbol{x}_\mathrm{new})\)</span> for which we hope <span class="math inline">\(\hat{y}_\mathrm{new}:= f(\boldsymbol{x}_\mathrm{new})\)</span> is “close” to <span class="math inline">\(y_\mathrm{new}\)</span>.</p>
+<p>Later, we expect to observe one (or more) values <span class="math inline">\(\boldsymbol{x}_\mathrm{new}\)</span>, but not the corresponding <span class="math inline">\(y_\mathrm{new}\)</span>. We’ll assume (tentatively) that the pair <span class="math inline">\((\boldsymbol{x}_\mathrm{new}, y_\mathrm{new})\)</span> come from the same distribution as the data, and are independent of the data. But for now, let’s think about the OLS estimator,</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}= (\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}
+\]</span></p>
+<p>under the assumption only of IID pairs of <span class="math inline">\((x_n, y_n)\)</span> and that certain moments exist (specifically that all covariances are finite, and <span class="math inline">\(x_n\)</span> has an invertible covariance matrix, but we won’t worry too much about technical conditions for now).</p>
+<p>You might be used to making an assumption about <span class="math inline">\(y_n\)</span> that looks something like</p>
+<p><span class="math display">\[
+y_n = {\boldsymbol{\beta}_{\mathrm{true}}}^\intercal\boldsymbol{x}_n + \varepsilon_n
+\textrm{ for }\varepsilon_n \overset{\mathrm{IID}}{\sim}\mathcal{N}\left(0,\sigma^2\right)
+\quad \leftarrow \textrm{ We do not assume this!}
+\]</span></p>
+<p>Now we have no such assumption! In particular, there is no “true” <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span> to estimate. We can still define mean zero “residuals” as</p>
+<p><span class="math display">\[
+\varepsilon_n := y_n - \mathbb{E}_{\,}\left[y| \boldsymbol{x}_n\right]
+\quad\Leftrightarrow\quad
+y_n = \mathbb{E}_{\,}\left[y| \boldsymbol{x}_n\right] + \varepsilon_n,
+\]</span></p>
+<p>but there is no reason to believe the function <span class="math inline">\(\mathbb{E}_{\,}\left[y| \boldsymbol{x}_n\right]\)</span> is linear in <span class="math inline">\(\boldsymbol{x}_n\)</span>. We might say that our regression model is <strong>misspecified</strong> in the sense the we are fitting a model of the form that does not match the actual process that generated the data.</p>
+<p>Some things that you may have learned about OLS in introductory classes are no longer true under misspecification. The big one is the (now fals) assertion that <span class="math inline">\(\hat{\boldsymbol{\beta}}\sim \mathcal{N}\left(\boldsymbol{\beta}_{\mathrm{true}}, \sigma^2 (\boldsymbol{X}^\intercal\boldsymbol{X})^{-1}\right)\)</span>. There are a lot of things wrong with this one:</p>
+<ul>
+<li>There is no such thing as <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span></li>
+<li>There is no reason to think that <span class="math inline">\(\mathrm{Var}_{\,}\left(\varepsilon_n\right)\)</span> is a constant <span class="math inline">\(\sigma^2\)</span> that does not depend on <span class="math inline">\(\boldsymbol{x}_n\)</span> (heteroskedasticity)</li>
+<li>This derivation relies on <span class="math inline">\(\varepsilon_n\)</span> being normal, but <span class="math inline">\(\varepsilon_n\)</span> can have essentially any distribution (we assume it has finite variance though)</li>
+<li><span class="math inline">\(\boldsymbol{X}\)</span> is actually random here (they too are IID), and so it cannot be a parameter in a distribution. (Typically this formula is derived conditional on <span class="math inline">\(\boldsymbol{X}\)</span>.)</li>
+</ul>
+<p>Similarly, you might have learned that “OLS is unbiased,” meaning <span class="math inline">\(\mathbb{E}_{\,}\left[\hat{\boldsymbol{\beta}}\right] = \boldsymbol{\beta}_{\mathrm{true}}\)</span>. This no longer makes sense, again because there is no <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span>. But even the predictions are biased. Taking <span class="math inline">\(\hat{\boldsymbol{Y}}:= \boldsymbol{X}\hat{\boldsymbol{\beta}}\)</span>, we see that</p>
+<p><span class="math display">\[
+\mathbb{E}_{\,}\left[\hat{\boldsymbol{Y}}\right] = \mathbb{E}_{\,}\left[\boldsymbol{X}(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right]
+= \mathbb{E}_{\,}\left[\boldsymbol{X}(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\,}\left[\boldsymbol{Y}| \boldsymbol{X}\right]\right],
+\]</span></p>
+<p>which does not equal <span class="math inline">\(\mathbb{E}_{\,}\left[\boldsymbol{Y}\right]\)</span> in general. It’s even worse: the expectation of <span class="math inline">\(\hat{y}_{\mathrm{new}}\)</span> at an IID draw <span class="math inline">\(\boldsymbol{x}_{\mathrm{new}}\)</span> is not unbiased either:</p>
+<p><span class="math display">\[
+\mathbb{E}_{\,}\left[\hat{y}_{\mathrm{new}}\right] =
+\mathbb{E}_{\,}\left[\boldsymbol{x}_{\mathrm{new}}^\intercal\hat{\boldsymbol{\beta}}\right] =
+\mathbb{E}_{\,}\left[\boldsymbol{x}_{\mathrm{new}}\right]^\intercal\mathbb{E}_{\,}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right],
+\]</span></p>
+<p>and since the rightmost expression is no longer a true <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span>, this has no guaranteed relation to <span class="math inline">\(\mathbb{E}_{\,}\left[y_{\mathrm{new}}\right]\)</span>.</p>
+<p>So what can we say? Assuming covariances are finite, we can apply a LLN, so that</p>
+<p><span class="math display">\[
+\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{X}\rightarrow \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
+\quad\textrm{and}\quad
+\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{Y}\rightarrow \mathbb{E}_{\,}\left[\boldsymbol{x}y\right],
+\]</span></p>
+<p>and so (by the continuous mapping theorem if <span class="math inline">\(\mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]\)</span> is invertible),</p>
+<p><span class="math display">\[
+\hat{\boldsymbol{\beta}}\rightarrow \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]^{-1} \mathbb{E}_{\,}\left[\boldsymbol{x}y\right].
+\]</span></p>
+<p>This is a mysterious expression. In order to give it meaning, let us consider the more general problem of <em>empirical risk minimization</em>. We will see at the end that this is actually quite a good quantity for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> to converge to.</p>
+</section>
+<section id="regression-as-loss-minimization" class="level1">
+<h1>Regression as loss minimization</h1>
+<p>Let us step back. Ultimately, we want to guess <span class="math inline">\(y_\mathrm{new}\)</span>, for which we want a function <span class="math inline">\(f(\boldsymbol{x}_\mathrm{new})\)</span>. We hope <span class="math inline">\(\hat{y}_\mathrm{new}:= f(\boldsymbol{x}_\mathrm{new})\)</span> is “close” to <span class="math inline">\(y_\mathrm{new}\)</span>.</p>
 <p>What does “close” mean? There are many choices for measuring a “distance” between <span class="math inline">\(\hat{y}_\mathrm{new}\)</span> and <span class="math inline">\(y_\mathrm{new}\)</span>. Here are a few:</p>
 <ul>
 <li><span class="math inline">\(|\hat{y}_\mathrm{new}- y_\mathrm{new}|\)</span></li>
@@ -271,7 +319,7 @@ Notation
 <p>The notation <span class="math inline">\((\cdot)\)</span> in <span class="math inline">\(f^{\star}(\cdot)\)</span> emphasizes that the object <span class="math inline">\(f^{\star}\)</span> is a function. At times I may omit it and simply write <span class="math inline">\(f^{\star}\)</span> (for example). In contrast, I will (try) to write <span class="math inline">\(f^{\star}(x)\)</span> only for the function <span class="math inline">\(f^{\star}\)</span> evaluated at a particular value <span class="math inline">\(x\)</span>.</p>
 </div>
 </div>
-<p>The problem with this definition of <span class="math inline">\(f^{\star}\)</span> is that we don’t actually know how to compute <span class="math inline">\(\mathscr{R}(f)\)</span>, since we don’t know the joint distribution of <span class="math inline">\(\boldsymbol{x},y\)</span>. In this class, we will extensively use and study the <em>empirical loss</em>,</p>
+<p>The problem with this definition of <span class="math inline">\(f^{\star}\)</span> is that we don’t actually know how to compute <span class="math inline">\(\mathscr{R}(f)\)</span>, since we don’t know the joint distribution of <span class="math inline">\(\boldsymbol{x},y\)</span>. In this class, we will extensively use and study the <em>empirical risk</em>,</p>
 <p><span class="math display">\[
 \hat{\mathscr{R}}(f) := \frac{1}{N} \sum_{n=1}^N\mathscr{L}(f(\boldsymbol{x}_n), y_n).
 \]</span></p>
@@ -341,7 +389,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 <h2 class="anchored" data-anchor-id="approximating-the-conditional-expectation">Approximating the conditional expectation</h2>
 <p>We now know that the optimal regression function is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span>. The problem is how to estimate it.</p>
 <p>We have been imagining that we know the full joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>. In that case, we can read off the conditional distribution by “slicing” through a particular <span class="math inline">\(\boldsymbol{x}\)</span>:</p>
-<div id="bb476475" class="cell" data-execution_count="2">
+<div id="4fb3d7eb" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -351,7 +399,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 </div>
 </div>
 <p>However, in practice, we don’t actually observe the full joint distribution, we observe data points. How should we proceed?</p>
-<div id="495a8acf" class="cell" data-execution_count="3">
+<div id="5c53630c" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -379,48 +427,18 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 <p><span class="math display">\[
 \boldsymbol{\beta}^{*}= \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] ^{-1} \mathbb{E}_{\,}\left[\boldsymbol{x}y\right].
 \]</span></p>
-</section>
-<section id="empirical-approximation" class="level2">
-<h2 class="anchored" data-anchor-id="empirical-approximation">Empirical approximation</h2>
-<p>Now, we cannot actually compute <span class="math inline">\(\beta^{*}\)</span>, since we still don’t know the joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>, and so cannot compute the preceding expectations. However, if we have a training set, we can <em>approximate</em> the expected loss:</p>
-<p><span class="math display">\[
-\hat{\boldsymbol{\beta}}:=
-\underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \frac{1}{N} \sum_{n=1}^N\left( y_n - \boldsymbol{\beta}^\intercal\boldsymbol{x}_n \right)^2
-= \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \hat{\mathscr{R}}(\boldsymbol{\beta})
-\overset{?}{\approx}
-\underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[\left( y- \boldsymbol{\beta}^\intercal\boldsymbol{x}\right)^2\right]
-= \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \mathscr{R}(\boldsymbol{\beta})
-= \boldsymbol{\beta}^{*}.
-\]</span></p>
-<p>Recall that we can write the objective function for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> in matrix notation as</p>
-<p><span class="math display">\[
-\hat{\boldsymbol{\beta}}:= \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, (\boldsymbol{Y}- \boldsymbol{X}\boldsymbol{\beta})^\intercal(\boldsymbol{Y}- \boldsymbol{X}\boldsymbol{\beta}) =:
-\underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \hat{\mathscr{R}}(\boldsymbol{\beta}),
-\]</span></p>
-<p>Setting derivatives with respect to <span class="math inline">\(\boldsymbol{\beta}\)</span> equal to zero gives</p>
-<p><span class="math display">\[
-\left. \frac{\partial \hat{\mathscr{R}}(\boldsymbol{\beta})}{\partial \boldsymbol{\beta}} \right|_{\hat{\boldsymbol{\beta}}} =
-2 \boldsymbol{X}^\intercal\boldsymbol{Y}- 2 \boldsymbol{X}^\intercal\boldsymbol{X}\hat{\boldsymbol{\beta}}=
-\boldsymbol{0}.
-\]</span></p>
-<p>When <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}\)</span> is invertible (i.e., <span class="math inline">\(\boldsymbol{X}\)</span> is full rank), then</p>
-<p><span class="math display">\[
-\hat{\boldsymbol{\beta}}= (\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}=
-\left(\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{X}\right)^{-1} \frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{Y}.
-\]</span></p>
-<section id="consistency" class="level3">
-<h3 class="anchored" data-anchor-id="consistency">Consistency</h3>
-<p>If we can apply a LLN, then</p>
-<p><span class="math display">\[
-\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{X}\rightarrow \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
-\quad\textrm{and}\quad
-\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{Y}\rightarrow \mathbb{E}_{\,}\left[\boldsymbol{x}y\right],
-\]</span></p>
-<p>and so (by the continuous mapping theorem if <span class="math inline">\(\mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]\)</span> is invertible),</p>
+<p>Note that this is the limiting quantity for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>, the OLS estimator! We have shown that, as <span class="math inline">\(N \rightarrow \infty\)</span>,</p>
 <p><span class="math display">\[
 \hat{\boldsymbol{\beta}}\rightarrow \boldsymbol{\beta}^{*}.
 \]</span></p>
-<p>In other words, the OLS estimator is a <em>consistent estimator of <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span></em> when we can apply the LLN and continuous mapping theorem to the quantities <span class="math inline">\(\boldsymbol{x}\boldsymbol{x}^\intercal\)</span> and <span class="math inline">\(\boldsymbol{x}y\)</span>.</p>
+<p>That is, the OLS estimator converges to the <em>best linear estimator</em> of the risk function! That is, in fact, the best quantity you could hope for it to converge to.</p>
+<p>This is not a coincidence, since <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is minimizing an objective function that is closely related to <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span>. Note that we cannot actually compute <span class="math inline">\(\beta^{*}\)</span> directly, since we still don’t know the joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>, and so cannot compute the preceding expectations. However, if we have a training set, we can <em>approximate</em> the expected loss:</p>
+<p><span class="math display">\[
+\hat{\mathscr{R}}(\boldsymbol{\beta}) :=
+\frac{1}{N} \sum_{n=1}^N\mathscr{L}(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n, y_n) =
+\frac{1}{N} \sum_{n=1}^N\left( y_n - \boldsymbol{\beta}^\intercal\boldsymbol{x}_n \right)^2.
+\]</span></p>
+<p>For any particular <span class="math inline">\(\boldsymbol{\beta}\)</span>, <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta}) \rightarrow \mathscr{R}(\boldsymbol{\beta})\)</span> by the LLN, so it might (tentatively) make sense to use <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> as a proxy for <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span>. And of course, <span class="math inline">\(\hat{\boldsymbol{\beta}}:= \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \hat{\mathscr{R}}(\boldsymbol{\beta})\)</span>, and since we have shown manually that <span class="math inline">\(\hat{\boldsymbol{\beta}}\rightarrow \boldsymbol{\beta}^{*}\)</span>, we see that <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> <em>is</em> a good proxy for <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span></p>
 <p>The preceding proof of the consistency of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> used an explicit formula for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>. In this class, we will often discuss estimators for whom no explicit formula exists because we will find them via black–box optimization procedures. How can we reason in such cases?</p>
 <p>Recall that we argued, for a particular <span class="math inline">\(f\)</span>, that a LLN should give</p>
 <p><span class="math display">\[
@@ -453,7 +471,6 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 \mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(\boldsymbol{\beta}^{*}) \ge 0.
 \]</span></p>
 <p>That is, by using <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> instead of the optimal <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span>, how much worse is our ``true’’ loss? Note that this quantity must be positive since you cannot do better than <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span>, but we would like to show that <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(\boldsymbol{\beta}^{*}) \rightarrow 0\)</span>. But we really don’t know much about <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}})\)</span>, so we need to express the regret in terms of quantities we understand.</p>
-</section>
 <section id="preview-of-uniform-laws" class="level3">
 <h3 class="anchored" data-anchor-id="preview-of-uniform-laws">Preview of uniform laws</h3>
 <p>A useful decomposition is as follows:</p>

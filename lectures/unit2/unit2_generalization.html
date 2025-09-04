@@ -178,7 +178,7 @@ window.Quarto = {
 \]</span></p>
 <p>which has the potential to increase with the complexity of the model. In a certain sense, if we believe in the IID assumption, then this variance term is the only reason to not increase the complexity of your regression without bound.</p>
 <p>However, these arguments break down if we consider alternative loss functions, such as absolute <span class="math inline">\(\mathscr{L}(\hat{y}, y) = \left|\hat{y}- y\right|\)</span> or classification loss <span class="math inline">\(\mathscr{L}(\hat{y}, y) = \mathrm{I}\left(\hat{y}&lt; c \textrm{ and }y&gt; c\right)\)</span>, since we cannot decompose the loss into bias and variance contributions.</p>
-<p>Furthermore, unlike for OLS, for these losses we don’t have explicit forms for the empirical loss–minimizing parameters. At a deeper level, it seems wrong to express the complexity of our functions in terms of a parameter at all. Shouldn’t the complexity be measured in terms of the class of prediciton rules themselves, rather than their representation?</p>
+<p>Furthermore, unlike for OLS, for these losses we don’t have explicit forms for the empirical risk–minimizing parameters. At a deeper level, it seems wrong to express the complexity of our functions in terms of a parameter at all. Shouldn’t the complexity be measured in terms of the class of prediciton rules themselves, rather than their representation?</p>
 <p>To this end, let’s consider a more generic decomposition of loss that allows us to go beyond least squares and OLS. Recall our three types of functions:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -200,7 +200,7 @@ f^{\star}={}&amp; \underset{f}{\mathrm{argmin}}\, \mathscr{L}(f) \\
 \underset{\textrm{Irreducible error}}{\mathscr{L}(f^{\star})}.
 \end{aligned}
 \]</span></p>
-<p>The approximation error is like “bias,” and only improves with complexity. The irreducible error cannot be improved, no matter how expressive <span class="math inline">\(\mathcal{F}\)</span> is. If there is a penalty to complexity, it can only come from the “sampling error,” the cost of using the empirical loss as a substitute for true loss. This was the “variance” term in OLS.</p>
+<p>The approximation error is like “bias,” and only improves with complexity. The irreducible error cannot be improved, no matter how expressive <span class="math inline">\(\mathcal{F}\)</span> is. If there is a penalty to complexity, it can only come from the “sampling error,” the cost of using the empirical risk as a substitute for true risk. This was the “variance” term in OLS.</p>
 <p>We can further decompose the sampling error into three parts, only one of which can possibly be problematic, at least for large <span class="math inline">\(N\)</span>: <span class="math display">\[
 \begin{aligned}
 \mathscr{L}(\hat{f}) - \mathscr{L}(\overline{f}) ={}&amp;

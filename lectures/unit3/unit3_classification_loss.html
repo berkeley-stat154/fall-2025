@@ -195,7 +195,7 @@ window.Quarto = {
 <section id="goals" class="level1">
 <h1>Goals</h1>
 <ul>
-<li>Introduce several different ways of representing classification as empirical loss minimization
+<li>Introduce several different ways of representing classification as empirical risk minimization
 <ul>
 <li>Zero–one loss</li>
 <li>Probability–based loss</li>
@@ -252,7 +252,7 @@ As before, we wish to use <span class="math inline">\(\boldsymbol{x}\)</span> to
 </section>
 <section id="second-version-the-ml-procedure-returns-a-probability" class="level2">
 <h2 class="anchored" data-anchor-id="second-version-the-ml-procedure-returns-a-probability">Second version: the ML procedure returns a probability</h2>
-<p>The natural generalization of zero–one loss and functions that return categories is a function that returns a probability. For binary regression with <span class="math inline">\(y\in \left\{ 0,1 \right\}\)</span>, we can take <span class="math inline">\(\pi(\boldsymbol{x})\)</span> to approximate <span class="math inline">\(\mathbb{P}_{\,}\left(y= 1 \vert \boldsymbol{x}\right)\)</span>, and so take <span class="math inline">\(\pi: \boldsymbol{x}\mapsto [0,1]\)</span>. Our loss can then punish <span class="math inline">\(\pi\)</span> that is low when <span class="math inline">\(y= 1\)</span> or high when <span class="math inline">\(y= 0\)</span>. Ultimately we need a category, and we can return <span class="math inline">\(\hat{y}\)</span> to be the category with highest estimated probability. The benefit of doing so is a more tractable and flexible empirical loss; the cost is not directly minimizing the thing we actually care about, which is typically more like zero–one loss.</p>
+<p>The natural generalization of zero–one loss and functions that return categories is a function that returns a probability. For binary regression with <span class="math inline">\(y\in \left\{ 0,1 \right\}\)</span>, we can take <span class="math inline">\(\pi(\boldsymbol{x})\)</span> to approximate <span class="math inline">\(\mathbb{P}_{\,}\left(y= 1 \vert \boldsymbol{x}\right)\)</span>, and so take <span class="math inline">\(\pi: \boldsymbol{x}\mapsto [0,1]\)</span>. Our loss can then punish <span class="math inline">\(\pi\)</span> that is low when <span class="math inline">\(y= 1\)</span> or high when <span class="math inline">\(y= 0\)</span>. Ultimately we need a category, and we can return <span class="math inline">\(\hat{y}\)</span> to be the category with highest estimated probability. The benefit of doing so is a more tractable and flexible empirical risk; the cost is not directly minimizing the thing we actually care about, which is typically more like zero–one loss.</p>
 <p>One way to minimize a loss as a function of probability is actually squared error:</p>
 <p><span class="math display">\[
 \losssq(\pi, y) = (\pi(\boldsymbol{x}) - y)^2
