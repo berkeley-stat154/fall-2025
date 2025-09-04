@@ -261,6 +261,25 @@ Notation
 <p>In this course, <span class="math inline">\(\mathrm{I}\left(z\right)\)</span> will always be the “indicator function” taking value <span class="math inline">\(0\)</span> when <span class="math inline">\(z\)</span> is false and <span class="math inline">\(1\)</span> when <span class="math inline">\(z\)</span> is true.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Describe in ordinary language the implications of using each of the following loss functions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/loss_functions.jpg" class="img-fluid figure-img"></p>
+<figcaption>Loss functions</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>Whichever one we choose, we’ll define the “loss” of guessing <span class="math inline">\(\hat{y}\)</span> when the true value was is <span class="math inline">\(y\)</span> as <span class="math display">\[
 \mathscr{L}(\hat{y}, y) = \mathscr{L}(f(\boldsymbol{x}), y)
 \]</span></p>
@@ -389,7 +408,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 <h2 class="anchored" data-anchor-id="approximating-the-conditional-expectation">Approximating the conditional expectation</h2>
 <p>We now know that the optimal regression function is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span>. The problem is how to estimate it.</p>
 <p>We have been imagining that we know the full joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>. In that case, we can read off the conditional distribution by “slicing” through a particular <span class="math inline">\(\boldsymbol{x}\)</span>:</p>
-<div id="4fb3d7eb" class="cell" data-execution_count="2">
+<div id="866b84f3" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -399,7 +418,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 </div>
 </div>
 <p>However, in practice, we don’t actually observe the full joint distribution, we observe data points. How should we proceed?</p>
-<div id="5c53630c" class="cell" data-execution_count="3">
+<div id="ad0b0b72" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
