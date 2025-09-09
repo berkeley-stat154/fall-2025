@@ -149,6 +149,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#taylor-series" id="toc-taylor-series" class="nav-link" data-scroll-target="#taylor-series">Taylor series</a></li>
   <li><a href="#taylor-series-and-interactions" id="toc-taylor-series-and-interactions" class="nav-link" data-scroll-target="#taylor-series-and-interactions">Taylor series and interactions</a></li>
+  <li><a href="#fourier-series" id="toc-fourier-series" class="nav-link" data-scroll-target="#fourier-series">Fourier series</a></li>
   <li><a href="#indicator-functions" id="toc-indicator-functions" class="nav-link" data-scroll-target="#indicator-functions">Indicator functions</a></li>
   </ul></li>
   <li><a href="#splines" id="toc-splines" class="nav-link" data-scroll-target="#splines">Splines</a>
@@ -243,6 +244,16 @@ f_2(x, z| \gamma) :={}&amp;
 <p>The second regression contains an <em>interaction</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span>. In <span class="math inline">\(f_1\)</span>, the effect on the prediction <span class="math inline">\(f_1\)</span> of an increase in <span class="math inline">\(x\)</span> is the same no matter what <span class="math inline">\(z\)</span> is. In <span class="math inline">\(f_2\)</span>, the effect of an increase in <span class="math inline">\(x\)</span> depends on <span class="math inline">\(z\)</span> — there is an <em>interaction</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> in the model.</p>
 <p>In fact, <span class="math inline">\(f_2\)</span> is precisely a second–order Taylor series expansion of the regressors from <span class="math inline">\(f_1\)</span>. A third–order Taylor series expansion models third–order interactions, and so on.</p>
 </section>
+<section id="fourier-series" class="level2">
+<h2 class="anchored" data-anchor-id="fourier-series">Fourier series</h2>
+<p>Another basis expansion that we will encounter later in the class is the Fourier basis. For simplicity, consider scalar <span class="math inline">\(x\in [0,1]\)</span>, fix <span class="math inline">\(K\)</span>, and define</p>
+<p><span class="math display">\[
+f_K(x; \boldsymbol{\beta}) = \beta_0 + \sum_{k=1}^K \left(
+    \beta_k^s \sin(2 \pi k x) + \beta_k^c \cos(2 \pi k x) \right).
+\]</span></p>
+<p>Note that the <span class="math inline">\(K\)</span>–th order series has <span class="math inline">\(1 + 2 K\)</span> coefficients to estimate. Fourier bases are, of course, good at representing periodic functions, like daily or weekly cycles in the data. It is also perhaps clearer for the Fourier basis how higher <span class="math inline">\(K\)</span> allow you to express more wiggly functions than for the Taylor series basis.</p>
+<p>We mention Fourier bases here because they have a natural relationship to stationary kernels, as we will see towards the end of the class.</p>
+</section>
 <section id="indicator-functions" class="level2">
 <h2 class="anchored" data-anchor-id="indicator-functions">Indicator functions</h2>
 <p>You have probably seen how to turn categorical variables into regressors using one–hot encodings. A simlar trick can be done with continuous random variables. Again, take the regressor <span class="math inline">\(x\)</span> to be a scalar for simplicity. We can define a categorical variable “Is <span class="math inline">\(x\)</span> is positive?” If we turn this into a one–hot encoding, we get</p>
@@ -255,16 +266,16 @@ z_n =
 \end{cases}
 \]</span></p>
 <p>If we regress <span class="math inline">\(y_n \sim 1 + z_n\)</span>, our predictions <span class="math inline">\(\hat{y}_\mathrm{new}\)</span> will be simply the averages of <span class="math inline">\(y_n\)</span> among negative and positive training instances, respectively, according to whether <span class="math inline">\(x_\mathrm{new}\)</span> is postive or negative.</p>
-<p>Similarly, for any partition <span class="math inline">\(\zeta_0, \ldots, \zeta_K\)</span> of the <span class="math inline">\(x\)</span>–axis, we can construct the indicators</p>
+<p>Similarly, for any partition <span class="math inline">\(\rho_0, \ldots, \rho_K\)</span> of the <span class="math inline">\(x\)</span>–axis, we can construct the indicators</p>
 <p><span class="math display">\[
 \boldsymbol{z}^0_n =
 \begin{pmatrix}
-\mathrm{I}\left(\zeta_0 \le x&lt; \zeta_1\right) \\
-\mathrm{I}\left(\zeta_1 \le x&lt; \zeta_2\right) \\
+\mathrm{I}\left(\rho_0 \le x&lt; \rho_1\right) \\
+\mathrm{I}\left(\rho_1 \le x&lt; \rho_2\right) \\
 \vdots\\
-\mathrm{I}\left(\zeta_k \le x&lt; \zeta_{k+1}\right) \\
+\mathrm{I}\left(\rho_k \le x&lt; \rho_{k+1}\right) \\
 \vdots\\
-\mathrm{I}\left(\zeta_{K-1} \le x&lt; \zeta_{K}\right) \\
+\mathrm{I}\left(\rho_{K-1} \le x&lt; \rho_{K}\right) \\
 \end{pmatrix}.
 \]</span></p>
 <p>Regressing on <span class="math inline">\(\boldsymbol{z}_n\)</span> so constructed produces piecewise linear fits within the intervals, within which the regression returns the average of the training responses.</p>
@@ -278,22 +289,22 @@ z_n =
 <p><span class="math display">\[
 \boldsymbol{z}^1_n =
 \begin{pmatrix}
-\mathrm{I}\left(\zeta_0 \le x&lt; \zeta_1\right) (x- \zeta_0) \\
+\mathrm{I}\left(\rho_0 \le x&lt; \rho_1\right) (x- \rho_0) \\
 \vdots\\
-\mathrm{I}\left(\zeta_k \le x&lt; \zeta_{k+1}\right)(x- \zeta_k) \\
+\mathrm{I}\left(\rho_k \le x&lt; \rho_{k+1}\right)(x- \rho_k) \\
 \vdots\\
-\mathrm{I}\left(\zeta_{K-1} \le x&lt; \zeta_{K}\right)(x- \zeta_{K-1}) \\
+\mathrm{I}\left(\rho_{K-1} \le x&lt; \rho_{K}\right)(x- \rho_{K-1}) \\
 \end{pmatrix}.
 \]</span></p>
 <p>Regressing <span class="math inline">\(y_n \sim \boldsymbol{z}^0_n + \boldsymbol{z}^1_n\)</span> produces a piecewise linear fit. Effectively, it produces a separate first–order Taylor series approximation within each segment. The idea can be generalized using regressors of the form</p>
 <p><span class="math display">\[
 \boldsymbol{z}^p_n =
 \begin{pmatrix}
-\mathrm{I}\left(\zeta_0 \le x&lt; \zeta_1\right) (x- \zeta_0)^p \\
+\mathrm{I}\left(\rho_0 \le x&lt; \rho_1\right) (x- \rho_0)^p \\
 \vdots\\
-\mathrm{I}\left(\zeta_k \le x&lt; \zeta_{k+1}\right)(x- \zeta_k)^p \\
+\mathrm{I}\left(\rho_k \le x&lt; \rho_{k+1}\right)(x- \rho_k)^p \\
 \vdots\\
-\mathrm{I}\left(\zeta_{K-1} \le x&lt; \zeta_{K}\right)(x- \zeta_{K-1})^p \\
+\mathrm{I}\left(\rho_{K-1} \le x&lt; \rho_{K}\right)(x- \rho_{K-1})^p \\
 \end{pmatrix},
 \]</span></p>
 <p>regressing on which produce <span class="math inline">\(p\)</span>–th order polynomials within each bucket.</p>
@@ -303,25 +314,25 @@ z_n =
 <p><span class="math display">\[
 f_2(x) = \boldsymbol{\beta}^\intercal\boldsymbol{z}^0_n + \boldsymbol{\gamma}^\intercal\boldsymbol{z}^1_n.
 \]</span></p>
-<p>In between <span class="math inline">\(\zeta_0\)</span> and <span class="math inline">\(\zeta_1\)</span>, <span class="math inline">\(f_2(x)\)</span> is linear, and so continuous. However, it may have different values at the knots. For example,</p>
+<p>In between <span class="math inline">\(\rho_0\)</span> and <span class="math inline">\(\rho_1\)</span>, <span class="math inline">\(f_2(x)\)</span> is linear, and so continuous. However, it may have different values at the knots. For example,</p>
 <p><span class="math display">\[
 \begin{aligned}
-f_2(\zeta_1^- | \boldsymbol{\beta}) ={}&amp;
-    \beta_1 + \gamma_1 (x- \zeta_0) =
-    \beta_1 + \gamma_1 (\zeta_1 - \zeta_0)
-    &amp; \textrm{ just to the left of $\zeta_1$} \\
-f_2(\zeta_1^+ | \boldsymbol{\beta}) ={}&amp; \beta_2 + \gamma_2 (x- \zeta_1)
+f_2(\rho_1^- | \boldsymbol{\beta}) ={}&amp;
+    \beta_1 + \gamma_1 (x- \rho_0) =
+    \beta_1 + \gamma_1 (\rho_1 - \rho_0)
+    &amp; \textrm{ just to the left of $\rho_1$} \\
+f_2(\rho_1^+ | \boldsymbol{\beta}) ={}&amp; \beta_2 + \gamma_2 (x- \rho_1)
 = \beta_2.
-    &amp; \textrm{ just to the right of $\zeta_1$} \\
+    &amp; \textrm{ just to the right of $\rho_1$} \\
 \end{aligned}
 \]</span></p>
 <p>We can thus enforce continuity by requiring</p>
 <p><span class="math display">\[
 \begin{aligned}
-\beta_1 + \gamma_1 (\zeta_1 - \zeta_0) ={}&amp; \beta_2 \\
-\beta_2 + \gamma_2 (\zeta_2 - \zeta_1) ={}&amp; \beta_3 \\
+\beta_1 + \gamma_1 (\rho_1 - \rho_0) ={}&amp; \beta_2 \\
+\beta_2 + \gamma_2 (\rho_2 - \rho_1) ={}&amp; \beta_3 \\
 \vdots&amp; \\
-\beta_{K-1} + \gamma_{K-1} (\zeta_{K-1} - \zeta_{K}) ={}&amp; \beta_K \\
+\beta_{K-1} + \gamma_{K-1} (\rho_{K-1} - \rho_{K}) ={}&amp; \beta_K \\
 \end{aligned}
 \]</span></p>
 <p>Note that this amounts to <span class="math inline">\(K-1\)</span> linear constraints for <span class="math inline">\(K\)</span> intervals — one at each boundary — which can, in general, be written in the form</p>
@@ -332,7 +343,7 @@ A \begin{pmatrix}
 \end{pmatrix} = 0.
 \]</span></p>
 <p>This linear restriction reduces the free parameter space from <span class="math inline">\(2K\)</span> dimensions to <span class="math inline">\(2K - (K - 1)\)</span>, and can be produced by linearly reparameterizing the equations. Note that the first derivatives of a piecewise linear approximation cannot be made continuous. However, the first derivatives of a piecewise quadratic approximation can be, and so regressing on <span class="math inline">\(\boldsymbol{z}^0_n\)</span>, <span class="math inline">\(\boldsymbol{z}^1_n\)</span>, and <span class="math inline">\(\boldsymbol{z}^2_n\)</span> can be expressed using linear constraints as a function with continuous first derivatives but piecewise discontinuous second derivatives, and so on.</p>
-<p>Standard nomenclatur describes an “order–<span class="math inline">\(M\)</span>” spline as consisting of piecewise <span class="math inline">\(M-1\)</span>–order polynomials, with <span class="math inline">\(M-2\)</span> continuous derivatives. For example, a continuous piecewise quadratic spline consists of order <span class="math inline">\(2\)</span> polynomials, has <span class="math inline">\(1\)</span> continuous derivatives, and is a an order–<span class="math inline">\(3\)</span> spline. e (<span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> 5.2)</p>
+<p>Standard nomenclature describes an “order–<span class="math inline">\(M\)</span>” spline as consisting of piecewise <span class="math inline">\(M-1\)</span>–order polynomials, with <span class="math inline">\(M-2\)</span> continuous derivatives. For example, a continuous piecewise quadratic spline consists of order <span class="math inline">\(2\)</span> polynomials, has <span class="math inline">\(1\)</span> continuous derivatives, and is a an order–<span class="math inline">\(3\)</span> spline. e (<span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> 5.2)</p>
 <p>In practice, we do not select a basis and then analytically derive linear constraints. Instead, we can use an iterative construction known as B–splines which gives an explicit representation of the same basis in which continuity is automatically enforced. See the appendix to <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> Chapter 5.</p>
 </section>
 <section id="extrapolation" class="level2">

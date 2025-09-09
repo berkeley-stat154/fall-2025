@@ -129,10 +129,11 @@ window.Quarto = {
   <li><a href="#linear-regression-and-least-squares-loss" id="toc-linear-regression-and-least-squares-loss" class="nav-link" data-scroll-target="#linear-regression-and-least-squares-loss">Linear regression and least squares loss</a>
   <ul class="collapse">
   <li><a href="#approximating-the-conditional-expectation" id="toc-approximating-the-conditional-expectation" class="nav-link" data-scroll-target="#approximating-the-conditional-expectation">Approximating the conditional expectation</a></li>
-  <li><a href="#linear-approximation" id="toc-linear-approximation" class="nav-link" data-scroll-target="#linear-approximation">Linear approximation</a>
-  <ul class="collapse">
-  <li><a href="#preview-of-uniform-laws" id="toc-preview-of-uniform-laws" class="nav-link" data-scroll-target="#preview-of-uniform-laws">Preview of uniform laws</a></li>
+  <li><a href="#linear-approximation" id="toc-linear-approximation" class="nav-link" data-scroll-target="#linear-approximation">Linear approximation</a></li>
   </ul></li>
+  <li><a href="#regret-minimization-and-basis-expansions" id="toc-regret-minimization-and-basis-expansions" class="nav-link" data-scroll-target="#regret-minimization-and-basis-expansions">Regret minimization and basis expansions</a>
+  <ul class="collapse">
+  <li><a href="#ulln-preview" id="toc-ulln-preview" class="nav-link" data-scroll-target="#ulln-preview">ULLN preview</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -357,10 +358,11 @@ Notation
 <section id="linear-regression-and-least-squares-loss" class="level1">
 <h1>Linear regression and least squares loss</h1>
 <p>For the next few lectures, we will focus on least squares loss <span class="math inline">\(\mathscr{L}(\hat{y}, y) = (\hat{y}- y)^2\)</span>. This loss does not always reflect what we really want, but it is extremely computationally and analytically tractable, and so widely used.</p>
-<p>Given some <span class="math inline">\(\boldsymbol{x}_\mathrm{new}\)</span>, we want to find a best guess <span class="math inline">\(f(\boldsymbol{x}_\mathrm{new})\)</span> for the value of <span class="math inline">\(y_\mathrm{new}\)</span>: specifically, we want to find the function that minimizes the “loss”</p>
+<p>Given some <span class="math inline">\(\boldsymbol{x}_\mathrm{new}\)</span>, we want to find a best guess <span class="math inline">\(f(\boldsymbol{x}_\mathrm{new})\)</span> for the value of <span class="math inline">\(y_\mathrm{new}\)</span>: specifically, we want to find a function that minimizes the risk</p>
 <p><span class="math display">\[
 f^{\star}(\cdot) :=
-\underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[\mathscr{L}(y_\mathrm{new}, f(\boldsymbol{x}_\mathrm{new}))\right] =
+\underset{f}{\mathrm{argmin}}\, \mathscr{R}(f) =
+\underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[\mathscr{L}(f(\boldsymbol{x}_\mathrm{new}), y_\mathrm{new})\right] =
 \underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[\left( y_\mathrm{new}- f(\boldsymbol{x}_\mathrm{new}) \right)^2\right].
 \]</span></p>
 <p>This is a functional optimization problem over an infinite dimensional space! You can solve this using some fancy math, but you can also prove directly that the best choice is</p>
@@ -408,7 +410,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 <h2 class="anchored" data-anchor-id="approximating-the-conditional-expectation">Approximating the conditional expectation</h2>
 <p>We now know that the optimal regression function is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span>. The problem is how to estimate it.</p>
 <p>We have been imagining that we know the full joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>. In that case, we can read off the conditional distribution by “slicing” through a particular <span class="math inline">\(\boldsymbol{x}\)</span>:</p>
-<div id="82a0163d" class="cell" data-execution_count="2">
+<div id="d033cf41" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -418,7 +420,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 </div>
 </div>
 <p>However, in practice, we don’t actually observe the full joint distribution, we observe data points. How should we proceed?</p>
-<div id="a09a7c2a" class="cell" data-execution_count="3">
+<div id="ee1e9f99" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -457,8 +459,40 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 \frac{1}{N} \sum_{n=1}^N\mathscr{L}(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n, y_n) =
 \frac{1}{N} \sum_{n=1}^N\left( y_n - \boldsymbol{\beta}^\intercal\boldsymbol{x}_n \right)^2.
 \]</span></p>
-<p>For any particular <span class="math inline">\(\boldsymbol{\beta}\)</span>, <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta}) \rightarrow \mathscr{R}(\boldsymbol{\beta})\)</span> by the LLN, so it might (tentatively) make sense to use <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> as a proxy for <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span>. And of course, <span class="math inline">\(\hat{\boldsymbol{\beta}}:= \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \hat{\mathscr{R}}(\boldsymbol{\beta})\)</span>, and since we have shown manually that <span class="math inline">\(\hat{\boldsymbol{\beta}}\rightarrow \boldsymbol{\beta}^{*}\)</span>, we see that <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> <em>is</em> a good proxy for <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span></p>
-<p>The preceding proof of the consistency of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> used an explicit formula for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>. In this class, we will often discuss estimators for whom no explicit formula exists because we will find them via black–box optimization procedures. How can we reason in such cases?</p>
+<p>For any particular <span class="math inline">\(\boldsymbol{\beta}\)</span>, <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta}) \rightarrow \mathscr{R}(\boldsymbol{\beta})\)</span> by the LLN, so it might (tentatively) make sense to use <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> as a proxy for <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span>. And of course, <span class="math inline">\(\hat{\boldsymbol{\beta}}:= \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \hat{\mathscr{R}}(\boldsymbol{\beta})\)</span>, and since we have shown manually that <span class="math inline">\(\hat{\boldsymbol{\beta}}\rightarrow \boldsymbol{\beta}^{*}\)</span>, we see that <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> <em>is</em> a good proxy for <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span> in this particular case, in the sense that we learn a function, <span class="math inline">\(\hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x}\)</span>, that converges, as <span class="math inline">\(N \rightarrow \infty\)</span>, to the best possible function in our function class: <span class="math inline">\(\hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x}\rightarrow {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}\)</span>.</p>
+</section>
+</section>
+<section id="regret-minimization-and-basis-expansions" class="level1">
+<h1>Regret minimization and basis expansions</h1>
+<p>We should not congratulate ourselves too hastily. After all, we would like to estimate <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\,}\left[y\vert \boldsymbol{x}\right]\)</span>, not the best linear estimator. As we will discuss in the next lecture, we can easily form new regression estimators out of old ones by regressing on non–linear transformations of <span class="math inline">\(\boldsymbol{x}\)</span>. For example, when <span class="math inline">\(x\)</span> is a scalar, we could consider the following hierarchy of linear regressions:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_0(x; \beta) ={}&amp; \beta_0 \\
+f_1(x; \boldsymbol{\beta}) ={}&amp; \beta_0 + \beta_1 x\\
+f_2(x; \boldsymbol{\beta}) ={}&amp; \beta_0 + \beta_1 x+ \frac{1}{2} \beta_2 x^2\\
+\vdots{}&amp;\\
+f_K(x; \boldsymbol{\beta}) ={}&amp; \sum_{k=1}^K \frac{1}{k!} \beta_k x^k.
+\end{aligned}
+\]</span></p>
+<p>As <span class="math inline">\(K\)</span> increases, <span class="math inline">\(f\)</span> becomes arbitrarily expressive — in fact, it can express any piecewise continuous function on a compact domain! However, the corresponding <span class="math inline">\(\boldsymbol{\beta}\)</span> become harder and harder to estimate. In fact, as long as <span class="math inline">\(x\)</span> takes on <span class="math inline">\(N\)</span> distinct values, when <span class="math inline">\(K &gt; N\)</span> the matrix <span class="math inline">\(\boldsymbol{X}\)</span> is not full-rank, and <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is not uniquely defined.</p>
+<p>This observation motivates a key (potential) tradeoff between model expressivness and estimability. Like many things in machine learning, the tradeoff can be seen by adding and subtracting things to the risk. First, note that we only care about <span class="math inline">\(\boldsymbol{\beta}\)</span> (or, in general, a function <span class="math inline">\(f\)</span>) through the risk. In particular, we want to minimize the “regret,” or the difference from the optimal prediction function:</p>
+<p><span class="math display">\[
+\textrm{Regret}(f) :=
+\mathscr{R}(f) - \mathscr{R}(f^{\star}) \ge 0.
+\]</span></p>
+<p>In particular, suppose we fix a particular <span class="math inline">\(K\)</span> and use the regression estimate <span class="math inline">\(\hat{f}_K(\boldsymbol{x}) = \sum_{k=1}^K \frac{1}{k!} \hat{\beta}_k x^k\)</span>. Letting <span class="math inline">\(f^*_K\)</span> denote the minimizer of <span class="math inline">\(\mathscr{R}(\cdot)\)</span> among functions of the form <span class="math inline">\(f_K(\cdot)\)</span>, the risk decomposes as</p>
+<p><span class="math display">\[
+\mathscr{R}(\hat{f}_K) - \mathscr{R}(f^{\star}) =
+\underbrace{\mathscr{R}(\hat{f}_K) - \mathscr{R}(f^{\star}_K)}_{\textrm{Estimation error $\ge 0$}}
++
+\underbrace{\mathscr{R}(f^{\star}_K) - \mathscr{R}(f^{\star})}_{\textrm{Model bias $\ge 0$}}
+.
+\]</span></p>
+<p>Each term is positive because (a) we cannot find the optimal <span class="math inline">\(f^{\star}_K\)</span> and (b) the optimal <span class="math inline">\(f^{\star}_K\)</span> is not, in general, equal to the true <span class="math inline">\(f^{\star}\)</span>.</p>
+<p>This decomposition is useful because you might expect <span class="math inline">\(K\)</span> to act in opposite directions in these two terms — large <span class="math inline">\(K\)</span> makes the first harder, since you have more to estimate, but large <span class="math inline">\(K\)</span> makes the second easier, since you are more likely to be able to express something close to the optimal <span class="math inline">\(f^{\star}\)</span>.</p>
+<section id="ulln-preview" class="level3">
+<h3 class="anchored" data-anchor-id="ulln-preview">ULLN preview</h3>
+<p>Note that the above proof of the consistency of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> used an explicit formula for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>. In this class, we will often discuss estimators for whom no explicit formula exists because we will find them via black–box optimization procedures. How can we reason in such cases?</p>
 <p>Recall that we argued, for a particular <span class="math inline">\(f\)</span>, that a LLN should give</p>
 <p><span class="math display">\[
 \hat{\mathscr{R}}(f) \rightarrow \mathscr{R}(f).
@@ -484,14 +518,19 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 \end{aligned}
 \]</span></p>
 <p>Unfortunately, this does not translate directly into <span class="math inline">\(\hat{\boldsymbol{\beta}}\rightarrow \boldsymbol{\beta}^{*}\)</span>, since the preceding limit holds only for a <em>fixed</em> <span class="math inline">\(\boldsymbol{\beta}\)</span>. Different <span class="math inline">\(\boldsymbol{\beta}\)</span> will lead to convergence at different rates, so in theory it may be the case that <span class="math inline">\(\underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> does not converge to <span class="math inline">\(\underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \mathscr{R}(\boldsymbol{\beta})\)</span>.</p>
-<p>Further, in practice, we really don’t care about learning the function <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span>, rather we want to achieve the optimal loss. That is, we are interested in the ``regret’’</p>
-<p><span class="math display">\[
-\textrm{Regret}(\hat{\boldsymbol{\beta}}) :=
-\mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(\boldsymbol{\beta}^{*}) \ge 0.
-\]</span></p>
-<p>That is, by using <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> instead of the optimal <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span>, how much worse is our ``true’’ loss? Note that this quantity must be positive since you cannot do better than <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span>, but we would like to show that <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(\boldsymbol{\beta}^{*}) \rightarrow 0\)</span>. But we really don’t know much about <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}})\)</span>, so we need to express the regret in terms of quantities we understand.</p>
-<section id="preview-of-uniform-laws" class="level3">
-<h3 class="anchored" data-anchor-id="preview-of-uniform-laws">Preview of uniform laws</h3>
+<div class="callout callout-style-default callout-warning callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the special case of linear regression, show explicitly that <span class="math inline">\(\hat{\mathscr{R}}(\hat{\boldsymbol{\beta}}) \rightarrow \mathscr{R}(\boldsymbol{\beta}^{*})\)</span>. What special structure of the problem permits this result so easily?</p>
+</div>
+</div>
 <p>A useful decomposition is as follows:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -529,7 +568,6 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 <p>It turns out that it is easy to state condtiions under which a ULLN holds for linear regression. In general, we get a ULLN by limiting the complexity of our function class, as we will see later in the class.</p>
 
 
-</section>
 </section>
 </section>
 
