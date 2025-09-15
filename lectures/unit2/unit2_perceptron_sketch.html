@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ryan Giordano">
 
-<title>Lectures</title>
+<title>The perceptron algorithm and support vector classifiers</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,25 +21,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-eecca78eb8c822cd20fef27ff3322c6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3c26bda9cedcf6dcb30ec7dd6948e637.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,98 +128,26 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lectures.html">Lectures</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Fall 2025 STAT154/154</a> 
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course schedule</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lectures/lectures.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Lectures</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../labs/labs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Labs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../assignments/assignments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Assignments</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course Policies</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#unit-1-regression-in-a-machine-learning-setting" id="toc-unit-1-regression-in-a-machine-learning-setting" class="nav-link" data-scroll-target="#unit-1-regression-in-a-machine-learning-setting">Unit 1: Regression in a machine learning setting</a></li>
-  <li><a href="#unit-2-classification" id="toc-unit-2-classification" class="nav-link" data-scroll-target="#unit-2-classification">Unit 2: Classification</a>
-  <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  </ul></li>
+  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a></li>
+  <li><a href="#the-perceptron-algorithm" id="toc-the-perceptron-algorithm" class="nav-link" data-scroll-target="#the-perceptron-algorithm">The perceptron algorithm</a></li>
+  <li><a href="#the-support-vector-classifier-or-soft-margin-classifier" id="toc-the-support-vector-classifier-or-soft-margin-classifier" class="nav-link" data-scroll-target="#the-support-vector-classifier-or-soft-margin-classifier">The support vector classifier (or soft margin classifier)</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -207,14 +156,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures</h1>
-<p class="subtitle lead">Stat 154/254: Statistical Machine Learning</p>
+<h1 class="title">The perceptron algorithm and support vector classifiers</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryan Giordano </p>
+          </div>
+  </div>
     
   
     
@@ -225,71 +179,80 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p><a href="../lectures/lecture_intro.html">Class introduction</a></p>
-</section>
-<section id="unit-1-regression-in-a-machine-learning-setting" class="level1">
-<h1>Unit 1: Regression in a machine learning setting</h1>
+<section id="goals" class="level1">
+<h1>Goals</h1>
 <ul>
-<li><a href="../lectures/unit1/unit1_ols_matrix_notation.html">Linear regression in matrix notation (review)</a></li>
-<li><a href="../lectures/unit1/unit1_ols.html">Linear regression in an ML setting</a></li>
-<li><a href="../lectures/unit1/unit1_splines.html">Basis expansions and splines for linear regression</a></li>
-<li><a href="../lectures/unit1/unit1_l1l2.html">L1 and L2 penalization</a></li>
+<li>Introduce the perceptron algorithm
+<ul>
+<li>Show that it is performing empirical risk minimization</li>
+<li>Prove that it generalizes when there is a margin using stability analysis rather than a uniform law of large numbers</li>
+</ul></li>
+<li>Introduce support vector classifiers as a generalization of the perceptron algorithm</li>
 </ul>
 </section>
-<section id="unit-2-classification" class="level1">
-<h1>Unit 2: Classification</h1>
+<section id="reading" class="level1">
+<h1>Reading</h1>
+<p>The primary reading for this section is Chapter 3 of <span class="citation" data-cites="hardt:2021:patterns">Hardt and Recht (<a href="#ref-hardt:2021:patterns" role="doc-biblioref">2021</a>)</span>, Chapter 9 of <span class="citation" data-cites="isl:2021:gareth">Gareth et al. (<a href="#ref-isl:2021:gareth" role="doc-biblioref">2021</a>)</span>, and Chapters 4.5 and 12.2 of <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span>. These notes are only a loose sketch of the reading topics that we will cover in the lecture and how they connect to the rest of the course.</p>
+</section>
+<section id="the-perceptron-algorithm" class="level1">
+<h1>The perceptron algorithm</h1>
+<p>The perceptron algorithm is a way of training linear classifiers when there exists a separating hyperplane for a particular set of features. Specifically, suppose that you observe <span class="math inline">\((\boldsymbol{x}_n, y_n)\)</span> and there exists a <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> such that</p>
+<p><span class="math display">\[
+y_n = \mathrm{I}\left(\boldsymbol{x}_n^\intercal\boldsymbol{\beta}^{*}\right) \textrm{ for all }n\in\{1,\ldots,N\}.
+\]</span></p>
+<p>When there exists such a <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span>, it turns out that there is a simple algorithm for finding it, the “perceptron algorithm,” with provable generalization error. The perceptron algorithm is not necessarily practical support vector classifiers (or the related support vector machines) are typically used instead. (See <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> Chapter 4.5.1 for a discussion of some practical problems with the perceptron algorithm.) However, the perceptron algorithm is interesting because</p>
 <ul>
-<li><a href="../lectures/unit2/unit2_classification_loss.html">Empirical risk minimization for classification</a> <!--
-- [$\star$ Trading off false positives and negatives](unit2/unit2_false_positives_negatives.qmd)
-- [Perceptron algorithm](unit2/unit2_perceptron.qmd)
-- [Support vector machines](unit2/unit2_svm.qmd)
-
-
-
-# Unit 3: Risk and complexity
-
-- [Asymptotics and bias--variance tradeoff in linear regression](unit1/unit1_biasvar.qmd)
-- [Generalization error and uniform laws](unit2/unit2_generalization.qmd)
-- [Uniform laws for smooth function classes](unit2/unit2_ulln.qmd)
-- [VC dimension and zero--one loss](unit2/unit2_vc_dimension.qmd)
-- [Held-out data and cross-validation](unit2/unit2_cv.qmd)
-
-
-# Unit 4: Trees and weak learners
-
-- [Classification and regression trees](unit4/unit4_cart.qmd)
-- [Bagging weak learners](unit4/unit4_bagging.qmd)
-- [Boosting weak learners](unit4/unit4_boosting.qmd)
-
-
-# Unit 5: Kernel methods
-
-- [The kernel trick](unit5/unit5_kerneltrick.qmd)
-- [Valid kernels and inner products](unit5/unit5_validkernels.qmd)
-- [Reproducing kernel Hilbert spaces](unit5/unit5_rkhs.qmd)
-
-# Unit 6: Optimization and neural networks
-
-- [Optimization notes](optimization.qmd)
-
-
-
---></li>
+<li>Even though it does not appear superficially to be performing empirical loss minimization, we can find a loss that admits this interpretation and</li>
+<li>We can prove that it generalizes in a new way: by analyzing the <em>stability</em> of the particular algorithm rather than by a ULLN.</li>
 </ul>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="../lectures/linalg_review.html">here</a>.</p>
+<p>There is no need to reproduce the text of Chapter 3 of <span class="citation" data-cites="hardt:2021:patterns">Hardt and Recht (<a href="#ref-hardt:2021:patterns" role="doc-biblioref">2021</a>)</span> here. The key ideas are:</p>
+<ul>
+<li>The perceptron algorithm is operationally defined</li>
+<li>The perceptron algorithm makes sense, in that it moves the margin to improve its mistakes, and ignores its correct classification</li>
+<li>The perceptron algorithm can be rewritten as stochastic gradient descent on the hinge loss</li>
+<li>Without doing <em>any statistics</em>, you can prove that the perceptron algorithm makes a finite number of mistakes (Chapter 3, Theorem 1, <span class="citation" data-cites="hardt:2021:patterns">Hardt and Recht (<a href="#ref-hardt:2021:patterns" role="doc-biblioref">2021</a>)</span>)</li>
+<li>The bound on the number of mistakes guarantees that you find <em>a</em> separating hyperplane on any dataset where one exits</li>
+<li>The bound on the number of mistakes controls the generalization error by a simple IID argument (Chapter 3, Theorem 2, <span class="citation" data-cites="hardt:2021:patterns">Hardt and Recht (<a href="#ref-hardt:2021:patterns" role="doc-biblioref">2021</a>)</span>)</li>
+</ul>
+<p>Of particular interest to us is how we get <em>strong generalization bounds</em> by carefully analyzing a <em>particular algorithm</em> for performing empirical loss minimization.</p>
+</section>
+<section id="the-support-vector-classifier-or-soft-margin-classifier" class="level1">
+<h1>The support vector classifier (or soft margin classifier)</h1>
+<p>A solution to some of the practical difficulties of the perceptron algorithm is to define more precisely which of the many possible separating hyperplanes we want. One key idea is to maximize the <em>margin</em>, or the minimum distance of any point to the hyperplane.</p>
+<p>This leads to a family of maximum–margin estimators, which can be written as constrained optimization problems (<span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> 4.5.2):</p>
+<p><span class="math display">\[
+\min_{\boldsymbol{\beta}} \left\Vert\boldsymbol{\beta}\right\Vert_2^2
+\textrm{ subject to }
+y_n(\boldsymbol{x}_n^\intercal\boldsymbol{\beta}+ \beta_0) \ge 1
+\]</span></p>
+<p>One of your homework problems will be to work through some of the details, and we’ll provide intuition in the lecture. When a separating hyperplane does not exist, one can use a soft–margin classifier (<span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> 12.2),</p>
+<p><span class="math display">\[
+\min_{\boldsymbol{\beta}} \left\Vert\boldsymbol{\beta}\right\Vert_2^2
+\textrm{ subject to }
+y_n(\boldsymbol{x}_n^\intercal\boldsymbol{\beta}+ \beta_0) \ge 1 -  \zeta_n
+\textrm{ and }\zeta_n \ge 0, \sum_{n=1}^N\zeta_n \le C.
+\]</span></p>
+<p>If <span class="math inline">\(\zeta_n &gt; 1\)</span>, then the point is misclassified; this is allowed in the soft–margin classifier, but no more than <span class="math inline">\(C\)</span> times. The quantity <span class="math inline">\(C\)</span> is a tuning parameter which governs the degree to which you get a bumpy boundary that classifies things correctly or a smooth margin that makes some errors. As usual, <span class="math inline">\(C\)</span> can be set by cross-validation.</p>
+<p>The soft–margin classifier is particularly well motivated when you have a highly expressive set of regressors which can in principle produce a separating hyperplane, but which might be very bumpy in the original space, and which you want to regularize with <span class="math inline">\(C\)</span>. Kernel methods, which we will discuss at the end of the course, will provide a such a setting, and lead to “support vector machines.”</p>
+</section>
+<section id="references" class="level1">
+
+
 
 
 </section>
-</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-isl:2021:gareth" class="csl-entry" role="listitem">
+Gareth, J., W. Daniela, H. Trevor, and T. Robert. 2021. <em>An Introduction to Statistical Learning: <span>W</span>ith Applications in <span>Python</span></em>. Spinger.
+</div>
+<div id="ref-hardt:2021:patterns" class="csl-entry" role="listitem">
+Hardt, M., and B. Recht. 2021. <span>“Patterns, Predictions, and Actions: <span>A</span> Story about Machine Learning.”</span> <em>arXiv Preprint arXiv:2102.05242</em>.
+</div>
+<div id="ref-esl:2009:hastie" class="csl-entry" role="listitem">
+Hastie, T., R. Tibshirani, and J. Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference and Prediction</em>. 2nd ed. Springer.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ryan Giordano">
 
-<title>Lectures</title>
+<title>Cross-validation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +24,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-eecca78eb8c822cd20fef27ff3322c6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3c26bda9cedcf6dcb30ec7dd6948e637.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,98 +108,26 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lectures.html">Lectures</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Fall 2025 STAT154/154</a> 
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course schedule</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lectures/lectures.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Lectures</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../labs/labs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Labs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../assignments/assignments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Assignments</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course Policies</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#unit-1-regression-in-a-machine-learning-setting" id="toc-unit-1-regression-in-a-machine-learning-setting" class="nav-link" data-scroll-target="#unit-1-regression-in-a-machine-learning-setting">Unit 1: Regression in a machine learning setting</a></li>
-  <li><a href="#unit-2-classification" id="toc-unit-2-classification" class="nav-link" data-scroll-target="#unit-2-classification">Unit 2: Classification</a>
+  <li><a href="#variance-of-loo-crossvalidation" id="toc-variance-of-loo-crossvalidation" class="nav-link active" data-scroll-target="#variance-of-loo-crossvalidation">Variance of LOO cross–validation</a>
   <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#closedform-for-the-gaussian-case" id="toc-closedform-for-the-gaussian-case" class="nav-link" data-scroll-target="#closedform-for-the-gaussian-case">Closed–form for the Gaussian case</a></li>
   </ul></li>
+  <li><a href="#implications-for-leavekout-cv" id="toc-implications-for-leavekout-cv" class="nav-link" data-scroll-target="#implications-for-leavekout-cv">Implications for leave–K–out CV</a></li>
   </ul>
 </nav>
     </div>
@@ -207,14 +136,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures</h1>
-<p class="subtitle lead">Stat 154/254: Statistical Machine Learning</p>
+<h1 class="title">Cross-validation</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryan Giordano </p>
+          </div>
+  </div>
     
   
     
@@ -225,68 +159,332 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p><a href="../lectures/lecture_intro.html">Class introduction</a></p>
+<section id="variance-of-loo-crossvalidation" class="level1">
+<h1>Variance of LOO cross–validation</h1>
+<p>In this section, I derive an expression that helps explain why leave–k–out (or, further, k–fold) cross validation can have a lower variance than leave–one–out CV.</p>
+<p>The intuition is actually relatively simple, and doesn’t rely on the precise formula below. Suppose we are using squared error loss, so that</p>
+<p><span class="math display">\[
+\mathscr{L}_{LOO} = \frac{1}{N} \sum_{n=1}^N(\hat{f}_{-n}(\boldsymbol{x}_n) - y_n)^2 =: \frac{1}{N} \sum_{n=1}^Nz_n
+\quad\textrm{where}\quad
+z_n := (\hat{f}_{-n}(\boldsymbol{x}_n) - y_n)^2.
+\]</span></p>
+<p>In the preceding expression the only randomness is due to the training data, and the <span class="math inline">\(z_n\)</span> are not independent, since they are correlated through <span class="math inline">\(\hat{f}\)</span>. Still, <span class="math inline">\(z_n\)</span> has a well–defined marginal variance <span class="math inline">\(\sigma^2 := \mathrm{Var}_{\,}\left(z_n\right)\)</span>, which we expect to be the primary determinant of the variance of <span class="math inline">\(\mathscr{L}_{LOO}\)</span>, as long as the correlation between <span class="math inline">\(z_n\)</span> is relatively small. In particular, we roughly expect</p>
+<p><span class="math display">\[
+\mathrm{Var}_{\,}\left(\mathscr{L}_{LOO}\right) \propto \frac{\sigma^2}{N} + \textrm{lower order terms in $N$},
+\]</span></p>
+<p>since <span class="math inline">\(\mathscr{L}_{LOO}^2\)</span> is of order <span class="math inline">\(z_n^4\)</span> and is an average of <span class="math inline">\(N\)</span> units. The correlation between <span class="math inline">\(z_n\)</span> may increase the variance by some constant, but the proportionality should be roughly correct.</p>
+<p>Now suppose that, instead of performing LOO with <span class="math inline">\((\boldsymbol{x}_n,y_n)\)</span>, we perform it with pairs <span class="math inline">\(((\boldsymbol{x}_{n}, y_n), (\boldsymbol{x}_{n+1}, y_{n+1}))\)</span>, for odd <span class="math inline">\(n\)</span>.</p>
+<section id="closedform-for-the-gaussian-case" class="level2">
+<h2 class="anchored" data-anchor-id="closedform-for-the-gaussian-case">Closed–form for the Gaussian case</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note from Ryan G: — I’m not 100% confident that the below computations are error–free. If you find a mistake, please let me know.</p>
+</div>
+</div>
+<p><span class="math display">\[
+\def\hat{\mu}{\hat\mu}
+\def\m{m}
+\]</span></p>
+<p>Let’s take the simplest possible example, where <span class="math inline">\(x_n \overset{\mathrm{IID}}{\sim}\mathcal{N}\left(0, \sigma^2\right)\)</span>, and look at leave–one–out CV for <span class="math inline">\(\hat{\mu}= \frac{1}{N} \sum_{n=1}^Nx_n\)</span>. Let’s define <span class="math inline">\(\theta = N / (N - 1)\)</span>, a quantity that will come up a lot. In particular,</p>
+<p><span class="math display">\[
+\begin{aligned}
+x_n - \hat{\mu}_{-n}
+={}&amp; x_n - \frac{1}{N-1} \sum_{i \ne n}x_n
+\\={}&amp; x_n - \frac{1}{N-1} \sum_{n=1}^Nx_n + \frac{1}{N-1} x_n
+\\={}&amp; \frac{N-1+1}{N-1} x_n - \frac{N}{N-1} \hat{\mu}
+\\={}&amp; \theta(x_n - \hat{\mu}).
+\end{aligned}
+\]</span></p>
+<p>So the LOO loss is</p>
+<p><span class="math display">\[
+\mathscr{L}_{LOO} = \frac{1}{N} \sum_{n=1}^N(x_n - \hat{\mu}_{-n})^2 = \theta^2 \frac{1}{N} \sum_{n=1}^N(x_n - \hat{\mu})^2.
+\]</span></p>
+<p>First, note that we can write out the condition distributions for <span class="math inline">\(n \ne m\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{P}_{\,}\left(
+\begin{pmatrix}
+x_n \\
+x_m \\
+\hat{\mu}
+\end{pmatrix}
+\right)
+={}&amp;
+\mathcal{N}\left(
+\begin{pmatrix}
+0 \\ 0 \\ 0
+\end{pmatrix},
+\begin{pmatrix}
+\sigma^2 &amp; 0 &amp; \sigma^2 / N \\
+0 &amp; \sigma^2 &amp; \sigma^2 / N \\
+\sigma^2 / N &amp; \sigma^2 / N &amp; \sigma^2 / N \\
+\end{pmatrix}
+\right) \Rightarrow\\
+\mathbb{P}_{\,}\left(
+\begin{pmatrix}
+x_n \\
+x_m \\
+\end{pmatrix}
+\vert
+\hat{\mu}
+\right)
+={}&amp;
+\mathcal{N}\left(
+\begin{pmatrix}
+\hat{\mu}\\
+\hat{\mu}\\
+\end{pmatrix},
+\begin{pmatrix}
+1 &amp; -\frac{1}{N-1} \\
+-\frac{1}{N-1} &amp; 1
+\end{pmatrix} \theta^{-1} \sigma^2
+\right),
+\end{aligned}
+\]</span></p>
+<p>where the covariance calculation uses</p>
+<p><span class="math display">\[
+\mathrm{Cov}_{\,}\left(\begin{pmatrix}
+x_n \\
+x_m \\
+\end{pmatrix}
+\vert
+\hat{\mu}
+\right) =
+\begin{pmatrix}
+\sigma^2 &amp; 0 \\
+0 &amp; \sigma^2
+\end{pmatrix}
+-
+\begin{pmatrix}
+\sigma^2 / N \\
+\sigma^2 / N \\
+\end{pmatrix}
+(\sigma^2 / N)^{-1}
+\begin{pmatrix}
+\sigma^2 / N &amp;
+\sigma^2 / N
+\end{pmatrix}
+=
+\sigma^2
+\begin{pmatrix}
+1 - \frac{1}{N} &amp; -\frac{1}{N} \\
+-\frac{1}{N} &amp; 1-\frac{1}{N} \\
+\end{pmatrix}.
+\]</span></p>
+<p>From this we get that</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}_{\vphantom{}}\left[\mathscr{L}_{LOO}\right] ={}&amp;
+\mathbb{E}_{\vphantom{}}\left[\mathbb{E}_{\vphantom{}}\left[\mathscr{L}_{LOO} \vert \hat{\mu}\right]\right]
+\\={}&amp; \theta^2 \frac{1}{N} \sum_{n=1}^N\mathbb{E}_{\vphantom{}}\left[ \mathbb{E}_{\vphantom{}}\left[(x_n - \hat{\mu})^2 | \hat{\mu}\right]\right]
+\\={}&amp; \theta^2 \frac{1}{N} \sum_{n=1}^N\sigma^2 \theta^{-1}
+\\={}&amp; \theta \sigma^2.
+\end{aligned}
+\]</span></p>
+<p>Note that</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}_{\vphantom{}}\left[\mathscr{L}(\hat{\mu})\right] ={}&amp;
+\mathbb{E}_{\vphantom{}}\left[(x_\mathrm{new}- \hat{\mu})^2\right]
+\\={}&amp;
+\mathbb{E}_{\vphantom{}}\left[(x_\mathrm{new}- \mu + \mu - \hat{\mu})^2\right]
+\\={}&amp;
+\sigma^2 + \frac{\sigma^2}{N}
+\\={}&amp;
+\theta \sigma^2,
+\end{aligned}
+\]</span></p>
+<p>so the LOO loss is unbiased, as expected. What is its variance? We need to compute</p>
+<p><span class="math display">\[
+\mathbb{E}_{\vphantom{}}\left[\mathscr{L}_{LOO}^2\right] =
+\frac{\theta^4}{N^2} \sum_{n=1}^N\sum_{m=1}^N \mathbb{E}_{\vphantom{}}\left[ \mathbb{E}_{\vphantom{}}\left[(x_n - \hat{\mu})^2 (x_m - \hat{\mu})^2 | \hat{\mu}\right]\right].
+\]</span></p>
+<p>For terms with <span class="math inline">\(n=m\)</span>, we have</p>
+<p><span class="math display">\[
+\mathbb{E}_{\vphantom{}}\left[ (x_n - \hat{\mu})^4 \vert \hat{\mu}\right] = 3 \sigma^4 \theta^{-2}.
+\]</span></p>
+<p>For <span class="math inline">\(n \ne m\)</span>, we need an additional calculation. In general, if we have two Gaussian random variables with</p>
+<p><span class="math display">\[
+\mathbb{P}_{\,}\left(
+\begin{pmatrix}
+q \\
+r
+\end{pmatrix}
+\right)
+=
+\mathcal{N}\left(
+\begin{pmatrix}
+0 \\ 0
+\end{pmatrix}
+,
+\begin{pmatrix}
+1 &amp; \rho \\
+\rho &amp; 1
+\end{pmatrix}
+\right),
+\]</span></p>
+<p>then</p>
+<p><span class="math display">\[
+\mathbb{P}_{\,}\left(q | r\right) =
+\mathcal{N}\left(\rho r, 1 - \rho^2\right),
+\]</span></p>
+<p>so</p>
+<p><span class="math display">\[
+\mathbb{E}_{\vphantom{}}\left[q^2 r^2\right]
+=
+\mathbb{E}_{\vphantom{}}\left[
+    \mathbb{E}_{\vphantom{}}\left[q^2 | r\right]
+    r^2
+\right]
+=
+\mathbb{E}_{\vphantom{}}\left[
+    \left(\rho^2 r^2 + (1 - \rho^2) \right)
+    r^2
+\right]
+=
+\mathbb{E}_{\vphantom{}}\left[
+    \rho^2 r^4 + (1 - \rho^2) r^2
+\right]
+=
+3 \rho^2 + 1- \rho^2 = 2\rho^2 +1.
+\]</span></p>
+<p>From this, we get that, when <span class="math inline">\(n \ne m\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}_{\vphantom{}}\left[(x_n - \hat{\mu})^2 (x_m - \hat{\mu})^2 \vert \hat{\mu}\right]
+={}&amp;
+\sigma^4 \theta^{-2}
+\mathbb{E}_{\vphantom{}}\left[\left(\frac{x_n - \hat{\mu}}{\sigma \theta^{-1/2}} \right)^2
+            \left(\frac{x_m - \hat{\mu}}{\sigma \theta^{-1/2}} \right)^2 \vert \hat{\mu}\right]
+\\={}&amp;
+\sigma^4 \theta^{-2}
+\left(
+    \frac{2}{(N-1)^2} + 1
+\right).
+\end{aligned}
+\]</span></p>
+<p>There are <span class="math inline">\(N\)</span> terms with <span class="math inline">\(n=m\)</span> and <span class="math inline">\(N (N -1)\)</span> terms with <span class="math inline">\(n \ne m\)</span>, giving</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}_{\vphantom{}}\left[\mathscr{L}_{LOO}^2\right] ={}&amp;
+\frac{\theta^4}{N^2}\left(
+    3 N \sigma^4 \theta^{-2} + N(N-1) \sigma^4 \theta^{-2}\left(
+    \frac{2}{(N-1)^2} + 1
+\right)
+\right)
+\\={}&amp;
+\frac{\theta^2 \sigma^4}{N}\left(
+    3  + (N-1) \left(
+    \frac{2}{(N-1)^2} + 1
+\right)
+\right)
+\\={}&amp;
+\theta^2 \sigma^4 \left(
+    \frac{N-1}{N} + \frac{3}{N} +
+    \frac{2}{N (N-1)}
+\right),
+\end{aligned}
+\]</span></p>
+<p>and so</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathrm{Var}_{\,}\left(\mathscr{L}_{LOO}\right) ={}&amp;
+\theta^2 \sigma^4 \left(
+    \frac{N-1}{N} + \frac{3}{N} +
+    \frac{2}{N (N-1)}
+\right) - \theta^2 \sigma^4
+\\={}&amp;
+\theta^2 \sigma^4 \left(
+     \frac{2}{N} +
+    \frac{2}{N (N-1)}
+\right)
+\\={}&amp;
+2 \theta^2 \sigma^4 \left(
+     \frac{N-1}{N(N-1)} +
+    \frac{1}{N (N-1)}
+\right)
+\\={}&amp;
+\frac{2 \theta^2 \sigma^4}{N-1}.
+\\={}&amp;
+2 \frac{N^2 }{(N-1)^2} \frac{\sigma^4}{N-1}.
+\end{aligned}
+\]</span></p>
 </section>
-<section id="unit-1-regression-in-a-machine-learning-setting" class="level1">
-<h1>Unit 1: Regression in a machine learning setting</h1>
-<ul>
-<li><a href="../lectures/unit1/unit1_ols_matrix_notation.html">Linear regression in matrix notation (review)</a></li>
-<li><a href="../lectures/unit1/unit1_ols.html">Linear regression in an ML setting</a></li>
-<li><a href="../lectures/unit1/unit1_splines.html">Basis expansions and splines for linear regression</a></li>
-<li><a href="../lectures/unit1/unit1_l1l2.html">L1 and L2 penalization</a></li>
-</ul>
 </section>
-<section id="unit-2-classification" class="level1">
-<h1>Unit 2: Classification</h1>
-<ul>
-<li><a href="../lectures/unit2/unit2_classification_loss.html">Empirical risk minimization for classification</a> <!--
-- [$\star$ Trading off false positives and negatives](unit2/unit2_false_positives_negatives.qmd)
-- [Perceptron algorithm](unit2/unit2_perceptron.qmd)
-- [Support vector machines](unit2/unit2_svm.qmd)
+<section id="implications-for-leavekout-cv" class="level1">
+<h1>Implications for leave–K–out CV</h1>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note from Ryan G — This analogy is not correct. (I think the leave–one–out formula above might still be correct.)</p>
+</div>
+</div>
+<p>Suppose we did leave–K–out CV instead. Suppose we do it the same way we do (N / K)–fold cross validation, rather than leaving out all possible sets of k. Assume for simplicity that <span class="math inline">\(N/K\)</span> is an integer. Then leave–K–out is equivalent to leave–one–out on the redefined variables,</p>
+<p><span class="math display">\[
+z_m = \frac{1}{K} \sum_{k=1}^K x_{K (m - 1) + k},
+\]</span></p>
+<p>since, taking <span class="math inline">\(M=N/K\)</span>,</p>
+<p><span class="math display">\[
+\frac{1}{M} \sum_{m=1}^M z_m = \frac{K}{N} \sum_{m=1}^M \frac{1}{K} \sum_{k=1}^K x_{K (m - 1) + k} = \hat{\mu}.
+\]</span></p>
+<p>Note that</p>
+<p><span class="math display">\[
+\sigma_K^2 := \mathrm{Var}_{\,}\left(z_m\right) = \frac{\sigma^2}{K}
+\quad\textrm{and}\quad
+\theta_K := \frac{M}{M-1} = \frac{N}{N-K}.
+\]</span></p>
+<p>Plugging this in, we get</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathrm{Var}_{\,}\left(\mathscr{L}_{LKO}\right) ={}&amp;
+\frac{2 \theta_K^2 \sigma_K^4}{M-1}
+\\={}&amp;
+2 \frac{N^2}{(N-K)^2} \frac{\sigma^4}{K^2} \frac{K}{N - K}
+\\={}&amp;
+2 \frac{N^2}{(N-K)^2} \frac{\sigma^4 }{(N- K)} \frac{1}{K}.
+\end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\(N-K \approx N\)</span> when <span class="math inline">\(N\)</span> is large, the leading factor of <span class="math inline">\(1/K\)</span> dominates, and the variance decreases for leave–<span class="math inline">\(K\)</span>–out CV.</p>
+<div class="cell" data-display="false">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unit3_cv_keave_k_out_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
-
-# Unit 3: Risk and complexity
-
-- [Asymptotics and bias--variance tradeoff in linear regression](unit1/unit1_biasvar.qmd)
-- [Generalization error and uniform laws](unit2/unit2_generalization.qmd)
-- [Uniform laws for smooth function classes](unit2/unit2_ulln.qmd)
-- [VC dimension and zero--one loss](unit2/unit2_vc_dimension.qmd)
-- [Held-out data and cross-validation](unit2/unit2_cv.qmd)
-
-
-# Unit 4: Trees and weak learners
-
-- [Classification and regression trees](unit4/unit4_cart.qmd)
-- [Bagging weak learners](unit4/unit4_bagging.qmd)
-- [Boosting weak learners](unit4/unit4_boosting.qmd)
-
-
-# Unit 5: Kernel methods
-
-- [The kernel trick](unit5/unit5_kerneltrick.qmd)
-- [Valid kernels and inner products](unit5/unit5_validkernels.qmd)
-- [Reproducing kernel Hilbert spaces](unit5/unit5_rkhs.qmd)
-
-# Unit 6: Optimization and neural networks
-
-- [Optimization notes](optimization.qmd)
-
-
-
---></li>
-</ul>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="../lectures/linalg_review.html">here</a>.</p>
-
-
-</section>
 </section>
 
 </main> <!-- /main -->

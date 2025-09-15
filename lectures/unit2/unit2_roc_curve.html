@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ryan Giordano">
 
-<title>Lectures</title>
+<title>True and false positives and the ROC curve</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,25 +21,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-eecca78eb8c822cd20fef27ff3322c6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3c26bda9cedcf6dcb30ec7dd6948e637.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,98 +128,25 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lectures.html">Lectures</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Fall 2025 STAT154/154</a> 
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course schedule</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lectures/lectures.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Lectures</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../labs/labs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Labs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../assignments/assignments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Assignments</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course Policies</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#unit-1-regression-in-a-machine-learning-setting" id="toc-unit-1-regression-in-a-machine-learning-setting" class="nav-link" data-scroll-target="#unit-1-regression-in-a-machine-learning-setting">Unit 1: Regression in a machine learning setting</a></li>
-  <li><a href="#unit-2-classification" id="toc-unit-2-classification" class="nav-link" data-scroll-target="#unit-2-classification">Unit 2: Classification</a>
-  <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  </ul></li>
+  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a></li>
+  <li><a href="#thresholded-families-of-classifiers-and-roc-curves" id="toc-thresholded-families-of-classifiers-and-roc-curves" class="nav-link" data-scroll-target="#thresholded-families-of-classifiers-and-roc-curves">Thresholded families of classifiers and ROC curves</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -207,14 +155,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures</h1>
-<p class="subtitle lead">Stat 154/254: Statistical Machine Learning</p>
+<h1 class="title">True and false positives and the ROC curve</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryan Giordano </p>
+          </div>
+  </div>
     
   
     
@@ -225,71 +178,63 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p><a href="../lectures/lecture_intro.html">Class introduction</a></p>
-</section>
-<section id="unit-1-regression-in-a-machine-learning-setting" class="level1">
-<h1>Unit 1: Regression in a machine learning setting</h1>
+<p><span class="math display">\[
+\def\losszo{\mathscr{L}_{\mathrm{ZO}}}
+\def\lossce{\mathscr{L}_{\mathrm{CE}}}
+\def\losssq{\mathscr{L}_{\mathrm{SQ}}}
+\]</span></p>
+<section id="goals" class="level1">
+<h1>Goals</h1>
 <ul>
-<li><a href="../lectures/unit1/unit1_ols_matrix_notation.html">Linear regression in matrix notation (review)</a></li>
-<li><a href="../lectures/unit1/unit1_ols.html">Linear regression in an ML setting</a></li>
-<li><a href="../lectures/unit1/unit1_splines.html">Basis expansions and splines for linear regression</a></li>
-<li><a href="../lectures/unit1/unit1_l1l2.html">L1 and L2 penalization</a></li>
+<li>View discriminative classifiers as a family of classifiers by varying the threshold</li>
+<li>Define the ROC plot and discuss its interpretation</li>
+<li>Define false and true positives and discuss why you care</li>
+<li>Use the ROC curve to produce new estimators from old</li>
 </ul>
 </section>
-<section id="unit-2-classification" class="level1">
-<h1>Unit 2: Classification</h1>
+<section id="reading" class="level1">
+<h1>Reading</h1>
+<p>The primary reading for this section is <span class="citation" data-cites="isl:2021:gareth">Gareth et al. (<a href="#ref-isl:2021:gareth" role="doc-biblioref">2021</a>)</span> 4.4.2 and <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">Wikipedia</a>. Chapter 2 of <span class="citation" data-cites="recht:2025:argmin">Recht (<a href="#ref-recht:2025:argmin" role="doc-biblioref">2025</a>)</span> also has an interesting extended discussion of ROC curves that is beyond the scope of the present course.</p>
+</section>
+<section id="thresholded-families-of-classifiers-and-roc-curves" class="level1">
+<h1>Thresholded families of classifiers and ROC curves</h1>
+<p>In fact, thresholding classifiers each lead to not just one but a whole family of classifiers. Take the binary case, and suppose we classify <span class="math inline">\(\hat{y}_n = \mathrm{I}\left(f(\boldsymbol{x}) \ge t\right)\)</span> for any <span class="math inline">\(t\)</span>. At <span class="math inline">\(t= 0\)</span> we recover the simple thresholding estimate from above. As <span class="math inline">\(t\)</span> increases we classify more <span class="math inline">\(0\)</span>’s, and as <span class="math inline">\(t\)</span> decreases we classify more <span class="math inline">\(1\)</span>’s. In a sense, <span class="math inline">\(t\)</span> is a hyperparameter which we can tune to achieve classifiers with different characteristics.</p>
+<p>There are two different kinds of errors we can make in binary classification: we can have “false negatives” (<span class="math inline">\(\hat{y}= 0\)</span> but <span class="math inline">\(y= 1\)</span>) and “false positives” (<span class="math inline">\(\hat{y}= 1\)</span> but <span class="math inline">\(y= 0\)</span>). Analogously, there are two kinds of correct classifications: “true positives” (<span class="math inline">\(\hat{y}= 1\)</span> and <span class="math inline">\(y= 1\)</span>) and “true negatives” (<span class="math inline">\(\hat{y}= 0\)</span> and <span class="math inline">\(y= 0\)</span>).</p>
+<p>As we decrease the threshold <span class="math inline">\(t\)</span>, we classify more things as positive, changing some <span class="math inline">\(\hat{y}\)</span> from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span>. Some of the newly classifed positives will be true, some will be false. In the limit of <span class="math inline">\(t\rightarrow \infty\)</span>, we will classify everything as <span class="math inline">\(\hat{y}= 0\)</span>, and we will have no false positives but also no true positives. Conversely, as <span class="math inline">\(t\rightarrow \infty\)</span> we will classify everything as <span class="math inline">\(\hat{y}= 1\)</span>, and the proportion of true positives and false positives will just be the proportions of <span class="math inline">\(y= 1\)</span> and <span class="math inline">\(y= 0\)</span> in the overall population.</p>
+<p><a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">Wikipedia has a nice table</a>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../assets/roc_table.png" class="img-fluid figure-img"></p>
+<figcaption>ROC table</figcaption>
+</figure>
+</div>
+<p>A nice plot for visualizing the tradeoffs is known as the “reciever operating characteristic” (ROC) curve. Typically, it plots the “true positive rate”, <span class="math inline">\(TP / P\)</span> on the x–axis and the “false postive rate”, <span class="math inline">\(FP / N\)</span> on the y–axis. (I find the names confusing — they are both rates of positives, but have different denominators.)</p>
+<p>Some things to note in lecture about the ROC curve:</p>
 <ul>
-<li><a href="../lectures/unit2/unit2_classification_loss.html">Empirical risk minimization for classification</a> <!--
-- [$\star$ Trading off false positives and negatives](unit2/unit2_false_positives_negatives.qmd)
-- [Perceptron algorithm](unit2/unit2_perceptron.qmd)
-- [Support vector machines](unit2/unit2_svm.qmd)
-
-
-
-# Unit 3: Risk and complexity
-
-- [Asymptotics and bias--variance tradeoff in linear regression](unit1/unit1_biasvar.qmd)
-- [Generalization error and uniform laws](unit2/unit2_generalization.qmd)
-- [Uniform laws for smooth function classes](unit2/unit2_ulln.qmd)
-- [VC dimension and zero--one loss](unit2/unit2_vc_dimension.qmd)
-- [Held-out data and cross-validation](unit2/unit2_cv.qmd)
-
-
-# Unit 4: Trees and weak learners
-
-- [Classification and regression trees](unit4/unit4_cart.qmd)
-- [Bagging weak learners](unit4/unit4_bagging.qmd)
-- [Boosting weak learners](unit4/unit4_boosting.qmd)
-
-
-# Unit 5: Kernel methods
-
-- [The kernel trick](unit5/unit5_kerneltrick.qmd)
-- [Valid kernels and inner products](unit5/unit5_validkernels.qmd)
-- [Reproducing kernel Hilbert spaces](unit5/unit5_rkhs.qmd)
-
-# Unit 6: Optimization and neural networks
-
-- [Optimization notes](optimization.qmd)
-
-
-
---></li>
+<li>TPR and FPR are often better performance measures than the overall classification accuracy for a particular application. The “right” tradeoff between true and false positives depends on the application. The credit default classification example of <span class="citation" data-cites="isl:2021:gareth">Gareth et al. (<a href="#ref-isl:2021:gareth" role="doc-biblioref">2021</a>)</span> table 4.4 is a good example.</li>
+<li>Up and to the left is better for an ROC curve.</li>
+<li>To choose a threshold to minimize a weighted zero–one loss <span class="math inline">\(\alpha \mathrm{I}\left(\hat{y}= 1, y=0\right) + (1 - \alpha) \mathrm{I}\left(\hat{y}= 1, y=0\right)\)</span>, you can look at the level curves of the expected zero–one loss and find the point on the ROC curve with the appropriate slope.</li>
+<li>An estimator that is pure chance will be a 45–degree line on the ROC curve</li>
+<li>Estimators below the 45–degree line are thus worse than randomly guessing a class.<br>
+</li>
+<li>If you have a classifier that is worse than chance, you can make it better than chance by simply flipping the classification, turning true positives into false negatives and false positives into true negatives.</li>
 </ul>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="../lectures/linalg_review.html">here</a>.</p>
+</section>
+<section id="references" class="level1">
+
+
 
 
 </section>
-</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-isl:2021:gareth" class="csl-entry" role="listitem">
+Gareth, J., W. Daniela, H. Trevor, and T. Robert. 2021. <em>An Introduction to Statistical Learning: <span>W</span>ith Applications in <span>Python</span></em>. Spinger.
+</div>
+<div id="ref-recht:2025:argmin" class="csl-entry" role="listitem">
+Recht, B. 2025. <span>“Argmin Blog.”</span> <a href="https://www.argmin.net/">https://www.argmin.net/</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

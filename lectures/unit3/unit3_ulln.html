@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ryan Giordano">
 
-<title>Lectures</title>
+<title>Generalization and uniform laws</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,25 +21,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-eecca78eb8c822cd20fef27ff3322c6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3c26bda9cedcf6dcb30ec7dd6948e637.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,97 +128,30 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lectures.html">Lectures</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Fall 2025 STAT154/154</a> 
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course schedule</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lectures/lectures.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Lectures</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../labs/labs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Labs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../assignments/assignments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Assignments</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course Policies</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#unit-1-regression-in-a-machine-learning-setting" id="toc-unit-1-regression-in-a-machine-learning-setting" class="nav-link" data-scroll-target="#unit-1-regression-in-a-machine-learning-setting">Unit 1: Regression in a machine learning setting</a></li>
-  <li><a href="#unit-2-classification" id="toc-unit-2-classification" class="nav-link" data-scroll-target="#unit-2-classification">Unit 2: Classification</a>
+  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a></li>
+  <li><a href="#uniform-laws-of-large-numbers-for-smooth-function-classes" id="toc-uniform-laws-of-large-numbers-for-smooth-function-classes" class="nav-link" data-scroll-target="#uniform-laws-of-large-numbers-for-smooth-function-classes">Uniform laws of large numbers for smooth function classes</a>
   <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#some-examples" id="toc-some-examples" class="nav-link" data-scroll-target="#some-examples">Some examples</a></li>
+  <li><a href="#a-finite-set-of-functions" id="toc-a-finite-set-of-functions" class="nav-link" data-scroll-target="#a-finite-set-of-functions">A finite set of functions</a></li>
+  <li><a href="#a-covering" id="toc-a-covering" class="nav-link" data-scroll-target="#a-covering">A covering</a></li>
+  <li><a href="#using-the-tiling-to-produce-a-ulln" id="toc-using-the-tiling-to-produce-a-ulln" class="nav-link" data-scroll-target="#using-the-tiling-to-produce-a-ulln">Using the tiling to produce a ULLN</a></li>
+  <li><a href="#general-covering-arguments" id="toc-general-covering-arguments" class="nav-link" data-scroll-target="#general-covering-arguments">General covering arguments</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -207,14 +161,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures</h1>
-<p class="subtitle lead">Stat 154/254: Statistical Machine Learning</p>
+<h1 class="title">Generalization and uniform laws</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryan Giordano </p>
+          </div>
+  </div>
     
   
     
@@ -225,71 +184,170 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p><a href="../lectures/lecture_intro.html">Class introduction</a></p>
-</section>
-<section id="unit-1-regression-in-a-machine-learning-setting" class="level1">
-<h1>Unit 1: Regression in a machine learning setting</h1>
+<p><span class="math display">\[
+% Generalization error
+\def\err{\textrm{Error}}
+\]</span></p>
+<section id="goals" class="level1">
+<h1>Goals</h1>
 <ul>
-<li><a href="../lectures/unit1/unit1_ols_matrix_notation.html">Linear regression in matrix notation (review)</a></li>
-<li><a href="../lectures/unit1/unit1_ols.html">Linear regression in an ML setting</a></li>
-<li><a href="../lectures/unit1/unit1_splines.html">Basis expansions and splines for linear regression</a></li>
-<li><a href="../lectures/unit1/unit1_l1l2.html">L1 and L2 penalization</a></li>
+<li>Prove a ULLN for sufficiently smooth parametric function classes</li>
+<li>Introduce a covering argument to do so</li>
 </ul>
 </section>
-<section id="unit-2-classification" class="level1">
-<h1>Unit 2: Classification</h1>
-<ul>
-<li><a href="../lectures/unit2/unit2_classification_loss.html">Empirical risk minimization for classification</a> <!--
-- [$\star$ Trading off false positives and negatives](unit2/unit2_false_positives_negatives.qmd)
-- [Perceptron algorithm](unit2/unit2_perceptron.qmd)
-- [Support vector machines](unit2/unit2_svm.qmd)
+<section id="reading" class="level1">
+<h1>Reading</h1>
+<p>This is a simplified exposition of <span class="citation" data-cites="van:2000:asymptotic">Van der Vaart (<a href="#ref-van:2000:asymptotic" role="doc-biblioref">2000</a>)</span> Example 19.7. One can find a different perspective on the same class of problems in <span class="citation" data-cites="keener:2010:theoretical">Keener (<a href="#ref-keener:2010:theoretical" role="doc-biblioref">2010</a>)</span> Chapter 9. A more advanced approach that is finite–sample but limited to bounded functions can be found in <span class="citation" data-cites="wainwright:2019:high">Wainwright (<a href="#ref-wainwright:2019:high" role="doc-biblioref">2019</a>)</span> Chapter 4.</p>
+</section>
+<section id="uniform-laws-of-large-numbers-for-smooth-function-classes" class="level1">
+<h1>Uniform laws of large numbers for smooth function classes</h1>
+<p>Recall that we want to find conditions under which a uniform law of large numbers (ULLN) holds:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left|\hat{\mathscr{L}}(\hat{f}) - \mathscr{L}(\hat{f})\right| \le{}&amp;
+\sup_{f\in \mathcal{F}} \left|\hat{\mathscr{L}}(f) - \mathscr{L}(f)\right|
+\\={}&amp;
+\sup_{f\in \mathcal{F}}
+\left|
+  \frac{1}{N} \sum_{n=1}^N\mathscr{L}(f(x_n), y_n) - \mathbb{E}_{new}\left[\mathscr{L}(f(x_\mathrm{new}), y_\mathrm{new})\right]
+\right|.
+\end{aligned}
+\]</span></p>
+<p>Note that the ULLN depends on the function <span class="math inline">\(f\)</span> only through <span class="math inline">\(f\mapsto \mathscr{L}(f(x), y)\)</span>. And so the above ULLN is a special case of the more general problem of controlling</p>
+<p><span class="math display">\[
+\sup_{f\in \mathcal{F}} \left|\frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\vphantom{}}\left[f(z)\right]\right|
+=\sup_{f\in \mathcal{F}} \err(f, N)
+\]</span></p>
+<p>where we define</p>
+<p><span class="math display">\[
+\err(f,N) := \left|\frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\vphantom{}}\left[f(z)\right]\right|.
+\]</span></p>
+<p>Note that <span class="math inline">\(\err(f,N)\)</span> is random, since it depends on <span class="math inline">\(z_1, \ldots, z_N\)</span>.</p>
+<section id="some-examples" class="level2">
+<h2 class="anchored" data-anchor-id="some-examples">Some examples</h2>
+<p>Although we will develop an abstract result, it’s worth keeping in mind a few parametric examples. The linear case is functions of the form <span class="math inline">\(\mathcal{F}= \{ f(x) = \boldsymbol{\beta}^\intercal x\textrm{ for some } \boldsymbol{\beta}\}\)</span>. An estimator of a class probability from logistic regression might be <span class="math inline">\(\mathcal{F}= \{ f(x) = \textrm{Logit}^{-1}(\boldsymbol{\beta}^\intercal x) \textrm{ for some } \boldsymbol{\beta}\}\)</span>. Similarly, a <span class="math inline">\(0--1\)</span> valued classifer would be <span class="math inline">\(\mathcal{F}= \{ f(x) = \mathrm{I}\left(\boldsymbol{\beta}^\intercal x&gt; \alpha\right) \textrm{ for some } \boldsymbol{\beta}, \alpha \}\)</span>. Finally, you might take <span class="math inline">\(\mathcal{F}= \{ \log p(\cdot | \theta) \textrm{ for some parameter } \theta \}\)</span> for a probability distribution <span class="math inline">\(p(z| \theta)\)</span>, corresponding to maximum likelihood.</p>
+</section>
+<section id="a-finite-set-of-functions" class="level2">
+<h2 class="anchored" data-anchor-id="a-finite-set-of-functions">A finite set of functions</h2>
+<p>We first note that the problem is easy if <span class="math inline">\(\mathcal{F}\)</span> is finite, i.e., <span class="math inline">\(\mathcal{F}= \{ f_k \textrm{ for }k=1,\ldots,K &lt; \infty \}\)</span>, where each <span class="math inline">\(f_k\)</span> satisfies <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[|f_k(z)|\right] \infty\)</span>. In that case,</p>
+<p><span class="math display">\[
+\sup_{f\in \mathcal{F}} \err(f,N) = \max_{k=1,\ldots,K} \err(f_k, N).
+\]</span></p>
+<p>Since <span class="math inline">\(\err(f_k, N) \rightarrow 0\)</span> by the ordinary LLN, it follows that <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 0\)</span> as well, since <span class="math inline">\(K\)</span> is finite.</p>
+<p>Specifically, <span class="math inline">\(\err(f_k, N) \rightarrow 0\)</span> means that, for any <span class="math inline">\(\varepsilon &gt; 0\)</span> and <span class="math inline">\(\delta &gt; 0\)</span>, there exists an <span class="math inline">\(N_k\)</span> such that</p>
+<p><span class="math display">\[
+N &gt; N_k \Rightarrow
+\mathbb{P}_{\,}\left(\err(f_k, N) \ge \varepsilon\right) \le \delta.
+\]</span></p>
+<p>Take <span class="math inline">\(N &gt; \max_{k =1,\ldots,K} N_k\)</span>. Then</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{P}_{\,}\left(\max_{k=1,\ldots,K} \err(f_k, N) \ge \varepsilon \right) ={}&amp;
+\mathbb{P}_{\,}\left(\bigcup_{k=1}^K \err(f_k, N) \ge \varepsilon\right)
+\\\le{}&amp;
+\sum_{k=1}^K \mathbb{P}_{\,}\left(\err(f_k, N) \ge \varepsilon\right)
+\\\le{}&amp; K \delta.
+\end{aligned}
+\]</span></p>
+<p>Since we can tak <span class="math inline">\(\delta = \delta' / K\)</span> for any <span class="math inline">\(\delta'\)</span>, we have proven that <span class="math inline">\(\sup_{f\in \mathcal{F}} \err(f,N) \rightarrow 0\)</span> in probability.</p>
+</section>
+<section id="a-covering" class="level2">
+<h2 class="anchored" data-anchor-id="a-covering">A covering</h2>
+<p>The previous trick cannot be applied when <span class="math inline">\(\mathcal{F}\)</span> is infinite — as is the case in any of our examples, which are parameterized by a continuous parameter and so contain an infinite class of functions.</p>
+<p>A classical approach is to finite a finite “cover” of <span class="math inline">\(\mathcal{F}\)</span>. There are many ways to do so, but here we will focus on a particular example (<span class="citation" data-cites="van:2000:asymptotic">Van der Vaart (<a href="#ref-van:2000:asymptotic" role="doc-biblioref">2000</a>)</span> Example 19.7). Suppose that: <span class="math inline">\(\mathcal{F}= \{ f(\cdot; \theta) \textrm{ for some }\theta \in \Omega \}\)</span>. Assume:</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Integrable Lipschitz Assumption">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Integrable Lipschitz Assumption
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assume that <span class="math inline">\(\Omega\)</span> is compact, and assume that, for each <span class="math inline">\(z\)</span>, <span class="math display">\[
+\left|f(z; \theta) - f(z; \theta')\right| \le{} M(z) \left\Vert\theta - \theta'\right\Vert,
+\]</span> where <span class="math inline">\(M(z) \ge 0\)</span> and <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[M(z)\right] &lt; \infty\)</span>.</p>
+</div>
+</div>
+<p>This means that the depednence of <span class="math inline">\(f(z; \theta)\)</span> can be decomposed into a smooth part depending on <span class="math inline">\(\theta\)</span>, and an integral part depending on <span class="math inline">\(z\)</span>. When this is true, for a fixed <span class="math inline">\(\gamma &gt; 0\)</span>, we can always find a set of <span class="math inline">\(K(\gamma)\)</span> parameters <span class="math inline">\(\theta_k\)</span> (depending on <span class="math inline">\(\gamma\)</span>) such that</p>
+<p><span class="math display">\[
+\textrm{For each }\theta \in \Omega\textrm{, there exists }\theta_k
+\textrm{ such that }\left\Vert\theta_k - \theta\right\Vert &lt; \gamma.
+\]</span></p>
+<p>The smaller <span class="math inline">\(\gamma\)</span> is, the larger <span class="math inline">\(K(\gamma)\)</span> must be. That there exist such <span class="math inline">\(\theta_k\)</span> is guaranteed by the compactness of <span class="math inline">\(\Omega\)</span>, which is a crucial assumption.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Exercise">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recall that if <span class="math inline">\(\Omega\)</span> is compact, then every open cover has a finite sub–cover. Using this fact, prove that <span class="math inline">\(K(\gamma) &lt; \infty\)</span> for each <span class="math inline">\(\gamma &gt; 0\)</span>.</p>
+</div>
+</div>
+<p>Given this “covering,” for a given <span class="math inline">\(\theta\)</span> and its associated <span class="math inline">\(\theta_k\)</span> with <span class="math inline">\(\left\Vert\theta - \theta_k\right\Vert &lt; \gamma\)</span>, we can identify <span class="math inline">\(f_k(\cdot) = f(\cdot; \theta_k)\)</span>.</p>
+</section>
+<section id="using-the-tiling-to-produce-a-ulln" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-tiling-to-produce-a-ulln">Using the tiling to produce a ULLN</h2>
+<p><span class="math display">\[
+\begin{aligned}
+\err(f, N) ={}&amp;
+\left|\frac{1}{N} \sum_{n=1}^Nf(z_n; \theta) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta)\right]\right|
+\\={}&amp;
+\left|\frac{1}{N} \sum_{n=1}^Nf(z_n; \theta) - f(z_n; \theta_k) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta) - f(z; \theta_k)\right] + f(z_n; \theta_k) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta_k)\right]\right|
+\\ \le{}&amp;
+\frac{1}{N} \sum_{n=1}^N\left|f(z_n; \theta) - f(z_n; \theta_k)\right|  +
+\mathbb{E}_{\vphantom{}}\left[\left|f(z; \theta) - f(z; \theta_k)\right|\right] +
+\err(f_k, N)
+\\ \le{}&amp;
+\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \left\Vert\theta - \theta_k\right\Vert +
+\err(f_k, N)
+\\ \le{}&amp;
+\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
+\max_{k=1,\ldots,K} \err(f_k, N).
+\end{aligned}
+\]</span></p>
+<p>The right hand side now does not depend on <span class="math inline">\(f\)</span>, so</p>
+<p><span class="math display">\[
+\sup_{f\in \mathcal{F}} \err(f, N) \le
+\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
+\max_{k=1,\ldots,K} \err(f_k, N).
+\]</span></p>
+<p>For any fixed <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 0\)</span>, as shown above. So since <span class="math inline">\(\frac{1}{N} \sum_{n=1}^NM(z_n) \rightarrow \mathbb{E}_{\vphantom{}}\left[M(z)\right]\)</span>, we have that, for any fixed <span class="math inline">\(\gamma\)</span>,</p>
+<p><span class="math display">\[
+\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
+\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 2 \mathbb{E}_{\vphantom{}}\left[M(z)\right] \gamma.
+\]</span></p>
+<p>Since <span class="math inline">\(\gamma\)</span> can be made arbitrarily small (at the cost of requiring even greater <span class="math inline">\(N\)</span> to make <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N)\)</span> small), for any <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\delta\)</span> we can choose <span class="math inline">\(\gamma = \varepsilon / 2 \mathbb{E}_{\vphantom{}}\left[M(z)\right]\)</span> and find an <span class="math inline">\(N\)</span> large enough that</p>
+<p><span class="math display">\[
+\mathbb{P}_{\,}\left(\sup_{f\in \mathcal{F}} \err(f, N) \ge \varepsilon\right) \le \delta.
+\]</span></p>
+<p>It follows that <span class="math inline">\(\sup_{f\in \mathcal{F}} \err(f, N) \rightarrow 0\)</span> in probability.</p>
+</section>
+<section id="general-covering-arguments" class="level2">
+<h2 class="anchored" data-anchor-id="general-covering-arguments">General covering arguments</h2>
+<p>Note that the above argument relied on having a covering of the parameter space to give a covering of the function space. The key idea is the covering, not the parameters! Many ULLNs for generic function classes proceed by studying the number of functions it takes to “cover” the function class <span class="math inline">\(\mathcal{F}\)</span> using some notion of distance between functions, rather than the distance between parameters.</p>
 
-
-
-# Unit 3: Risk and complexity
-
-- [Asymptotics and bias--variance tradeoff in linear regression](unit1/unit1_biasvar.qmd)
-- [Generalization error and uniform laws](unit2/unit2_generalization.qmd)
-- [Uniform laws for smooth function classes](unit2/unit2_ulln.qmd)
-- [VC dimension and zero--one loss](unit2/unit2_vc_dimension.qmd)
-- [Held-out data and cross-validation](unit2/unit2_cv.qmd)
-
-
-# Unit 4: Trees and weak learners
-
-- [Classification and regression trees](unit4/unit4_cart.qmd)
-- [Bagging weak learners](unit4/unit4_bagging.qmd)
-- [Boosting weak learners](unit4/unit4_boosting.qmd)
-
-
-# Unit 5: Kernel methods
-
-- [The kernel trick](unit5/unit5_kerneltrick.qmd)
-- [Valid kernels and inner products](unit5/unit5_validkernels.qmd)
-- [Reproducing kernel Hilbert spaces](unit5/unit5_rkhs.qmd)
-
-# Unit 6: Optimization and neural networks
-
-- [Optimization notes](optimization.qmd)
-
-
-
---></li>
-</ul>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="../lectures/linalg_review.html">here</a>.</p>
 
 
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-keener:2010:theoretical" class="csl-entry" role="listitem">
+Keener, R. 2010. <em>Theoretical Statistics: <span>Topics</span> for a Core Course</em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-van:2000:asymptotic" class="csl-entry" role="listitem">
+Van der Vaart, A. 2000. <em>Asymptotic Statistics</em>. Vol. 3. Cambridge university press.
+</div>
+<div id="ref-wainwright:2019:high" class="csl-entry" role="listitem">
+Wainwright, M. 2019. <em>High-Dimensional Statistics: <span>A</span> Non-Asymptotic Viewpoint</em>. Vol. 48. Cambridge university press.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Erez Buchweitz">
 
-<title>Lectures</title>
+<title>Support Vector Machines</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +24,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-eecca78eb8c822cd20fef27ff3322c6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3c26bda9cedcf6dcb30ec7dd6948e637.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,98 +108,26 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lectures.html">Lectures</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Fall 2025 STAT154/154</a> 
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course schedule</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lectures/lectures.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Lectures</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../labs/labs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Labs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../assignments/assignments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Assignments</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course Policies</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#unit-1-regression-in-a-machine-learning-setting" id="toc-unit-1-regression-in-a-machine-learning-setting" class="nav-link" data-scroll-target="#unit-1-regression-in-a-machine-learning-setting">Unit 1: Regression in a machine learning setting</a></li>
-  <li><a href="#unit-2-classification" id="toc-unit-2-classification" class="nav-link" data-scroll-target="#unit-2-classification">Unit 2: Classification</a>
-  <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  </ul></li>
+  <li><a href="#from-perceptron-to-svm" id="toc-from-perceptron-to-svm" class="nav-link active" data-scroll-target="#from-perceptron-to-svm">From perceptron to SVM</a></li>
+  <li><a href="#regularization" id="toc-regularization" class="nav-link" data-scroll-target="#regularization">Regularization</a></li>
+  <li><a href="#soft-margin" id="toc-soft-margin" class="nav-link" data-scroll-target="#soft-margin">Soft margin</a></li>
+  <li><a href="#solving-the-optimization-problem" id="toc-solving-the-optimization-problem" class="nav-link" data-scroll-target="#solving-the-optimization-problem">Solving the optimization problem</a></li>
+  <li><a href="#kernels" id="toc-kernels" class="nav-link" data-scroll-target="#kernels">Kernels</a></li>
   </ul>
 </nav>
     </div>
@@ -207,14 +136,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures</h1>
-<p class="subtitle lead">Stat 154/254: Statistical Machine Learning</p>
+<h1 class="title">Support Vector Machines</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Erez Buchweitz </p>
+          </div>
+  </div>
     
   
     
@@ -225,68 +159,78 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p><a href="../lectures/lecture_intro.html">Class introduction</a></p>
-</section>
-<section id="unit-1-regression-in-a-machine-learning-setting" class="level1">
-<h1>Unit 1: Regression in a machine learning setting</h1>
+<section id="from-perceptron-to-svm" class="level1">
+<h1>From perceptron to SVM</h1>
+<p>The perceptron algorithm finds a hyperplane that separates the training data, meaning <span class="math display">\[
+y_n = \text{sign}(\boldsymbol{x}_n^T\hat{\boldsymbol{\beta}}) \; \; \; \; \text{for all}\; \; n=1,\dots,N,
+\]</span> by running stochastic gradient descent to minimize hinge loss. A crucial assumption is that the data are indeed linearly separable.</p>
+<p>SVMs add three layers on top of this:</p>
 <ul>
-<li><a href="../lectures/unit1/unit1_ols_matrix_notation.html">Linear regression in matrix notation (review)</a></li>
-<li><a href="../lectures/unit1/unit1_ols.html">Linear regression in an ML setting</a></li>
-<li><a href="../lectures/unit1/unit1_splines.html">Basis expansions and splines for linear regression</a></li>
-<li><a href="../lectures/unit1/unit1_l1l2.html">L1 and L2 penalization</a></li>
+<li><strong>Regularization</strong>: find the separating hyperplane with maximum margin.</li>
+<li><strong>Soft margin</strong>: allow for margin mistakes (e.g.&nbsp;not linearly separable).</li>
+<li><strong>Kernel</strong>: expressive (possibly infinite) feature mapping.</li>
+</ul>
+<p>All three together amount to what is reffered to as SVM.</p>
+</section>
+<section id="regularization" class="level1">
+<h1>Regularization</h1>
+<p>For finite data that are linearly separable, there always are infinitely many separating hyperplanes. Which one does perceptron converge to? If it does con implicit, so let’s make it implicit and ask for a particular one. As a form of regularization, we’ll ask for the one with maximum margin: <span class="math display">\[
+\hat{\boldsymbol{\beta}}_{\text{hard}} = \underset{\|\boldsymbol{\beta}\|_2=1,\gamma}{\mathrm{argmax}}\, \; \; \; \; \gamma \; \; \; \; \text{subject to} \; \; \; \; y_n\boldsymbol{x}_n^T\boldsymbol{\beta}\geq \gamma \; \; \forall n=1,\dots,N.
+\]</span> This is known as a hard margin (linear) SVM. To be clear, though the maximization is over two parameters, we are only interested in the normal <span class="math inline">\(\hat{\boldsymbol{\beta}}_{\text{hard}}\)</span>. The requirement that <span class="math inline">\(\hat{\boldsymbol{\beta}}_{\text{hard}}\)</span> be a unit vector is necessary, because <span class="math inline">\(\hat{\boldsymbol{\beta}}_{\text{hard}}\)</span> can always be rescaled to increase <span class="math inline">\(\gamma\)</span> artificially.</p>
+<p>The next proposition shows that maximizing the margin is equivalent to <span class="math inline">\(\ell_2\)</span>-regularizing the normal.</p>
+<p><strong>Proposition</strong>: <span class="math display">\[
+\hat{\boldsymbol{\beta}}_{\text{hard}} = \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \; \; \; \; \|\boldsymbol{\beta}\|_2 \; \; \; \text{subject to} \; \; \; \; y_n\boldsymbol{x}_n^T\boldsymbol{\beta}\geq 1 \; \; \forall n=1,\dots,N.
+\]</span></p>
+<p><strong>Proof</strong>:</p>
+<p>Make the change of variable <span class="math inline">\(\tilde{\boldsymbol{\beta}}=\frac{1}{\gamma}\boldsymbol{\beta}\)</span>: <span class="math display">\[
+\underset{\|\boldsymbol{\beta}\|_2=1,\gamma}{\mathrm{argmax}}\, \left\{\gamma: y_n\boldsymbol{x}_n^T\boldsymbol{\beta}\geq \gamma \; \; \forall n=1,\dots,N\right\} = \underset{\|\tilde{\boldsymbol{\beta}}\|_2=1/\gamma,\gamma}{\mathrm{argmax}}\, \left\{\frac{1}{\|\tilde{\boldsymbol{\beta}}\|_2}: y_n\boldsymbol{x}_n^T\tilde{\boldsymbol{\beta}} \geq 1 \; \; \forall n=1,\dots,N\right\}.
+\]</span> Now simply change the maximization to minimization, and drop the redundant variable <span class="math inline">\(\gamma\)</span>: <span class="math display">\[
+= \underset{\tilde{\boldsymbol{\beta}}}{\mathrm{argmin}}\, \left\{\|\tilde{\boldsymbol{\beta}}\|_2: y_n\boldsymbol{x}_n^T\tilde{\boldsymbol{\beta}} \geq 1 \; \; \forall n=1,\dots,N\right\}.
+\]</span> The proof is concluded.</p>
+<p><strong>Notes</strong>:</p>
+<ul>
+<li>An intercept may be added, and, as usual, it is not penalized.</li>
 </ul>
 </section>
-<section id="unit-2-classification" class="level1">
-<h1>Unit 2: Classification</h1>
-<ul>
-<li><a href="../lectures/unit2/unit2_classification_loss.html">Empirical risk minimization for classification</a> <!--
-- [$\star$ Trading off false positives and negatives](unit2/unit2_false_positives_negatives.qmd)
-- [Perceptron algorithm](unit2/unit2_perceptron.qmd)
-- [Support vector machines](unit2/unit2_svm.qmd)
-
-
-
-# Unit 3: Risk and complexity
-
-- [Asymptotics and bias--variance tradeoff in linear regression](unit1/unit1_biasvar.qmd)
-- [Generalization error and uniform laws](unit2/unit2_generalization.qmd)
-- [Uniform laws for smooth function classes](unit2/unit2_ulln.qmd)
-- [VC dimension and zero--one loss](unit2/unit2_vc_dimension.qmd)
-- [Held-out data and cross-validation](unit2/unit2_cv.qmd)
-
-
-# Unit 4: Trees and weak learners
-
-- [Classification and regression trees](unit4/unit4_cart.qmd)
-- [Bagging weak learners](unit4/unit4_bagging.qmd)
-- [Boosting weak learners](unit4/unit4_boosting.qmd)
-
-
-# Unit 5: Kernel methods
-
-- [The kernel trick](unit5/unit5_kerneltrick.qmd)
-- [Valid kernels and inner products](unit5/unit5_validkernels.qmd)
-- [Reproducing kernel Hilbert spaces](unit5/unit5_rkhs.qmd)
-
-# Unit 6: Optimization and neural networks
-
-- [Optimization notes](optimization.qmd)
-
-
-
---></li>
-</ul>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="../lectures/linalg_review.html">here</a>.</p>
-
-
+<section id="soft-margin" class="level1">
+<h1>Soft margin</h1>
+<p>The hard margin SVM is restricted to linearly separable data. We now introduce a soft margin (linear) SVM, which trades separability with <span class="math inline">\(\|\boldsymbol{\beta}\|_2\)</span>: <span class="math display">\[
+\hat{\boldsymbol{\beta}}_{\text{soft}}(\lambda) = \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \sum_{n=1}^N \max(1-y_n\boldsymbol{x}_n^T\boldsymbol{\beta}, 0) + \lambda\|\boldsymbol{\beta}\|_2^2
+\]</span> This way, we may allow classification (or margin) mistakes for the purpose of reducing <span class="math inline">\(\|\boldsymbol{\beta}\|_2^2\)</span>. This brings us to the familiar form of minimizing loss plus penalty.</p>
+<p><strong>Connection to hard margin SVM</strong>:</p>
+<p>To see how soft margin SVM relates to hard margin, add slack variable <span class="math inline">\(\xi_n\geq \max(1-y_n\boldsymbol{x}_n^T\beta, 0)\)</span> and observe that <span class="math display">\[
+\hat{\boldsymbol{\beta}}_{\text{soft}}(\lambda) = \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \|\boldsymbol{\beta}\|_2^2 + \frac{1}{\lambda}\sum_{n=1}^N \xi_n \; \; \; \; \text{subject to} \; \; \; \; y_n\boldsymbol{x}_n^T\beta\geq 1-\xi_n, \; \; \xi_n\geq 0 \; \; \forall n=1,\dots,N.
+\]</span> We also divided by <span class="math inline">\(\lambda\)</span>. From this point we may intuitively believe that, for linearly separable data, <span class="math inline">\(\hat{\boldsymbol{\beta}}_{\text{hard}}\)</span> is obtained as the limit of <span class="math inline">\(\hat{\boldsymbol{\beta}}_{\text{soft}}(\lambda)\)</span> as <span class="math inline">\(\lambda\to 0^+\)</span>, since the slack variable <span class="math inline">\(\xi_1,\dots,\xi_N\)</span> are pushed to zero.</p>
+<p><strong>Interpretation as penalty for margin mistakes</strong>:</p>
+<p>The slack variable <span class="math inline">\(\xi_N\)</span> is nonzero if we make a margin mistake on <span class="math inline">\((\boldsymbol{x}_n,y_n)\)</span>. It is greater than one if we make a classification mistake. The sum <span class="math inline">\(\sum_{n=1}^N\xi_N\)</span> quantifies the total over all margin mistakes, which we can control by adjusting the penalty <span class="math inline">\(\lambda\)</span>.</p>
 </section>
+<section id="solving-the-optimization-problem" class="level1">
+<h1>Solving the optimization problem</h1>
+<p>Using convex optimization theory (we won’t show this), one may show that the soft margin SVM solution will satisfy <span class="math display">\[
+\hat{\boldsymbol{\beta}}_{\text{soft}} = \sum_{n=1}^N \alpha_n y_n\boldsymbol{x}_n \; \; \;\ ;\ \text{where} \; \; \; \; \alpha_n\ne 0 \; \; \text{if and only if} \; \; y_n\boldsymbol{x}_n^T\hat{\boldsymbol{\beta}}_{\text{soft}} \leq 1.
+\]</span> This sum is usually sparse, meaning that the number of participating observations is much less that <span class="math inline">\(N\)</span>. The observation that are “on” the margin are referred to as “support vectors”.</p>
+</section>
+<section id="kernels" class="level1">
+<h1>Kernels</h1>
+<p>If we used an expressive feature transformation <span class="math inline">\(\varphi(\boldsymbol{x}_n)\in\mathbb{R}^{Q}\)</span>, the soft margin (non-linear!) SVM <span class="math inline">\(\hat{\boldsymbol{\beta}}_{\text{kernel}}\in\mathbb{R}^Q\)</span> would satisfy <span class="math display">\[
+\hat{\boldsymbol{\beta}}_{\text{kernel}} = \sum_{n=1}^N \alpha_n y_n\varphi(\boldsymbol{x}_n).
+\]</span> The prediction on a new observation would be <span class="math display">\[
+y= \text{sign}(\varphi(\boldsymbol{x})^T\hat{\boldsymbol{\beta}}_{\text{kernel}}) = \sum_{n=1}^N \alpha_ny_n \varphi(\boldsymbol{x})^T\varphi(\boldsymbol{x}_n).
+\]</span></p>
+<p><strong>Infinite transformation</strong>:</p>
+<p>What if <span class="math inline">\(Q=\infty\)</span>? There is no hope in computing the transformed feature vector <span class="math inline">\(\varphi(\boldsymbol{x})\)</span>, but close attention would reveal that only the inner product <span class="math display">\[
+\varphi(\boldsymbol{x})^T \varphi(\boldsymbol{x}_n)
+\]</span> is required to compute the prediction. (The same is true for computing <span class="math inline">\(\alpha_n\)</span>.)</p>
+<p><strong>Reproducing kernel Hilbert spaces (RKHSs)</strong>:</p>
+<p>There is a rich theory on infinite-dimensional spaces for which inner products are easy to compute, and the soft margin SVM adapts well to RKHSs. (The same is true for linear regression!) Without getting into too much detail at this point, RKHSs use a kernel <span class="math inline">\(k(\cdot,\cdot)\)</span> such that <span class="math display">\[
+\varphi(\boldsymbol{x})^T\varphi(\boldsymbol{z}) = k(\boldsymbol{x},\boldsymbol{z}).
+\]</span> Examples of kernels:</p>
+<ul>
+<li>Polynomial <span class="math inline">\(k(\boldsymbol{x},\boldsymbol{z})=(\boldsymbol{x}^T\boldsymbol{z}+ 1)^d\)</span>. (This is finite dimensional.)</li>
+<li>Gaussian: <span class="math inline">\(k(\boldsymbol{x},\boldsymbol{z})=e^{-\|\boldsymbol{x}-\boldsymbol{z}\|_2^2}\)</span>.</li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->

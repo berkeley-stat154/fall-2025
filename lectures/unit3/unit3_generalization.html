@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ryan Giordano">
 
-<title>Lectures</title>
+<title>Generalization error and uniform laws</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +24,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-eecca78eb8c822cd20fef27ff3322c6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3c26bda9cedcf6dcb30ec7dd6948e637.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,98 +108,24 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lectures.html">Lectures</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Fall 2025 STAT154/154</a> 
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course schedule</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lectures/lectures.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Lectures</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../labs/labs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Labs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../assignments/assignments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Assignments</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course Policies</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#unit-1-regression-in-a-machine-learning-setting" id="toc-unit-1-regression-in-a-machine-learning-setting" class="nav-link" data-scroll-target="#unit-1-regression-in-a-machine-learning-setting">Unit 1: Regression in a machine learning setting</a></li>
-  <li><a href="#unit-2-classification" id="toc-unit-2-classification" class="nav-link" data-scroll-target="#unit-2-classification">Unit 2: Classification</a>
-  <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  </ul></li>
+  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#a-generic-complexity-cost" id="toc-a-generic-complexity-cost" class="nav-link" data-scroll-target="#a-generic-complexity-cost">A generic complexity cost</a></li>
+  <li><a href="#uniform-laws-of-large-numbers" id="toc-uniform-laws-of-large-numbers" class="nav-link" data-scroll-target="#uniform-laws-of-large-numbers">Uniform laws of large numbers</a></li>
   </ul>
 </nav>
     </div>
@@ -207,14 +134,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures</h1>
-<p class="subtitle lead">Stat 154/254: Statistical Machine Learning</p>
+<h1 class="title">Generalization error and uniform laws</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryan Giordano </p>
+          </div>
+  </div>
     
   
     
@@ -225,68 +157,105 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p><a href="../lectures/lecture_intro.html">Class introduction</a></p>
-</section>
-<section id="unit-1-regression-in-a-machine-learning-setting" class="level1">
-<h1>Unit 1: Regression in a machine learning setting</h1>
+<p><span class="math display">\[
+% Generalization error
+\def\err{\textrm{Error}}
+\]</span></p>
+<section id="goals" class="level1">
+<h1>Goals</h1>
 <ul>
-<li><a href="../lectures/unit1/unit1_ols_matrix_notation.html">Linear regression in matrix notation (review)</a></li>
-<li><a href="../lectures/unit1/unit1_ols.html">Linear regression in an ML setting</a></li>
-<li><a href="../lectures/unit1/unit1_splines.html">Basis expansions and splines for linear regression</a></li>
-<li><a href="../lectures/unit1/unit1_l1l2.html">L1 and L2 penalization</a></li>
+<li>Introduce generalization error, a complexity cost for generic loss functions</li>
+<li>Express complexity as the expressiveness of a function class</li>
+<li>Present uniform bounds as one (conservative) way to control complexity cost</li>
 </ul>
 </section>
-<section id="unit-2-classification" class="level1">
-<h1>Unit 2: Classification</h1>
-<ul>
-<li><a href="../lectures/unit2/unit2_classification_loss.html">Empirical risk minimization for classification</a> <!--
-- [$\star$ Trading off false positives and negatives](unit2/unit2_false_positives_negatives.qmd)
-- [Perceptron algorithm](unit2/unit2_perceptron.qmd)
-- [Support vector machines](unit2/unit2_svm.qmd)
-
-
-
-# Unit 3: Risk and complexity
-
-- [Asymptotics and bias--variance tradeoff in linear regression](unit1/unit1_biasvar.qmd)
-- [Generalization error and uniform laws](unit2/unit2_generalization.qmd)
-- [Uniform laws for smooth function classes](unit2/unit2_ulln.qmd)
-- [VC dimension and zero--one loss](unit2/unit2_vc_dimension.qmd)
-- [Held-out data and cross-validation](unit2/unit2_cv.qmd)
-
-
-# Unit 4: Trees and weak learners
-
-- [Classification and regression trees](unit4/unit4_cart.qmd)
-- [Bagging weak learners](unit4/unit4_bagging.qmd)
-- [Boosting weak learners](unit4/unit4_boosting.qmd)
-
-
-# Unit 5: Kernel methods
-
-- [The kernel trick](unit5/unit5_kerneltrick.qmd)
-- [Valid kernels and inner products](unit5/unit5_validkernels.qmd)
-- [Reproducing kernel Hilbert spaces](unit5/unit5_rkhs.qmd)
-
-# Unit 6: Optimization and neural networks
-
-- [Optimization notes](optimization.qmd)
-
-
-
---></li>
-</ul>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="../lectures/linalg_review.html">here</a>.</p>
-
-
+<section id="a-generic-complexity-cost" class="level1">
+<h1>A generic complexity cost</h1>
+<p>For OLS estimators and least squares loss, we’ve derived a complexity penalty that takes the form of a parametric variance. Specifically, we showed that the loss incurred by using <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> for prediction, <span class="math inline">\(\mathscr{L}(\hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x}, y)\)</span>, can be decomposed into a bias term that improves with complexity, an irreducible loss that cannot be improved, and a variance term:</p>
+<p><span class="math display">\[
+\mathrm{trace}\left(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] \mathrm{Cov}_{\,}\left(\hat{\boldsymbol{\beta}}\right)\right)
+\quad\textrm{(Variance term)}\quad
+\]</span></p>
+<p>which has the potential to increase with the complexity of the model. In a certain sense, if we believe in the IID assumption, then this variance term is the only reason to not increase the complexity of your regression without bound.</p>
+<p>However, these arguments break down if we consider alternative loss functions, such as absolute <span class="math inline">\(\mathscr{L}(\hat{y}, y) = \left|\hat{y}- y\right|\)</span> or classification loss <span class="math inline">\(\mathscr{L}(\hat{y}, y) = \mathrm{I}\left(\hat{y}&lt; c \textrm{ and }y&gt; c\right)\)</span>, since we cannot decompose the loss into bias and variance contributions.</p>
+<p>Furthermore, unlike for OLS, for these losses we don’t have explicit forms for the empirical risk–minimizing parameters. At a deeper level, it seems wrong to express the complexity of our functions in terms of a parameter at all. Shouldn’t the complexity be measured in terms of the class of prediciton rules themselves, rather than their representation?</p>
+<p>To this end, let’s consider a more generic decomposition of loss that allows us to go beyond least squares and OLS. Recall our three types of functions:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f^{\star}={}&amp; \underset{f}{\mathrm{argmin}}\, \mathscr{L}(f) \\
+\overline{f}={}&amp; \underset{f\in \mathcal{F}}{\mathrm{argmin}}\, \mathscr{L}(f)\\
+\hat{f}={}&amp; \underset{f\in \mathcal{F}}{\mathrm{argmin}}\, \hat{\mathscr{L}}(f)\\
+\textrm{where}\\
+\mathscr{L}(f) ={}&amp; \mathbb{E}_{new}\left[\mathscr{L}(f(\boldsymbol{x}_\mathrm{new}), y_\mathrm{new})\right] \\
+\hat{\mathscr{L}}(f) ={}&amp; \frac{1}{N} \sum_{n=1}^N\mathscr{L}(f(\boldsymbol{x}_n), y_n) \\
+\end{aligned}
+\]</span></p>
+<p>Here, <span class="math inline">\(f^{\star}\)</span> is the best we could do, <span class="math inline">\(\overline{f}\)</span> is the best we could do in our class of functions <span class="math inline">\(\mathcal{F}\)</span>, and <span class="math inline">\(\hat{f}\)</span> is the computable estimate based on our data. We want to quantify the complexity cost of <span class="math inline">\(\mathcal{F}\)</span>, since by making <span class="math inline">\(\mathcal{F}\)</span> more expressive, we can only make <span class="math inline">\(\mathscr{L}(\overline{f})\)</span> closer to <span class="math inline">\(\mathscr{L}(f^{\star})\)</span>.</p>
+<p>In loose analogy with the bias–variance decomposition, we can add and subtract to express the cost of using <span class="math inline">\(\hat{f}\)</span> as the sum of three terms:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathscr{L}(\hat{f})  ={}&amp;
+\underset{\textrm{Sampling error}}{\mathscr{L}(\hat{f}) - \mathscr{L}(\overline{f})} +
+\underset{\textrm{Approximation error}}{\mathscr{L}(\overline{f}) - \mathscr{L}(f^{\star})} +
+\underset{\textrm{Irreducible error}}{\mathscr{L}(f^{\star})}.
+\end{aligned}
+\]</span></p>
+<p>The approximation error is like “bias,” and only improves with complexity. The irreducible error cannot be improved, no matter how expressive <span class="math inline">\(\mathcal{F}\)</span> is. If there is a penalty to complexity, it can only come from the “sampling error,” the cost of using the empirical risk as a substitute for true risk. This was the “variance” term in OLS.</p>
+<p>We can further decompose the sampling error into three parts, only one of which can possibly be problematic, at least for large <span class="math inline">\(N\)</span>: <span class="math display">\[
+\begin{aligned}
+\mathscr{L}(\hat{f}) - \mathscr{L}(\overline{f}) ={}&amp;
+\underset{\textrm{Generalization error}}{\mathscr{L}(\hat{f}) - \hat{\mathscr{L}}(\hat{f})} +
+\underset{\le 0}{\hat{\mathscr{L}}(\hat{f}) - \hat{\mathscr{L}}(\overline{f})} +
+\underset{\rightarrow 0 \textrm{ by the LLN}}{\hat{\mathscr{L}}(\overline{f}) - \mathscr{L}(\overline{f})}
+\ge 0.
+\end{aligned}
+\]</span></p>
+<div class="g-warning" title="Exercise">
+<p>Prove that <span class="math inline">\(\mathscr{L}(\hat{f}) - \mathscr{L}(\overline{f}) \ge 0\)</span> and <span class="math inline">\(\hat{\mathscr{L}}(\overline{f}) - \hat{\mathscr{L}}(\overline{f}) \le 0\)</span>.</p>
+</div>
+<p>The reason the final term goes to zero by a LLN is that <span class="math inline">\(\overline{f}\)</span> is fixed, and does not depend on the data. In contrast, we <em>choose</em> <span class="math inline">\(\hat{f}\)</span> to minimize <span class="math inline">\(\hat{\mathscr{L}}(\cdot)\)</span>, and so might expect that <span class="math inline">\(\hat{\mathscr{L}}(\hat{f})\)</span> is an unduly optimistic estimate of our true loss — namely that <span class="math inline">\(\hat{\mathscr{L}}(\hat{f}) \le \mathscr{L}(\hat{f})\)</span>. The difference <span class="math inline">\(\mathscr{L}(\hat{f}) - \hat{\mathscr{L}}(\hat{f})\)</span> is sometimes called the “generalization error,” because it refers to the fact that the loss on your observed data may not “generalize” to future, unseen data. The above decomposition shows that a complexity cost must, asymptotically, come from generliazation error.</p>
 </section>
+<section id="uniform-laws-of-large-numbers" class="level1">
+<h1>Uniform laws of large numbers</h1>
+<p>As with the bias–variance tradeoff, we argued that complexity may — but does not necessarily — increase variance. However, we argued that, if the variance is controlled (e.g.&nbsp;by not having too many parameters), then the risk was also controlled. Similarly, we will now focus on situations when we can <em>control</em> the generalization error, while acknowledging that this control may be too strict, and that complex functions may generalize while failing these controls.</p>
+<p>Specifically, the generalization error is small if</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left|\mathscr{L}(\hat{f}) - \hat{\mathscr{L}}(\hat{f})\right| =
+\left|
+  \frac{1}{N} \sum_{n=1}^N\mathscr{L}(\hat{f}(x_n), y_n) - \mathbb{E}_{new}\left[\mathscr{L}(\hat{f}(x_\mathrm{new}), y_\mathrm{new})\right]
+\right|
+\rightarrow 0
+\quad\textrm{(we want this)}\quad
+\end{aligned}
+\]</span></p>
+<p>The problem is that <span class="math inline">\(\hat{f}\)</span> depends on the data in a perhaps very complicated way, and so the observations <span class="math inline">\(\mathscr{L}(\hat{f}(x_n), y_n)\)</span> are not independent — they are all dependent on one another through the dependence of <span class="math inline">\(\hat{f}\)</span> on all the data. There are roughly two routes to controlling this dependence, and they correspond roughtly to the three ways of controlling generalization error in machine learning:</p>
+<ul>
+<li>By showing that the procedure that generated <span class="math inline">\(\hat{f}\)</span> cannot depend too strongly on the data, or</li>
+<li>By showing that the loss function cannot depend too much on what <span class="math inline">\(\hat{f}\)</span> is.</li>
+</ul>
+<p>The former requires articulating something about how we get <span class="math inline">\(\hat{f}\)</span>, and so typically requires saying something about a particular algorithm in a particular context. The latter is more general, but may be more loose and so too conservative. We will now consider the latter, and try to give some examples of the former later in the course when discussing particular algorithms, like the perceptron algorithm and stochastic gradient descent.</p>
+<p>Specifically, we will show the stronger statement that</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left|\hat{\mathscr{L}}(\hat{f}) - \mathscr{L}(\hat{f})\right| \le{}&amp;
+\sup_{f\in \mathcal{F}} \left|\hat{\mathscr{L}}(f) - \mathscr{L}(f)\right|
+\\={}&amp;
+\sup_{f\in \mathcal{F}}
+\left|
+  \frac{1}{N} \sum_{n=1}^N\mathscr{L}(f(x_n), y_n) - \mathbb{E}_{new}\left[\mathscr{L}(f(x_\mathrm{new}), y_\mathrm{new})\right]
+\right|.
+\quad\textrm{(a "uniform" law of large numbers)}\quad
+\end{aligned}
+\]</span></p>
+<p>Note that this is an asymptotic statement, where the function class <span class="math inline">\(\mathcal{F}\)</span> is fixed as <span class="math inline">\(N \rightarrow \infty\)</span>. Most modern ML actually focuses on finite–sample results that look something like</p>
+<p><span class="math display">\[
+\mathbb{P}_{\,}\left(\sup_{f\in \mathcal{F}} \left|\hat{\mathscr{L}}(f) - \mathscr{L}(f)\right| \ge \varepsilon\right) \le C(N, \mathcal{F}, \varepsilon),
+\]</span></p>
+<p>for some explicit function <span class="math inline">\(C(\cdot)\)</span>. Typically one would hope that, all else fixed, <span class="math inline">\(C \rightarrow 0\)</span> as <span class="math inline">\(N \rightarrow \infty\)</span>. Furthermore, one usually has <span class="math inline">\(C \rightarrow 1\)</span> as <span class="math inline">\(\varepsilon \rightarrow 0\)</span>, so you cannot control arbitrarily small changes for any finite <span class="math inline">\(N\)</span>, and the dependence on <span class="math inline">\(\mathcal{F}\)</span> is somewhat explicit, so you can imagine changing the complexity of your function class as the dataset grows. These results are more realistic but a little more complicated, and so beyond the scope of a course like this.</p>
+<p>Howver, in at least some cases, the asymptotic results are simpler to understand, and rely on a similar style of argument to the finite–sample results. So the asymptotic results can give some intuition for the more sophisticated results that you might encounter in ML research or in further study.</p>
+
+
 </section>
 
 </main> <!-- /main -->
