@@ -213,15 +213,15 @@ window.Quarto = {
 <h1>New regressors from old</h1>
 <p>Recall that we are trying to approximate</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[y| \boldsymbol{x}\right] \approx \boldsymbol{\beta}^\intercal\boldsymbol{x}.
+\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right] \approx \boldsymbol{\beta}^\intercal\boldsymbol{x}.
 \]</span></p>
-<p>In general, the left–hand side <span class="math inline">\(\mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span> is <em>not</em> linear in the regressors, so linear regression will not be able to characterize <span class="math inline">\(\mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span>. How close can it get? The more regressors you include, the more expressive <span class="math inline">\(\boldsymbol{\beta}^\intercal\boldsymbol{x}\)</span> is. But typically you only have a finite set of regressors. Does this upper bound the complexity of the functions you can fit?</p>
+<p>In general, the left–hand side <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span> is <em>not</em> linear in the regressors, so linear regression will not be able to characterize <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span>. How close can it get? The more regressors you include, the more expressive <span class="math inline">\(\boldsymbol{\beta}^\intercal\boldsymbol{x}\)</span> is. But typically you only have a finite set of regressors. Does this upper bound the complexity of the functions you can fit?</p>
 <p>It turns out that it does not, since we can take non–linear transformations of the regressors to make new regressors.</p>
 <section id="taylor-series" class="level2">
 <h2 class="anchored" data-anchor-id="taylor-series">Taylor series</h2>
-<p>Suppose for simplicity that <span class="math inline">\(x\)</span> is a scalar, and that <span class="math inline">\(\mathbb{E}_{\,}\left[y| x\right]\)</span> is an analytic function, meaning it admits a Taylor series expansion:</p>
+<p>Suppose for simplicity that <span class="math inline">\(x\)</span> is a scalar, and that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| x\right]\)</span> is an analytic function, meaning it admits a Taylor series expansion:</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[y| x\right] =
+\mathbb{E}_{\vphantom{}}\left[y| x\right] =
     \beta^{*}_0 + \beta^{*}_1 x+ \frac{1}{2} x^2 + \ldots +
     \frac{1}{k!} \beta^{*}_k x^k + \ldots =
 \sum_{k=0}^\infty \frac{1}{k!} \beta^{*}_k x^k.

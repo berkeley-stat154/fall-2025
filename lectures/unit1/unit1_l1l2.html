@@ -212,7 +212,7 @@ window.Quarto = {
 <p><span class="math display">\[
 \hat{\boldsymbol{\beta}}:= \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \sum_{n=1}^N(y_n - \boldsymbol{\beta}^\intercal x_n)^2 =: \hat{\mathscr{R}}(\boldsymbol{\beta}).
 \]</span></p>
-<p>We motivated this as an approximation to the expected predicted risk, <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta}) = \mathbb{E}_{\,}\left[(y_\mathrm{new}- \boldsymbol{\beta}^\intercal x_\mathrm{new})^2\right]\)</span>. But that made sense when we had a fixed set of regressors, and have shown that the correspondence breaks down when we are searching the space of regressors. In particular, <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> always decreases as we add more regressors, but <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span> may not.</p>
+<p>We motivated this as an approximation to the expected predicted risk, <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta}) = \mathbb{E}_{\vphantom{}}\left[(y_\mathrm{new}- \boldsymbol{\beta}^\intercal x_\mathrm{new})^2\right]\)</span>. But that made sense when we had a fixed set of regressors, and have shown that the correspondence breaks down when we are searching the space of regressors. In particular, <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span> always decreases as we add more regressors, but <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span> may not.</p>
 <p>Instead, let us consider minimizing <span class="math inline">\(\hat{\mathscr{R}}(\boldsymbol{\beta})\)</span>, but with an additional penalty for large <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>. There are many ways to do this! But one convenient one is as follows. For now, pick a <span class="math inline">\(\lambda\)</span>, and choose <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> to minimize:</p>
 <p><span class="math display">\[
 \hat{\boldsymbol{\beta}}(\lambda) := \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \mathscr{R}_{ridge}(\boldsymbol{\beta}, \lambda) :=
@@ -287,8 +287,8 @@ x'_n := \frac{x_n - \bar{x}_n}{\sqrt{\frac{1}{N} \sum_{n=1}^N(x_n - \bar{x})^2}}
 <p>Suppose that <span class="math inline">\(y_n = \boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \varepsilon_n\)</span> for some <span class="math inline">\(\boldsymbol{\beta}\)</span>. Note that, for a fixed <span class="math inline">\(\boldsymbol{x}_\mathrm{new}\)</span>, <span class="math inline">\(y_\mathrm{new}\)</span>, and fixed <span class="math inline">\(\boldsymbol{X}\)</span>,</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[y_\mathrm{new}- \boldsymbol{x}_\mathrm{new}^\intercal\hat{\boldsymbol{\beta}}(\lambda)\right]  ={}&amp;
-\boldsymbol{x}_\mathrm{new}^\intercal\left(\boldsymbol{\beta}- \mathbb{E}_{\,}\left[\hat{\boldsymbol{\beta}}(\lambda)\right]\right)
+\mathbb{E}_{\vphantom{}}\left[y_\mathrm{new}- \boldsymbol{x}_\mathrm{new}^\intercal\hat{\boldsymbol{\beta}}(\lambda)\right]  ={}&amp;
+\boldsymbol{x}_\mathrm{new}^\intercal\left(\boldsymbol{\beta}- \mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}(\lambda)\right]\right)
 \\={}&amp;
 \boldsymbol{x}_\mathrm{new}^\intercal\left(\boldsymbol{I}_{\,}- \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right)^{-1} (\boldsymbol{X}^\intercal\boldsymbol{X})\right) \boldsymbol{\beta}
 \end{aligned}
@@ -376,7 +376,7 @@ x'_n := \frac{x_n - \bar{x}_n}{\sqrt{\frac{1}{N} \sum_{n=1}^N(x_n - \bar{x})^2}}
 <p>From this, we can read off <span class="math inline">\(\Sigma\)</span> and <span class="math inline">\(\mu\)</span>, and get the above expression.</p>
 <p>If we take <span class="math inline">\(\lambda = \sigma^2 / \sigma_\beta^2\)</span>, then we can see that</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[\beta | \boldsymbol{Y}\right] =
+\mathbb{E}_{\vphantom{}}\left[\beta | \boldsymbol{Y}\right] =
 \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right)^{-1}
     \boldsymbol{X}^\intercal\boldsymbol{Y}= \hat{\beta}(\lambda).
 \]</span></p>

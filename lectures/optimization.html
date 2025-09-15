@@ -328,9 +328,9 @@ f(\theta) = \frac{1}{N} \sum_{n=1}^N\mathscr{L}(z_n; \theta) \quad\Rightarrow\qu
 <p>A single gradient step requires computing <span class="math inline">\(N\)</span> terms, which can be very costly in large datasets. Furthermore, the whole idea of empirical risk minimization is that we should get a similar answer even if <span class="math inline">\(N\)</span> takes somewhat different values, which means that any individual datapoint should not have much influence on the result. Surely we don’t need to do order <span class="math inline">\(N\)</span> computation at each step? In fact, we don’t — we can show that you can do well by ranomly subsampling the data, even to the extreme of sampling a <em>single datapoint</em> at each step, as long as you choose the step sizes carefully.</p>
 <p>Stochastic gradient descent (SGD) is designed to minimize a function of the form</p>
 <p><span class="math display">\[
-f(\theta) = \mathbb{E}_{\,}\left[f(z; \theta)\right]
+f(\theta) = \mathbb{E}_{\vphantom{}}\left[f(z; \theta)\right]
 \]</span></p>
-<p>using draws <span class="math inline">\(g(z; \theta)\)</span> satisfying <span class="math inline">\(\mathbb{E}_{\,}\left[g(z; \theta)\right] = \frac{\partial f(\theta)}{\partial \theta}\)</span>. Note that it suffices to take <span class="math inline">\(g(z; \theta) = \partial f(z; \theta) / \partial \theta\)</span> (as long as you can exchange integration and differentiation), but there are many other choices you could make.</p>
+<p>using draws <span class="math inline">\(g(z; \theta)\)</span> satisfying <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[g(z; \theta)\right] = \frac{\partial f(\theta)}{\partial \theta}\)</span>. Note that it suffices to take <span class="math inline">\(g(z; \theta) = \partial f(z; \theta) / \partial \theta\)</span> (as long as you can exchange integration and differentiation), but there are many other choices you could make.</p>
 <p>Stochastic gradient descent operates by taking steps</p>
 <p><span class="math display">\[
 \theta^{t+1} = \theta^{t} - \alpha_tg(z; \theta).
@@ -409,7 +409,7 @@ g(\boldsymbol{\theta}) =  \H \boldsymbol{\theta}- \gv + \varepsilon,
 \]</span></p>
 <p>The noise is independent of all previous <span class="math inline">\(\boldsymbol{\theta}^{t}\)</span> (but not independent of subsequent ones!), so</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[\left\Vert\boldsymbol{\theta}^{t+1} - \thetavstar\right\Vert^2\right] \le \left\Vert\boldsymbol{I}_{\,}- \alpha \H\right\Vert_{op}^2 \mathbb{E}_{\,}\left[\left\Vert\boldsymbol{\theta}^{t} - \thetavstar\right\Vert^2\right] + \alpha^2 \sigma^2.
+\mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t+1} - \thetavstar\right\Vert^2\right] \le \left\Vert\boldsymbol{I}_{\,}- \alpha \H\right\Vert_{op}^2 \mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t} - \thetavstar\right\Vert^2\right] + \alpha^2 \sigma^2.
 \]</span></p>
 <p>Previously, we were able to recursively expand the error to get an expontially decaying distance to <span class="math inline">\(\thetavstar\)</span>, but we cannot in this case due to the <span class="math inline">\(\alpha^2 \sigma^2\)</span> term.</p>
 <!--
@@ -430,7 +430,7 @@ $$
 <h2 class="anchored" data-anchor-id="generalization-bounds">Generalization bounds</h2>
 <p>Theorem 3 of the reading states that, on a convex objective with bounded gradients,</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[f(\boldsymbol{\theta}^t) - f(\thetavstar)\right] \le \frac{C}{\sqrt{t}}.
+\mathbb{E}_{\vphantom{}}\left[f(\boldsymbol{\theta}^t) - f(\thetavstar)\right] \le \frac{C}{\sqrt{t}}.
 \]</span></p>
 <p>Astonishingly, in the case that we see each sample only once, this reasoning can be applied both to the empirical risk and population risk. In this sense, we get a generalization bound for SGD, using only the optimization algorithm.</p>
 </section>

@@ -228,27 +228,27 @@ How well does it do? Since the training data is also random, we want to evaluate
 <p>Here, <span class="math inline">\(\boldsymbol{x}_\mathrm{new},y_\mathrm{new}\)</span> are an independent sample from the same distribution that gave rise to the <span class="math inline">\(N\)</span> datapoints <span class="math inline">\(\mathcal{D}\)</span>, on which <span class="math inline">\(\hat{f}(\cdot)\)</span> depends.</p>
 <p>Let’s decompose this target. Define: <span class="math display">\[
 \begin{aligned}
-f^{\star}(\cdot) = \underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[(f(\boldsymbol{x}) - y)^2\right]
+f^{\star}(\cdot) = \underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\vphantom{}}\left[(f(\boldsymbol{x}) - y)^2\right]
 \quad\textrm{and}\quad
-\overline{f}(\cdot) = \mathbb{E}_{\,}\left[\hat{f}(\cdot)\right] \\
+\overline{f}(\cdot) = \mathbb{E}_{\vphantom{}}\left[\hat{f}(\cdot)\right] \\
 %\fbar(\cdot) = \lim_{N\rightarrow \infty} \fhat(\cdot).
 \end{aligned}
 \]</span></p>
 <p>We can then decompose our target into three terms:</p>
 <p><span id="eq-biasvariance"><span class="math display">\[
 \begin{aligned}
-&amp;\mathbb{E}_{\,}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
+&amp;\mathbb{E}_{\vphantom{}}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
 \\&amp;\quad={}
-\mathbb{E}_{\,}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - \overline{f}(\boldsymbol{x}_\mathrm{new}) + \overline{f}(\boldsymbol{x}_\mathrm{new}) - f^{\star}(\boldsymbol{x}_\mathrm{new}) + f^{\star}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
+\mathbb{E}_{\vphantom{}}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - \overline{f}(\boldsymbol{x}_\mathrm{new}) + \overline{f}(\boldsymbol{x}_\mathrm{new}) - f^{\star}(\boldsymbol{x}_\mathrm{new}) + f^{\star}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
 \\&amp;\quad={}
 \underset{\textrm{"variance"}}{
-  \mathbb{E}_{\,}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - \overline{f}(\boldsymbol{x}_\mathrm{new}))^2\right]
+  \mathbb{E}_{\vphantom{}}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - \overline{f}(\boldsymbol{x}_\mathrm{new}))^2\right]
 } +
 \underset{\textrm{"bias"}}{
-  \mathbb{E}_{\,}\left[(\overline{f}(\boldsymbol{x}_\mathrm{new}) - f^{\star}(\boldsymbol{x}_\mathrm{new}))^2\right]
+  \mathbb{E}_{\vphantom{}}\left[(\overline{f}(\boldsymbol{x}_\mathrm{new}) - f^{\star}(\boldsymbol{x}_\mathrm{new}))^2\right]
 } +
 \underset{\textrm{"irreducible error"}}{
-  \mathbb{E}_{\,}\left[(f^{\star}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
+  \mathbb{E}_{\vphantom{}}\left[(f^{\star}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
 }.
 %  +
 % \\&amp;\quad\quad\quad
@@ -284,35 +284,35 @@ further argument.
 </section>
 <section id="misspecified-linear-regression" class="level1">
 <h1>Misspecified linear regression</h1>
-<p>Let’s assume that we have regressors <span class="math inline">\(\boldsymbol{x}_n \in \mathbb{R}^{P}\)</span>, possibly created by feature expansions, and we would like to decide which regressors to include in our regression. Note that the larger <span class="math inline">\(P\)</span> is, the more expressive the regression can be, and the closer we can get to the true <span class="math inline">\(\mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span>. However, we will see that choosing regressors typically comes at a cost.</p>
-<p>As we have shown, <span class="math inline">\(f^{\star}(y) = \mathbb{E}_{\,}\left[y\vert \boldsymbol{x}\right]\)</span> minimizes the population loss <span class="math inline">\(\mathbb{E}_{\,}\left[(y- f(\boldsymbol{x}))^2\right]\)</span>, and the regression coefficient <span class="math inline">\(\beta^{*}= M_{xx}^{-1} M_{xy}\)</span> minimizes the linear regression loss <span class="math inline">\(\mathbb{E}_{\,}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta})^2\right]\)</span>, where</p>
+<p>Let’s assume that we have regressors <span class="math inline">\(\boldsymbol{x}_n \in \mathbb{R}^{P}\)</span>, possibly created by feature expansions, and we would like to decide which regressors to include in our regression. Note that the larger <span class="math inline">\(P\)</span> is, the more expressive the regression can be, and the closer we can get to the true <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span>. However, we will see that choosing regressors typically comes at a cost.</p>
+<p>As we have shown, <span class="math inline">\(f^{\star}(y) = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right]\)</span> minimizes the population loss <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[(y- f(\boldsymbol{x}))^2\right]\)</span>, and the regression coefficient <span class="math inline">\(\beta^{*}= M_{xx}^{-1} M_{xy}\)</span> minimizes the linear regression loss <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta})^2\right]\)</span>, where</p>
 <p><span class="math display">\[
-M_{xx} := \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
+M_{xx} := \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
 \quad\textrm{and}\quad
-M_{xy} := \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right].
+M_{xy} := \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right].
 \]</span></p>
 <section id="the-expectation-is-not-tractable-in-misspecified-models" class="level2">
 <h2 class="anchored" data-anchor-id="the-expectation-is-not-tractable-in-misspecified-models">The expectation is not tractable in misspecified models</h2>
-<p>We have shown that, for a fixed set of regressors, <span class="math inline">\(\hat{\boldsymbol{\beta}}\rightarrow \boldsymbol{\beta}^{*}\)</span>. But what is the <span class="math inline">\(\mathbb{E}_{\,}\left[\hat{\boldsymbol{\beta}}\right]\)</span>? We can write</p>
+<p>We have shown that, for a fixed set of regressors, <span class="math inline">\(\hat{\boldsymbol{\beta}}\rightarrow \boldsymbol{\beta}^{*}\)</span>. But what is the <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right]\)</span>? We can write</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[\hat{\boldsymbol{\beta}}\right] ={}&amp; \mathbb{E}_{\,}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right]
+\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right] ={}&amp; \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right]
 \\={}&amp;
-\mathbb{E}_{\,}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\,}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right]\right].
+\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right]\right].
 \end{aligned}
 \]</span></p>
-<p>Note that <span class="math inline">\(\boldsymbol{X}\)</span> is random in the preceding expression, since our pairs <span class="math inline">\((x_n, y_n)\)</span> are IID — otherwise, the relatioship between population and sample loss doesn’t make sense. In an introductory linear models class, you might assume that <span class="math inline">\(\mathbb{E}_{\,}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right] = \boldsymbol{X}\beta^{*}+ \boldsymbol{\varepsilon}\)</span> for <span class="math inline">\(\mathbb{E}_{\,}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right] = \boldsymbol{0}\)</span>. If that were the case, then</p>
+<p>Note that <span class="math inline">\(\boldsymbol{X}\)</span> is random in the preceding expression, since our pairs <span class="math inline">\((x_n, y_n)\)</span> are IID — otherwise, the relatioship between population and sample loss doesn’t make sense. In an introductory linear models class, you might assume that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right] = \boldsymbol{X}\beta^{*}+ \boldsymbol{\varepsilon}\)</span> for <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right] = \boldsymbol{0}\)</span>. If that were the case, then</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\,}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right]\right] ={}&amp;
-\mathbb{E}_{\,}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal(\boldsymbol{X}\beta^{*}+ \boldsymbol{\varepsilon})\right] \\={}&amp;
-\beta^{*}+ \mathbb{E}_{\,}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\,}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right]\right] \\={}&amp;
+\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right]\right] ={}&amp;
+\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal(\boldsymbol{X}\beta^{*}+ \boldsymbol{\varepsilon})\right] \\={}&amp;
+\beta^{*}+ \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right]\right] \\={}&amp;
 \beta^{*}.
 &amp; \textrm{(Under correct specification)}
 \end{aligned}
 \]</span></p>
-<p>However, under misspecification, there is no such simple result — in particular, there is no reason to think there is any <span class="math inline">\(\boldsymbol{\beta}\)</span> such that <span class="math inline">\(\mathbb{E}_{\,}\left[y- \boldsymbol{\beta}^\intercal\boldsymbol{x}| \boldsymbol{x}\right] = 0\)</span>.</p>
-<p>By imposing stronger–than–standard conditions on the distribution of <span class="math inline">\(\boldsymbol{x}\)</span>, one can show that <span class="math inline">\(\sqrt{N} (\mathbb{E}_{\,}\left[\hat{\boldsymbol{\beta}}\right] - \boldsymbol{\beta}^{*}) \rightarrow 0\)</span>. We will assume that this result holds without further elaboration, so that we can use <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> in place of the intractable <span class="math inline">\(\mathbb{E}_{\,}\left[\hat{\boldsymbol{\beta}}\right]\)</span> in the bias–variance decomposition.</p>
+<p>However, under misspecification, there is no such simple result — in particular, there is no reason to think there is any <span class="math inline">\(\boldsymbol{\beta}\)</span> such that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y- \boldsymbol{\beta}^\intercal\boldsymbol{x}| \boldsymbol{x}\right] = 0\)</span>.</p>
+<p>By imposing stronger–than–standard conditions on the distribution of <span class="math inline">\(\boldsymbol{x}\)</span>, one can show that <span class="math inline">\(\sqrt{N} (\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right] - \boldsymbol{\beta}^{*}) \rightarrow 0\)</span>. We will assume that this result holds without further elaboration, so that we can use <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> in place of the intractable <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right]\)</span> in the bias–variance decomposition.</p>
 </section>
 <section id="biasvariance-decomposition-for-misspecified-linear-models" class="level2">
 <h2 class="anchored" data-anchor-id="biasvariance-decomposition-for-misspecified-linear-models">Bias–variance decomposition for misspecified linear models</h2>
@@ -347,22 +347,22 @@ M_{xy} := \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right].
 \]</span></p>
 <p>By definition,</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[y- f^{\star}(\boldsymbol{x}) | \boldsymbol{x}\right] =
-\mathbb{E}_{\,}\left[y- \mathbb{E}_{\,}\left[y| \boldsymbol{x}\right] | \boldsymbol{x}\right] = 0,
+\mathbb{E}_{\vphantom{}}\left[y- f^{\star}(\boldsymbol{x}) | \boldsymbol{x}\right] =
+\mathbb{E}_{\vphantom{}}\left[y- \mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right] | \boldsymbol{x}\right] = 0,
 \]</span></p>
 <p>so we have by iterated expectations</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[(y- f^{\star}(\boldsymbol{x}))(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right] = 0
+\mathbb{E}_{\vphantom{}}\left[(y- f^{\star}(\boldsymbol{x}))(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right] = 0
 \quad\textrm{and}\quad
-\mathbb{E}_{\,}\left[(y- f^{\star}(\boldsymbol{x}))({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x})\right] = 0.
+\mathbb{E}_{\vphantom{}}\left[(y- f^{\star}(\boldsymbol{x}))({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x})\right] = 0.
 \]</span></p>
 <p>Now,</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right]^\intercal\boldsymbol{x})
+\mathbb{E}_{\vphantom{}}\left[({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right]^\intercal\boldsymbol{x})
         (f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right] ={}&amp;
   ({\boldsymbol{\beta}^{*}} - \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right])^\intercal
-  \mathbb{E}_{\,}\left[\boldsymbol{x}(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right]
+  \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right]
 \\={}&amp;
 ({\boldsymbol{\beta}^{*}} - \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right])^\intercal
   \left( M_{xy} - M_{xx} \boldsymbol{\beta}^{*}\right)
@@ -478,7 +478,7 @@ M_{yx} M_{xx}^{-1} M_{xx} M_{xx}^{-1} M_{xy} -
 \]</span></p>
 <p>Noting that</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[ \boldsymbol{x}_n (y_n - \boldsymbol{x}_n^\intercal\boldsymbol{\beta}^{*})\right] =
+\mathbb{E}_{\vphantom{}}\left[ \boldsymbol{x}_n (y_n - \boldsymbol{x}_n^\intercal\boldsymbol{\beta}^{*})\right] =
 M_{xy} - M_{xx} M_{xx}^{-1}M_{xy} = 0,
 \]</span></p>
 <p>we can apply the CLT to get</p>
@@ -493,7 +493,7 @@ M_{xy} - M_{xx} M_{xx}^{-1}M_{xy} = 0,
 \]</span></p>
 <p>Note that, unlike in standard correctly specified regression,</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[\varepsilon_n \vert \boldsymbol{x}\right] = \mathbb{E}_{\,}\left[y_n \vert \boldsymbol{x}\right] - \boldsymbol{x}^\intercal\beta^{*}\ne 0!
+\mathbb{E}_{\vphantom{}}\left[\varepsilon_n \vert \boldsymbol{x}\right] = \mathbb{E}_{\vphantom{}}\left[y_n \vert \boldsymbol{x}\right] - \boldsymbol{x}^\intercal\beta^{*}\ne 0!
 \]</span></p>
 <p>In general, <span class="math inline">\(\varepsilon_n\)</span> and <span class="math inline">\(\boldsymbol{x}\)</span> have some joint distribution. Putting this together,</p>
 <p><span class="math display">\[
@@ -537,7 +537,7 @@ N \mathbb{E}_{\mathrm{new},\mathcal{D}}\left[({\boldsymbol{\beta}^{*}}^\intercal
 <p>In the former case, we will see that the variance can only increase as you add regressors. In the latter case, including <span class="math inline">\(z_n\)</span> can either increase or decrease the variance, depending on its own variance.</p>
 <section id="no-signal" class="level4">
 <h4 class="anchored" data-anchor-id="no-signal">No signal</h4>
-<p>First, suppose that <span class="math inline">\(\mathbb{E}_{\,}\left[y\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(y\right) = \sigma^2\)</span>, and <span class="math inline">\(y\)</span> is independent of <span class="math inline">\(\boldsymbol{x}\)</span>. This is an extreme case, where there is no signal whatsoever. In this case, we recover the classical result, since <span class="math inline">\(M_{xy} = \boldsymbol{0}\)</span>, <span class="math inline">\(\boldsymbol{\beta}^{*}= \boldsymbol{0}\)</span>, and</p>
+<p>First, suppose that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(y\right) = \sigma^2\)</span>, and <span class="math inline">\(y\)</span> is independent of <span class="math inline">\(\boldsymbol{x}\)</span>. This is an extreme case, where there is no signal whatsoever. In this case, we recover the classical result, since <span class="math inline">\(M_{xy} = \boldsymbol{0}\)</span>, <span class="math inline">\(\boldsymbol{\beta}^{*}= \boldsymbol{0}\)</span>, and</p>
 <p><span class="math display">\[
 \mathrm{Cov}_{\,}\left(\boldsymbol{x}\varepsilon_n\right) = M_{xx} \sigma^2
 \quad\textrm{$\Rightarrow$}\quad
@@ -566,8 +566,8 @@ N \cdot \textrm{Variance term }
 <h4 class="anchored" data-anchor-id="omitted-regressors">Omitted regressors</h4>
 <p>Now suppose that we have an omitted regressor, <span class="math inline">\(z_n\)</span>. Without loss of generality we can take <span class="math inline">\(y_n = {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}_n + z_n + \varepsilon_n\)</span>, so the omitted coefficient is <span class="math inline">\(1\)</span> (otherwise we could just rescale the standard deviation of <span class="math inline">\(z\)</span>). Assume that</p>
 <ul>
-<li><span class="math inline">\(\mathbb{E}_{\,}\left[z\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(z\right) = \sigma_z^2\)</span>,</li>
-<li><span class="math inline">\(\mathbb{E}_{\,}\left[\varepsilon\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(\varepsilon\right) = \sigma^2\)</span>,</li>
+<li><span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[z\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(z\right) = \sigma_z^2\)</span>,</li>
+<li><span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\varepsilon\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(\varepsilon\right) = \sigma^2\)</span>,</li>
 <li><span class="math inline">\(\boldsymbol{x}\)</span>, <span class="math inline">\(z\)</span>, <span class="math inline">\(\varepsilon\)</span> are all independent.</li>
 </ul>
 <p>Note that <span class="math inline">\(M_{xy} = M_{xx} \boldsymbol{\beta}^{*}\)</span>, so there is no inconsistency assuming that <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> is the truth. We have</p>

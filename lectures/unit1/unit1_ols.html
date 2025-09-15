@@ -201,11 +201,11 @@ y_n = {\boldsymbol{\beta}_{\mathrm{true}}}^\intercal\boldsymbol{x}_n + \varepsil
 \]</span></p>
 <p>Now we have no such assumption! In particular, there is no “true” <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span> to estimate. We can still define mean zero “residuals” as</p>
 <p><span class="math display">\[
-\varepsilon_n := y_n - \mathbb{E}_{\,}\left[y| \boldsymbol{x}_n\right]
+\varepsilon_n := y_n - \mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}_n\right]
 \quad\Leftrightarrow\quad
-y_n = \mathbb{E}_{\,}\left[y| \boldsymbol{x}_n\right] + \varepsilon_n,
+y_n = \mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}_n\right] + \varepsilon_n,
 \]</span></p>
-<p>but there is no reason to believe the function <span class="math inline">\(\mathbb{E}_{\,}\left[y| \boldsymbol{x}_n\right]\)</span> is linear in <span class="math inline">\(\boldsymbol{x}_n\)</span>. We might say that our regression model is <strong>misspecified</strong> in the sense the we are fitting a model of the form that does not match the actual process that generated the data.</p>
+<p>but there is no reason to believe the function <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}_n\right]\)</span> is linear in <span class="math inline">\(\boldsymbol{x}_n\)</span>. We might say that our regression model is <strong>misspecified</strong> in the sense the we are fitting a model of the form that does not match the actual process that generated the data.</p>
 <p>Some things that you may have learned about OLS in introductory classes are no longer true under misspecification. The big one is the (now fals) assertion that <span class="math inline">\(\hat{\boldsymbol{\beta}}\sim \mathcal{N}\left(\boldsymbol{\beta}_{\mathrm{true}}, \sigma^2 (\boldsymbol{X}^\intercal\boldsymbol{X})^{-1}\right)\)</span>. There are a lot of things wrong with this one:</p>
 <ul>
 <li>There is no such thing as <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span></li>
@@ -213,27 +213,27 @@ y_n = \mathbb{E}_{\,}\left[y| \boldsymbol{x}_n\right] + \varepsilon_n,
 <li>This derivation relies on <span class="math inline">\(\varepsilon_n\)</span> being normal, but <span class="math inline">\(\varepsilon_n\)</span> can have essentially any distribution (we assume it has finite variance though)</li>
 <li><span class="math inline">\(\boldsymbol{X}\)</span> is actually random here (they too are IID), and so it cannot be a parameter in a distribution. (Typically this formula is derived conditional on <span class="math inline">\(\boldsymbol{X}\)</span>.)</li>
 </ul>
-<p>Similarly, you might have learned that “OLS is unbiased,” meaning <span class="math inline">\(\mathbb{E}_{\,}\left[\hat{\boldsymbol{\beta}}\right] = \boldsymbol{\beta}_{\mathrm{true}}\)</span>. This no longer makes sense, again because there is no <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span>. But even the predictions are biased. Taking <span class="math inline">\(\hat{\boldsymbol{Y}}:= \boldsymbol{X}\hat{\boldsymbol{\beta}}\)</span>, we see that</p>
+<p>Similarly, you might have learned that “OLS is unbiased,” meaning <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right] = \boldsymbol{\beta}_{\mathrm{true}}\)</span>. This no longer makes sense, again because there is no <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span>. But even the predictions are biased. Taking <span class="math inline">\(\hat{\boldsymbol{Y}}:= \boldsymbol{X}\hat{\boldsymbol{\beta}}\)</span>, we see that</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[\hat{\boldsymbol{Y}}\right] = \mathbb{E}_{\,}\left[\boldsymbol{X}(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right]
-= \mathbb{E}_{\,}\left[\boldsymbol{X}(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\,}\left[\boldsymbol{Y}| \boldsymbol{X}\right]\right],
+\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{Y}}\right] = \mathbb{E}_{\vphantom{}}\left[\boldsymbol{X}(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right]
+= \mathbb{E}_{\vphantom{}}\left[\boldsymbol{X}(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}| \boldsymbol{X}\right]\right],
 \]</span></p>
-<p>which does not equal <span class="math inline">\(\mathbb{E}_{\,}\left[\boldsymbol{Y}\right]\)</span> in general. It’s even worse: the expectation of <span class="math inline">\(\hat{y}_{\mathrm{new}}\)</span> at an IID draw <span class="math inline">\(\boldsymbol{x}_{\mathrm{new}}\)</span> is not unbiased either:</p>
+<p>which does not equal <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\right]\)</span> in general. It’s even worse: the expectation of <span class="math inline">\(\hat{y}_{\mathrm{new}}\)</span> at an IID draw <span class="math inline">\(\boldsymbol{x}_{\mathrm{new}}\)</span> is not unbiased either:</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[\hat{y}_{\mathrm{new}}\right] =
-\mathbb{E}_{\,}\left[\boldsymbol{x}_{\mathrm{new}}^\intercal\hat{\boldsymbol{\beta}}\right] =
-\mathbb{E}_{\,}\left[\boldsymbol{x}_{\mathrm{new}}\right]^\intercal\mathbb{E}_{\,}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right],
+\mathbb{E}_{\vphantom{}}\left[\hat{y}_{\mathrm{new}}\right] =
+\mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}_{\mathrm{new}}^\intercal\hat{\boldsymbol{\beta}}\right] =
+\mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}_{\mathrm{new}}\right]^\intercal\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right],
 \]</span></p>
-<p>and since the rightmost expression is no longer a true <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span>, this has no guaranteed relation to <span class="math inline">\(\mathbb{E}_{\,}\left[y_{\mathrm{new}}\right]\)</span>.</p>
+<p>and since the rightmost expression is no longer a true <span class="math inline">\(\boldsymbol{\beta}_{\mathrm{true}}\)</span>, this has no guaranteed relation to <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y_{\mathrm{new}}\right]\)</span>.</p>
 <p>So what can we say? Assuming covariances are finite, we can apply a LLN, so that</p>
 <p><span class="math display">\[
-\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{X}\rightarrow \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
+\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{X}\rightarrow \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
 \quad\textrm{and}\quad
-\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{Y}\rightarrow \mathbb{E}_{\,}\left[\boldsymbol{x}y\right],
+\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{Y}\rightarrow \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}y\right],
 \]</span></p>
-<p>and so (by the continuous mapping theorem if <span class="math inline">\(\mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]\)</span> is invertible),</p>
+<p>and so (by the continuous mapping theorem if <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]\)</span> is invertible),</p>
 <p><span class="math display">\[
-\hat{\boldsymbol{\beta}}\rightarrow \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]^{-1} \mathbb{E}_{\,}\left[\boldsymbol{x}y\right].
+\hat{\boldsymbol{\beta}}\rightarrow \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]^{-1} \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}y\right].
 \]</span></p>
 <p>This is a mysterious expression. In order to give it meaning, let us consider the more general problem of <em>empirical risk minimization</em>. We will see at the end that this is actually quite a good quantity for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> to converge to.</p>
 </section>
@@ -287,7 +287,7 @@ Exercise
 <p>We want to find <span class="math inline">\(f(\cdot)\)</span> so that <span class="math inline">\(\mathscr{L}(f(\boldsymbol{x}), y)\)</span> is as small as possible. But the loss for a particular <span class="math inline">\(f\)</span> may depend on <span class="math inline">\(\boldsymbol{x}_\mathrm{new}\)</span>, since different <span class="math inline">\(\boldsymbol{x}_\mathrm{new}\)</span> are associated with different distributions of <span class="math inline">\(y_\mathrm{new}\)</span>. It follows that it doesn’t make sense to minimize the loss — instead we want to minimize the <em>risk</em>,</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathscr{R}(f) :=&amp; \mathbb{E}_{\,}\left[\mathscr{L}(f(\boldsymbol{x}), y)\right] &amp; \textrm{(Risk)}.
+\mathscr{R}(f) :=&amp; \mathbb{E}_{\vphantom{}}\left[\mathscr{L}(f(\boldsymbol{x}), y)\right] &amp; \textrm{(Risk)}.
 \end{aligned}
 \]</span></p>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -305,7 +305,7 @@ Warning
 </div>
 <p>So we would like to find</p>
 <p><span class="math display">\[
-f^{\star}(\cdot) := \underset{f}{\mathrm{argmin}}\, \mathscr{R}(f) = \underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[\mathscr{L}(f(\boldsymbol{x}), y)\right].
+f^{\star}(\cdot) := \underset{f}{\mathrm{argmin}}\, \mathscr{R}(f) = \underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\vphantom{}}\left[\mathscr{L}(f(\boldsymbol{x}), y)\right].
 \]</span></p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Notation">
 <div class="callout-header d-flex align-content-center">
@@ -362,55 +362,55 @@ Notation
 <p><span class="math display">\[
 f^{\star}(\cdot) :=
 \underset{f}{\mathrm{argmin}}\, \mathscr{R}(f) =
-\underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[\mathscr{L}(f(\boldsymbol{x}_\mathrm{new}), y_\mathrm{new})\right] =
-\underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[\left( y_\mathrm{new}- f(\boldsymbol{x}_\mathrm{new}) \right)^2\right].
+\underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\vphantom{}}\left[\mathscr{L}(f(\boldsymbol{x}_\mathrm{new}), y_\mathrm{new})\right] =
+\underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\vphantom{}}\left[\left( y_\mathrm{new}- f(\boldsymbol{x}_\mathrm{new}) \right)^2\right].
 \]</span></p>
 <p>This is a functional optimization problem over an infinite dimensional space! You can solve this using some fancy math, but you can also prove directly that the best choice is</p>
 <p><span class="math display">\[
-f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \boldsymbol{x}_\mathrm{new}\right].
+f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\vphantom{}}\left[y_\mathrm{new}| \boldsymbol{x}_\mathrm{new}\right].
 \]</span></p>
 <p>Suppose we consider any other function <span class="math inline">\(f(\cdot)\)</span>. The loss is larger, since</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[\left( y_\mathrm{new}- f(\boldsymbol{x}_\mathrm{new}) \right)^2\right]
+\mathbb{E}_{\vphantom{}}\left[\left( y_\mathrm{new}- f(\boldsymbol{x}_\mathrm{new}) \right)^2\right]
 ={}&amp;
-\mathbb{E}_{\,}\left[
-  \mathbb{E}_{\,}\left[\left( y_\mathrm{new}- f(\boldsymbol{x}_\mathrm{new}) \right)^2 | \boldsymbol{x}_\mathrm{new}\right]
+\mathbb{E}_{\vphantom{}}\left[
+  \mathbb{E}_{\vphantom{}}\left[\left( y_\mathrm{new}- f(\boldsymbol{x}_\mathrm{new}) \right)^2 | \boldsymbol{x}_\mathrm{new}\right]
 \right]
 &amp;\textrm{(Tower property)}
 \\={}&amp;
-\mathbb{E}_{\,}\left[
-  \mathbb{E}_{\,}\left[\left( y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) + f^{\star}(\boldsymbol{x}_\mathrm{new}) - f(\boldsymbol{x}_\mathrm{new}) \right)^2 |
+\mathbb{E}_{\vphantom{}}\left[
+  \mathbb{E}_{\vphantom{}}\left[\left( y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) + f^{\star}(\boldsymbol{x}_\mathrm{new}) - f(\boldsymbol{x}_\mathrm{new}) \right)^2 |
     \boldsymbol{x}_\mathrm{new}\right]
 \right]
 &amp;\textrm{(add and subtract)}
 \\={}&amp;
-  \mathbb{E}_{\,}\left[\left( y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) \right)^2\right] +
+  \mathbb{E}_{\vphantom{}}\left[\left( y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) \right)^2\right] +
 \\&amp;
-  \mathbb{E}_{\,}\left[\left( f^{\star}(\boldsymbol{x}_\mathrm{new}) - f(\boldsymbol{x}_\mathrm{new}) \right)^2\right] +
+  \mathbb{E}_{\vphantom{}}\left[\left( f^{\star}(\boldsymbol{x}_\mathrm{new}) - f(\boldsymbol{x}_\mathrm{new}) \right)^2\right] +
 \\&amp;
-2 \mathbb{E}_{\,}\left[
-  \mathbb{E}_{\,}\left[y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) | \boldsymbol{x}_\mathrm{new}\right]
+2 \mathbb{E}_{\vphantom{}}\left[
+  \mathbb{E}_{\vphantom{}}\left[y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) | \boldsymbol{x}_\mathrm{new}\right]
           \left( f^{\star}(\boldsymbol{x}_\mathrm{new}) - f(\boldsymbol{x}_\mathrm{new}) \right)
 \right]
 &amp;\textrm{(expand the quadratic, use conditioning)}
 \\={}&amp;
-  \mathbb{E}_{\,}\left[\left( y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) \right)^2\right] +
+  \mathbb{E}_{\vphantom{}}\left[\left( y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) \right)^2\right] +
 \\&amp;
-  \mathbb{E}_{\,}\left[\left( f^{\star}(\boldsymbol{x}_\mathrm{new}) - f(\boldsymbol{x}_\mathrm{new}) \right)^2\right]
+  \mathbb{E}_{\vphantom{}}\left[\left( f^{\star}(\boldsymbol{x}_\mathrm{new}) - f(\boldsymbol{x}_\mathrm{new}) \right)^2\right]
 &amp;
-\textrm{($\mathbb{E}_{\,}\left[y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) | \boldsymbol{x}_\mathrm{new}\right]=0$ by definition)}
+\textrm{($\mathbb{E}_{\vphantom{}}\left[y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) | \boldsymbol{x}_\mathrm{new}\right]=0$ by definition)}
 \\\ge&amp;
-  \mathbb{E}_{\,}\left[\left( y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) \right)^2\right].
+  \mathbb{E}_{\vphantom{}}\left[\left( y_\mathrm{new}- f^{\star}(\boldsymbol{x}_\mathrm{new}) \right)^2\right].
 &amp;
 \textrm{(anything squared is greater than $0$)}
 \end{aligned}
 \]</span></p>
 <section id="approximating-the-conditional-expectation" class="level2">
 <h2 class="anchored" data-anchor-id="approximating-the-conditional-expectation">Approximating the conditional expectation</h2>
-<p>We now know that the optimal regression function is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span>. The problem is how to estimate it.</p>
+<p>We now know that the optimal regression function is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span>. The problem is how to estimate it.</p>
 <p>We have been imagining that we know the full joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>. In that case, we can read off the conditional distribution by “slicing” through a particular <span class="math inline">\(\boldsymbol{x}\)</span>:</p>
-<div id="d8db1954" class="cell" data-execution_count="2">
+<div id="8274a92c" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -420,7 +420,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 </div>
 </div>
 <p>However, in practice, we don’t actually observe the full joint distribution, we observe data points. How should we proceed?</p>
-<div id="ee322b4c" class="cell" data-execution_count="3">
+<div id="8020b37b" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -432,21 +432,21 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 </section>
 <section id="linear-approximation" class="level2">
 <h2 class="anchored" data-anchor-id="linear-approximation">Linear approximation</h2>
-<p>Typically, we don’t know the functional form of <span class="math inline">\(\mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span>, because we don’t know the joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>. But suppose we approximate it with</p>
+<p>Typically, we don’t know the functional form of <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span>, because we don’t know the joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>. But suppose we approximate it with</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[y| \boldsymbol{x}\right] \approx \boldsymbol{\beta}^\intercal\boldsymbol{x}.
+\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right] \approx \boldsymbol{\beta}^\intercal\boldsymbol{x}.
 \]</span></p>
-<p>Note that we are not assuming this is true — we do not expect that <span class="math inline">\(\mathbb{E}_{\,}\left[y| \boldsymbol{x}\right]\)</span> is a linear function of <span class="math inline">\(\boldsymbol{x}\)</span>. Rather, we are finding the best approximation to the unknown <span class="math inline">\(\mathbb{E}_{\,}\left[y_\mathrm{new}| \boldsymbol{x}_\mathrm{new}\right]\)</span> amongst the class of functions of the form <span class="math inline">\(\boldsymbol{\beta}^\intercal\boldsymbol{x}_\mathrm{new}\)</span>.</p>
+<p>Note that we are not assuming this is true — we do not expect that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span> is a linear function of <span class="math inline">\(\boldsymbol{x}\)</span>. Rather, we are finding the best approximation to the unknown <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y_\mathrm{new}| \boldsymbol{x}_\mathrm{new}\right]\)</span> amongst the class of functions of the form <span class="math inline">\(\boldsymbol{\beta}^\intercal\boldsymbol{x}_\mathrm{new}\)</span>.</p>
 <p>The linear assumption gives us a finite–dimensional class of candidate functions, which gives us a tractable optimization problem. Under this approximation, the problem becomes <span class="math display">\[
 \begin{aligned}
-\beta^{*}:={}&amp; \underset{\beta}{\mathrm{argmin}}\, \mathbb{E}_{\,}\left[\left( y- \boldsymbol{\beta}^\intercal\boldsymbol{x}\right)^2\right] \\
-={}&amp; \underset{\beta}{\mathrm{argmin}}\, \left(\mathbb{E}_{\,}\left[y^2\right] - 2 \boldsymbol{\beta}^\intercal\mathbb{E}_{\,}\left[y\boldsymbol{x}\right] +
-  \boldsymbol{\beta}^\intercal\mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] \boldsymbol{\beta}\right).
+\beta^{*}:={}&amp; \underset{\beta}{\mathrm{argmin}}\, \mathbb{E}_{\vphantom{}}\left[\left( y- \boldsymbol{\beta}^\intercal\boldsymbol{x}\right)^2\right] \\
+={}&amp; \underset{\beta}{\mathrm{argmin}}\, \left(\mathbb{E}_{\vphantom{}}\left[y^2\right] - 2 \boldsymbol{\beta}^\intercal\mathbb{E}_{\vphantom{}}\left[y\boldsymbol{x}\right] +
+  \boldsymbol{\beta}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] \boldsymbol{\beta}\right).
 \end{aligned}
 \]</span></p>
 <p>Differentiating with respect to <span class="math inline">\(\boldsymbol{\beta}\)</span> and solving gives</p>
 <p><span class="math display">\[
-\boldsymbol{\beta}^{*}= \mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] ^{-1} \mathbb{E}_{\,}\left[\boldsymbol{x}y\right].
+\boldsymbol{\beta}^{*}= \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] ^{-1} \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}y\right].
 \]</span></p>
 <p>Note that this is the limiting quantity for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>, the OLS estimator! We have shown that, as <span class="math inline">\(N \rightarrow \infty\)</span>,</p>
 <p><span class="math display">\[
@@ -464,7 +464,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\,}\left[y_\mathrm{new}| \
 </section>
 <section id="regret-minimization-and-basis-expansions" class="level1">
 <h1>Regret minimization and basis expansions</h1>
-<p>We should not congratulate ourselves too hastily. After all, we would like to estimate <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\,}\left[y\vert \boldsymbol{x}\right]\)</span>, not the best linear estimator. As we will discuss in the next lecture, we can easily form new regression estimators out of old ones by regressing on non–linear transformations of <span class="math inline">\(\boldsymbol{x}\)</span>. For example, when <span class="math inline">\(x\)</span> is a scalar, we could consider the following hierarchy of linear regressions:</p>
+<p>We should not congratulate ourselves too hastily. After all, we would like to estimate <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right]\)</span>, not the best linear estimator. As we will discuss in the next lecture, we can easily form new regression estimators out of old ones by regressing on non–linear transformations of <span class="math inline">\(\boldsymbol{x}\)</span>. For example, when <span class="math inline">\(x\)</span> is a scalar, we could consider the following hierarchy of linear regressions:</p>
 <p><span class="math display">\[
 \begin{aligned}
 f_0(x; \beta) ={}&amp; \beta_0 \\
@@ -509,10 +509,10 @@ f_K(x; \boldsymbol{\beta}) ={}&amp; \sum_{k=1}^K \frac{1}{k!} \beta_k x^k.
   \boldsymbol{\beta}^\intercal\left(\frac{1}{N} \sum_{n=1}^N\boldsymbol{x}_n \boldsymbol{x}_n^\intercal\right) \boldsymbol{\beta}-
   2 \boldsymbol{\beta}^\intercal\left(\frac{1}{N} \sum_{n=1}^N\boldsymbol{x}_n y_n \right) + \frac{1}{N} \sum_{n=1}^Ny_n^2
 \\\rightarrow{}&amp;
-  \boldsymbol{\beta}^\intercal\mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] \boldsymbol{\beta}-
-  2 \boldsymbol{\beta}^\intercal\mathbb{E}_{\,}\left[ \boldsymbol{x}y\right] + \mathbb{E}_{\,}\left[y_n^2\right]
+  \boldsymbol{\beta}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] \boldsymbol{\beta}-
+  2 \boldsymbol{\beta}^\intercal\mathbb{E}_{\vphantom{}}\left[ \boldsymbol{x}y\right] + \mathbb{E}_{\vphantom{}}\left[y_n^2\right]
 \\={}&amp;
-\mathbb{E}_{\,}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}- y)^2 \right]
+\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}- y)^2 \right]
 \\={}&amp;
 \mathscr{R}(\boldsymbol{\beta}).
 \end{aligned}

@@ -282,9 +282,9 @@ x_m \\
 <p>From this we get that</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[\mathscr{L}_{LOO}\right] ={}&amp;
-\mathbb{E}_{\,}\left[\mathbb{E}_{\,}\left[\mathscr{L}_{LOO} \vert \hat{\mu}\right]\right]
-\\={}&amp; \theta^2 \frac{1}{N} \sum_{n=1}^N\mathbb{E}_{\,}\left[ \mathbb{E}_{\,}\left[(x_n - \hat{\mu})^2 | \hat{\mu}\right]\right]
+\mathbb{E}_{\vphantom{}}\left[\mathscr{L}_{LOO}\right] ={}&amp;
+\mathbb{E}_{\vphantom{}}\left[\mathbb{E}_{\vphantom{}}\left[\mathscr{L}_{LOO} \vert \hat{\mu}\right]\right]
+\\={}&amp; \theta^2 \frac{1}{N} \sum_{n=1}^N\mathbb{E}_{\vphantom{}}\left[ \mathbb{E}_{\vphantom{}}\left[(x_n - \hat{\mu})^2 | \hat{\mu}\right]\right]
 \\={}&amp; \theta^2 \frac{1}{N} \sum_{n=1}^N\sigma^2 \theta^{-1}
 \\={}&amp; \theta \sigma^2.
 \end{aligned}
@@ -292,10 +292,10 @@ x_m \\
 <p>Note that</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[\mathscr{L}(\hat{\mu})\right] ={}&amp;
-\mathbb{E}_{\,}\left[(x_\mathrm{new}- \hat{\mu})^2\right]
+\mathbb{E}_{\vphantom{}}\left[\mathscr{L}(\hat{\mu})\right] ={}&amp;
+\mathbb{E}_{\vphantom{}}\left[(x_\mathrm{new}- \hat{\mu})^2\right]
 \\={}&amp;
-\mathbb{E}_{\,}\left[(x_\mathrm{new}- \mu + \mu - \hat{\mu})^2\right]
+\mathbb{E}_{\vphantom{}}\left[(x_\mathrm{new}- \mu + \mu - \hat{\mu})^2\right]
 \\={}&amp;
 \sigma^2 + \frac{\sigma^2}{N}
 \\={}&amp;
@@ -304,12 +304,12 @@ x_m \\
 \]</span></p>
 <p>so the LOO loss is unbiased, as expected. What is its variance? We need to compute</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[\mathscr{L}_{LOO}^2\right] =
-\frac{\theta^4}{N^2} \sum_{n=1}^N\sum_{m=1}^N \mathbb{E}_{\,}\left[ \mathbb{E}_{\,}\left[(x_n - \hat{\mu})^2 (x_m - \hat{\mu})^2 | \hat{\mu}\right]\right].
+\mathbb{E}_{\vphantom{}}\left[\mathscr{L}_{LOO}^2\right] =
+\frac{\theta^4}{N^2} \sum_{n=1}^N\sum_{m=1}^N \mathbb{E}_{\vphantom{}}\left[ \mathbb{E}_{\vphantom{}}\left[(x_n - \hat{\mu})^2 (x_m - \hat{\mu})^2 | \hat{\mu}\right]\right].
 \]</span></p>
 <p>For terms with <span class="math inline">\(n=m\)</span>, we have</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[ (x_n - \hat{\mu})^4 \vert \hat{\mu}\right] = 3 \sigma^4 \theta^{-2}.
+\mathbb{E}_{\vphantom{}}\left[ (x_n - \hat{\mu})^4 \vert \hat{\mu}\right] = 3 \sigma^4 \theta^{-2}.
 \]</span></p>
 <p>For <span class="math inline">\(n \ne m\)</span>, we need an additional calculation. In general, if we have two Gaussian random variables with</p>
 <p><span class="math display">\[
@@ -338,19 +338,19 @@ r
 \]</span></p>
 <p>so</p>
 <p><span class="math display">\[
-\mathbb{E}_{\,}\left[q^2 r^2\right]
+\mathbb{E}_{\vphantom{}}\left[q^2 r^2\right]
 =
-\mathbb{E}_{\,}\left[
-    \mathbb{E}_{\,}\left[q^2 | r\right]
+\mathbb{E}_{\vphantom{}}\left[
+    \mathbb{E}_{\vphantom{}}\left[q^2 | r\right]
     r^2
 \right]
 =
-\mathbb{E}_{\,}\left[
+\mathbb{E}_{\vphantom{}}\left[
     \left(\rho^2 r^2 + (1 - \rho^2) \right)
     r^2
 \right]
 =
-\mathbb{E}_{\,}\left[
+\mathbb{E}_{\vphantom{}}\left[
     \rho^2 r^4 + (1 - \rho^2) r^2
 \right]
 =
@@ -359,10 +359,10 @@ r
 <p>From this, we get that, when <span class="math inline">\(n \ne m\)</span>,</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[(x_n - \hat{\mu})^2 (x_m - \hat{\mu})^2 \vert \hat{\mu}\right]
+\mathbb{E}_{\vphantom{}}\left[(x_n - \hat{\mu})^2 (x_m - \hat{\mu})^2 \vert \hat{\mu}\right]
 ={}&amp;
 \sigma^4 \theta^{-2}
-\mathbb{E}_{\,}\left[\left(\frac{x_n - \hat{\mu}}{\sigma \theta^{-1/2}} \right)^2
+\mathbb{E}_{\vphantom{}}\left[\left(\frac{x_n - \hat{\mu}}{\sigma \theta^{-1/2}} \right)^2
             \left(\frac{x_m - \hat{\mu}}{\sigma \theta^{-1/2}} \right)^2 \vert \hat{\mu}\right]
 \\={}&amp;
 \sigma^4 \theta^{-2}
@@ -374,7 +374,7 @@ r
 <p>There are <span class="math inline">\(N\)</span> terms with <span class="math inline">\(n=m\)</span> and <span class="math inline">\(N (N -1)\)</span> terms with <span class="math inline">\(n \ne m\)</span>, giving</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\,}\left[\mathscr{L}_{LOO}^2\right] ={}&amp;
+\mathbb{E}_{\vphantom{}}\left[\mathscr{L}_{LOO}^2\right] ={}&amp;
 \frac{\theta^4}{N^2}\left(
     3 N \sigma^4 \theta^{-2} + N(N-1) \sigma^4 \theta^{-2}\left(
     \frac{2}{(N-1)^2} + 1

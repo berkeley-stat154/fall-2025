@@ -250,7 +250,7 @@ y_n\boldsymbol{x}_n^T\boldsymbol{\beta}^*&gt;\gamma&gt;0 \; \; \; \; \text{for a
 <h1>Generalization</h1>
 <p>We now understand that the algorithm converges to <em>a</em> separating hyperplane, granted that such a one exists. The question now becomes whether the separating hyperplane it converges to is any good, in terms of generalizing well to new data. We’ll see that <em>any</em> separating is good, using a uniform LLN bound. Then we’ll see that the particular one the algorithm converges to is especially good.</p>
 <p>Consider a test observation <span class="math inline">\((\boldsymbol{x},y)\)</span>, and we want to bound the expected test error, <span class="math display">\[
-\underbrace{\mathbb{P}_{\,}\left(y\ne\text{sign}(\boldsymbol{x}^T\hat{\boldsymbol{\beta}})\Big|\hat{\boldsymbol{\beta}}\right)}_{=\mathscr{L}(\hat{\boldsymbol{\beta}})=\mathbb{E}_{\,}\left[I(y\ne\text{sign}(\boldsymbol{x}^T\hat{\boldsymbol{\beta}}))|\hat{\boldsymbol{\beta}}\right]}.
+\underbrace{\mathbb{P}_{\,}\left(y\ne\text{sign}(\boldsymbol{x}^T\hat{\boldsymbol{\beta}})\Big|\hat{\boldsymbol{\beta}}\right)}_{=\mathscr{L}(\hat{\boldsymbol{\beta}})=\mathbb{E}_{\vphantom{}}\left[I(y\ne\text{sign}(\boldsymbol{x}^T\hat{\boldsymbol{\beta}}))|\hat{\boldsymbol{\beta}}\right]}.
 \]</span> We have to make an assumption about how data are generated, otherwise there is no hope that training data will tell anything on test data.</p>
 <p><strong>Assumption</strong>:</p>
 <ul>
@@ -270,11 +270,11 @@ y\boldsymbol{x}^T\beta^* &gt; \gamma &gt; 0.
 </section>
 <section id="via-direct-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="via-direct-analysis">Via direct analysis</h2>
-<p><strong>Theorem:</strong> <span class="math inline">\(\underbrace{\mathbb{P}_{\,}\left(y\ne\text{sign}(\boldsymbol{x}^T\hat{\boldsymbol{\beta}})\right)}_{\mathbb{E}_{\,}\left[\mathscr{L}(\hat{\boldsymbol{\beta}})\right]}\leq \frac{1}{N+1}\cdot\frac{3}{\gamma^2}\)</span>.</p>
+<p><strong>Theorem:</strong> <span class="math inline">\(\underbrace{\mathbb{P}_{\,}\left(y\ne\text{sign}(\boldsymbol{x}^T\hat{\boldsymbol{\beta}})\right)}_{\mathbb{E}_{\vphantom{}}\left[\mathscr{L}(\hat{\boldsymbol{\beta}})\right]}\leq \frac{1}{N+1}\cdot\frac{3}{\gamma^2}\)</span>.</p>
 <p><strong>Comparison between ULLN and direct analysis</strong>:</p>
 <ul>
 <li>ULLN: with high probability, <span class="math inline">\(\mathscr{L}(\hat{\boldsymbol{\beta}})\lesssim \frac{1}{\sqrt{N}}\)</span>.</li>
-<li>Direct analysis: <span class="math inline">\(\mathbb{E}_{\,}\left[\mathscr{L}(\hat{\boldsymbol{\beta}})\right]\lesssim \frac{1}{N}\)</span>.</li>
+<li>Direct analysis: <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\mathscr{L}(\hat{\boldsymbol{\beta}})\right]\lesssim \frac{1}{N}\)</span>.</li>
 </ul>
 <p>Without knowing anything about separating hyperplane, beside the fact that it separates the training data, the ULLN approach shows that it generalizes well. We get a different, arguably stronger result by analyzing the <em>particular</em> separating hyperplane the algorithm converges to.</p>
 </section>

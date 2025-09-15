@@ -173,7 +173,7 @@ window.Quarto = {
 <h1>A generic complexity cost</h1>
 <p>For OLS estimators and least squares loss, we’ve derived a complexity penalty that takes the form of a parametric variance. Specifically, we showed that the loss incurred by using <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> for prediction, <span class="math inline">\(\mathscr{L}(\hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x}, y)\)</span>, can be decomposed into a bias term that improves with complexity, an irreducible loss that cannot be improved, and a variance term:</p>
 <p><span class="math display">\[
-\mathrm{trace}\left(\mathbb{E}_{\,}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] \mathrm{Cov}_{\,}\left(\hat{\boldsymbol{\beta}}\right)\right)
+\mathrm{trace}\left(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] \mathrm{Cov}_{\,}\left(\hat{\boldsymbol{\beta}}\right)\right)
 \quad\textrm{(Variance term)}\quad
 \]</span></p>
 <p>which has the potential to increase with the complexity of the model. In a certain sense, if we believe in the IID assumption, then this variance term is the only reason to not increase the complexity of your regression without bound.</p>

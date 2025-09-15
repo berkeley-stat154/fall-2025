@@ -258,7 +258,7 @@ As before, we wish to use <span class="math inline">\(\boldsymbol{x}\)</span> to
 \losssq(\pi, y) = (\pi(\boldsymbol{x}) - y)^2
 \quad\textrm{(Squared error loss)}.
 \]</span></p>
-<p>Using our regression results, we have in fact already shown that the minimizer of <span class="math inline">\(\mathscr{L}(\pi)\)</span> is <span class="math inline">\(\pi^* = \mathbb{E}_{\,}\left[y\vert \boldsymbol{x}\right] = \mathbb{P}_{\,}\left(y\vert \boldsymbol{x}\right)\)</span>!</p>
+<p>Using our regression results, we have in fact already shown that the minimizer of <span class="math inline">\(\mathscr{L}(\pi)\)</span> is <span class="math inline">\(\pi^* = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right] = \mathbb{P}_{\,}\left(y\vert \boldsymbol{x}\right)\)</span>!</p>
 <p>Unfortunately, unlike linear regression, one probably does not want to model <span class="math inline">\(\pi(\boldsymbol{x}| \boldsymbol{\beta}) = \boldsymbol{\beta}^\intercal\boldsymbol{x}\)</span>, since these values are not constrained to be in <span class="math inline">\([0,1]\)</span>. We will deal with this in the next section.</p>
 <p>If <span class="math inline">\(\pi(\boldsymbol{x}) \in (0,1)\)</span> then we can in fact use other losses. One common choice is the negative log likelihood:</p>
 <p><span class="math display">\[

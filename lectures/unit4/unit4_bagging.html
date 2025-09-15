@@ -197,7 +197,7 @@ window.Quarto = {
 \quad\textrm{and}\quad
 \mathrm{Var}_{\mathcal{D}}\left(\hat{f}(\boldsymbol{x}; \mathcal{D})\right) \textrm{ is large.}
 \]</span></p>
-<p>Here, <span class="math inline">\(\mathbb{E}_{\,}\left[y\vert \boldsymbol{x}\right] = f^{\star}(\boldsymbol{x})\)</span> is the best possible prediciton we could make.</p>
+<p>Here, <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right] = f^{\star}(\boldsymbol{x})\)</span> is the best possible prediciton we could make.</p>
 <p>One might think of deep regression trees as being a possible example. Intuitively, one might expect such a predictor to be over–fitting the particular dataset at hand.</p>
 <p>Recall that we showed earlier that the expected squared error decomposes into</p>
 <p><span class="math display">\[
@@ -229,7 +229,7 @@ window.Quarto = {
 <p>The problem is, of course, that bootstrap draws are not draws from <span class="math inline">\(\mathcal{D}\)</span>. Why does boosting work? In my opinion, the theory is not very clear, but it appears in practice that boosting tends to improve highly variable and expressive estimators, but can make less variable estimators worse.</p>
 <section id="linear-estimators-are-unaffected-by-bagging" class="level2">
 <h2 class="anchored" data-anchor-id="linear-estimators-are-unaffected-by-bagging">Linear estimators are unaffected by bagging</h2>
-<p>To concretize the fact that boosting does not necessarily produce an improvement, we can consider the sample mean <span class="math inline">\(\hat{\mu}= \frac{1}{N} \sum_{n=1}^Ny_n\)</span> as an estimator of <span class="math inline">\(\mathbb{E}_{\,}\left[y\right]\)</span>. For a particular bootstrap sample,</p>
+<p>To concretize the fact that boosting does not necessarily produce an improvement, we can consider the sample mean <span class="math inline">\(\hat{\mu}= \frac{1}{N} \sum_{n=1}^Ny_n\)</span> as an estimator of <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y\right]\)</span>. For a particular bootstrap sample,</p>
 <p><span class="math display">\[
 \hat{\mu}^*_b := \frac{1}{N} \sum_{n=1}^Ny_n^*,
 \]</span></p>

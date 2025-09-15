@@ -213,7 +213,7 @@ window.Quarto = {
 <p>for some constant <span class="math inline">\(L\)</span>, and the IL condition allows this <span class="math inline">\(L\)</span> to depend on <span class="math inline">\(z\)</span>, but in a way that is ``integrable’’ by an integrable function <span class="math inline">\(M(z)\)</span>.</p>
 <p>To use this result to control generalization error, we want to apply this to functions of the form</p>
 <p><span class="math display">\[
-\sup_{f\in \mathcal{F}}\left|\frac{1}{N} \sum_{n=1}^N\mathscr{L}(f(x_n), y_n) - \mathbb{E}_{\,}\left[\mathscr{L}(f(x), y)\right]\right|.
+\sup_{f\in \mathcal{F}}\left|\frac{1}{N} \sum_{n=1}^N\mathscr{L}(f(x_n), y_n) - \mathbb{E}_{\vphantom{}}\left[\mathscr{L}(f(x), y)\right]\right|.
 \]</span></p>
 <p>So we might take <span class="math inline">\(z= (x, y)\)</span>, a parametric learner <span class="math inline">\(f(\cdot, y)\)</span>, and</p>
 <p><span class="math display">\[
@@ -283,7 +283,7 @@ M(z) = 2 \left(
 <p><span class="math display">\[
 M(z) = \sup_{\theta \in \Omega} \left\Vert\left. \frac{\partial \phi(z; \theta)}{\partial \theta} \right|_{\theta}\right\Vert,
 \]</span></p>
-<p>and show that <span class="math inline">\(\mathbb{E}_{\,}\left[M(z)\right] &lt; \infty\)</span>, then the IL property follows.</p>
+<p>and show that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[M(z)\right] &lt; \infty\)</span>, then the IL property follows.</p>
 </section>
 <section id="zeroone-loss-functions" class="level2">
 <h2 class="anchored" data-anchor-id="zeroone-loss-functions">Zero–one loss functions</h2>
@@ -328,7 +328,7 @@ VC Dimension
 <p>Let <span class="math inline">\(VC(\mathcal{F}) = \nu\)</span>, and <span class="math inline">\(f\in \mathcal{F}\)</span> take values in <span class="math inline">\(\{0,1\}\)</span>. Then, by <span class="citation" data-cites="wainwright:2019:high">Wainwright (<a href="#ref-wainwright:2019:high" role="doc-biblioref">2019</a>)</span>:</p>
 <p><span class="math display">\[
 \sup_{f\in \mathcal{F}} \left|
-  \frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\,}\left[f(z)\right]
+  \frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\vphantom{}}\left[f(z)\right]
 \right| \le
 \sqrt{\frac{\nu \log (N+1)}{N}} + \delta
 \quad\textrm{with probability at least}\quad

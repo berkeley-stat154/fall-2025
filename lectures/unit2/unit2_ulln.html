@@ -215,12 +215,12 @@ window.Quarto = {
 \]</span></p>
 <p>Note that the ULLN depends on the function <span class="math inline">\(f\)</span> only through <span class="math inline">\(f\mapsto \mathscr{L}(f(x), y)\)</span>. And so the above ULLN is a special case of the more general problem of controlling</p>
 <p><span class="math display">\[
-\sup_{f\in \mathcal{F}} \left|\frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\,}\left[f(z)\right]\right|
+\sup_{f\in \mathcal{F}} \left|\frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\vphantom{}}\left[f(z)\right]\right|
 =\sup_{f\in \mathcal{F}} \err(f, N)
 \]</span></p>
 <p>where we define</p>
 <p><span class="math display">\[
-\err(f,N) := \left|\frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\,}\left[f(z)\right]\right|.
+\err(f,N) := \left|\frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\vphantom{}}\left[f(z)\right]\right|.
 \]</span></p>
 <p>Note that <span class="math inline">\(\err(f,N)\)</span> is random, since it depends on <span class="math inline">\(z_1, \ldots, z_N\)</span>.</p>
 <section id="some-examples" class="level2">
@@ -229,7 +229,7 @@ window.Quarto = {
 </section>
 <section id="a-finite-set-of-functions" class="level2">
 <h2 class="anchored" data-anchor-id="a-finite-set-of-functions">A finite set of functions</h2>
-<p>We first note that the problem is easy if <span class="math inline">\(\mathcal{F}\)</span> is finite, i.e., <span class="math inline">\(\mathcal{F}= \{ f_k \textrm{ for }k=1,\ldots,K &lt; \infty \}\)</span>, where each <span class="math inline">\(f_k\)</span> satisfies <span class="math inline">\(\mathbb{E}_{\,}\left[|f_k(z)|\right] \infty\)</span>. In that case,</p>
+<p>We first note that the problem is easy if <span class="math inline">\(\mathcal{F}\)</span> is finite, i.e., <span class="math inline">\(\mathcal{F}= \{ f_k \textrm{ for }k=1,\ldots,K &lt; \infty \}\)</span>, where each <span class="math inline">\(f_k\)</span> satisfies <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[|f_k(z)|\right] \infty\)</span>. In that case,</p>
 <p><span class="math display">\[
 \sup_{f\in \mathcal{F}} \err(f,N) = \max_{k=1,\ldots,K} \err(f_k, N).
 \]</span></p>
@@ -267,7 +267,7 @@ Integrable Lipschitz Assumption
 <div class="callout-body-container callout-body">
 <p>Assume that <span class="math inline">\(\Omega\)</span> is compact, and assume that, for each <span class="math inline">\(z\)</span>, <span class="math display">\[
 \left|f(z; \theta) - f(z; \theta')\right| \le{} M(z) \left\Vert\theta - \theta'\right\Vert,
-\]</span> where <span class="math inline">\(M(z) \ge 0\)</span> and <span class="math inline">\(\mathbb{E}_{\,}\left[M(z)\right] &lt; \infty\)</span>.</p>
+\]</span> where <span class="math inline">\(M(z) \ge 0\)</span> and <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[M(z)\right] &lt; \infty\)</span>.</p>
 </div>
 </div>
 <p>This means that the depednence of <span class="math inline">\(f(z; \theta)\)</span> can be decomposed into a smooth part depending on <span class="math inline">\(\theta\)</span>, and an integral part depending on <span class="math inline">\(z\)</span>. When this is true, for a fixed <span class="math inline">\(\gamma &gt; 0\)</span>, we can always find a set of <span class="math inline">\(K(\gamma)\)</span> parameters <span class="math inline">\(\theta_k\)</span> (depending on <span class="math inline">\(\gamma\)</span>) such that</p>
@@ -296,33 +296,33 @@ Exercise
 <p><span class="math display">\[
 \begin{aligned}
 \err(f, N) ={}&amp;
-\left|\frac{1}{N} \sum_{n=1}^Nf(z_n; \theta) - \mathbb{E}_{\,}\left[f(z; \theta)\right]\right|
+\left|\frac{1}{N} \sum_{n=1}^Nf(z_n; \theta) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta)\right]\right|
 \\={}&amp;
-\left|\frac{1}{N} \sum_{n=1}^Nf(z_n; \theta) - f(z_n; \theta_k) - \mathbb{E}_{\,}\left[f(z; \theta) - f(z; \theta_k)\right] + f(z_n; \theta_k) - \mathbb{E}_{\,}\left[f(z; \theta_k)\right]\right|
+\left|\frac{1}{N} \sum_{n=1}^Nf(z_n; \theta) - f(z_n; \theta_k) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta) - f(z; \theta_k)\right] + f(z_n; \theta_k) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta_k)\right]\right|
 \\ \le{}&amp;
 \frac{1}{N} \sum_{n=1}^N\left|f(z_n; \theta) - f(z_n; \theta_k)\right|  +
-\mathbb{E}_{\,}\left[\left|f(z; \theta) - f(z; \theta_k)\right|\right] +
+\mathbb{E}_{\vphantom{}}\left[\left|f(z; \theta) - f(z; \theta_k)\right|\right] +
 \err(f_k, N)
 \\ \le{}&amp;
-\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\,}\left[M(z)\right] \right)  \left\Vert\theta - \theta_k\right\Vert +
+\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \left\Vert\theta - \theta_k\right\Vert +
 \err(f_k, N)
 \\ \le{}&amp;
-\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\,}\left[M(z)\right] \right)  \gamma +
+\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
 \max_{k=1,\ldots,K} \err(f_k, N).
 \end{aligned}
 \]</span></p>
 <p>The right hand side now does not depend on <span class="math inline">\(f\)</span>, so</p>
 <p><span class="math display">\[
 \sup_{f\in \mathcal{F}} \err(f, N) \le
-\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\,}\left[M(z)\right] \right)  \gamma +
+\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
 \max_{k=1,\ldots,K} \err(f_k, N).
 \]</span></p>
-<p>For any fixed <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 0\)</span>, as shown above. So since <span class="math inline">\(\frac{1}{N} \sum_{n=1}^NM(z_n) \rightarrow \mathbb{E}_{\,}\left[M(z)\right]\)</span>, we have that, for any fixed <span class="math inline">\(\gamma\)</span>,</p>
+<p>For any fixed <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 0\)</span>, as shown above. So since <span class="math inline">\(\frac{1}{N} \sum_{n=1}^NM(z_n) \rightarrow \mathbb{E}_{\vphantom{}}\left[M(z)\right]\)</span>, we have that, for any fixed <span class="math inline">\(\gamma\)</span>,</p>
 <p><span class="math display">\[
-\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\,}\left[M(z)\right] \right)  \gamma +
-\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 2 \mathbb{E}_{\,}\left[M(z)\right] \gamma.
+\left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
+\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 2 \mathbb{E}_{\vphantom{}}\left[M(z)\right] \gamma.
 \]</span></p>
-<p>Since <span class="math inline">\(\gamma\)</span> can be made arbitrarily small (at the cost of requiring even greater <span class="math inline">\(N\)</span> to make <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N)\)</span> small), for any <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\delta\)</span> we can choose <span class="math inline">\(\gamma = \varepsilon / 2 \mathbb{E}_{\,}\left[M(z)\right]\)</span> and find an <span class="math inline">\(N\)</span> large enough that</p>
+<p>Since <span class="math inline">\(\gamma\)</span> can be made arbitrarily small (at the cost of requiring even greater <span class="math inline">\(N\)</span> to make <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N)\)</span> small), for any <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\delta\)</span> we can choose <span class="math inline">\(\gamma = \varepsilon / 2 \mathbb{E}_{\vphantom{}}\left[M(z)\right]\)</span> and find an <span class="math inline">\(N\)</span> large enough that</p>
 <p><span class="math display">\[
 \mathbb{P}_{\,}\left(\sup_{f\in \mathcal{F}} \err(f, N) \ge \varepsilon\right) \le \delta.
 \]</span></p>
