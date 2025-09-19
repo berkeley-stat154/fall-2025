@@ -233,17 +233,17 @@ As before, we wish to use <span class="math inline">\(\boldsymbol{x}\)</span> to
 <p><span class="math display">\[
 \losszo(\hat{y}, y) = 0.1 \mathrm{I}\left(\hat{y}=0, y=1\right) + 0.9 \mathrm{I}\left(\hat{y}=1, y=0\right).
 \]</span></p>
-<p>Such classification error losses are conceptually appealing, but practically difficult, since they are discontinuous — small changes in your algorithm or information about <span class="math inline">\(\boldsymbol{x}\)</span> can produce discrete changes. For this reason, we often perform empirical risk minimization on one of the more expressive losses below, and then argue using VC dimension that the zero–one loss has low generalization error.</p>
+<p>Classification error losses based on counting the mismatches are conceptually appealing, but practically difficult, since they are discontinuous — small changes in your algorithm or information about <span class="math inline">\(\boldsymbol{x}\)</span> can produce discrete changes. For this reason, we often perform empirical risk minimization on one of the more expressive losses below, and then argue using VC dimension that the zero–one loss has low generalization error.</p>
 <p>Note that the maximizer of the zero–one loss has a closed form:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \mathbb{E}_{\mathbb{P}_{\,}\left(\boldsymbol{x}, y\right)}\left[\losszo(\hat{y}, y)\right] ={}&amp;
 \sum_{c \in \mathcal{Y}} \mathrm{I}\left(\hat{y}= c\right) \mathbb{E}_{\mathbb{P}_{\,}\left(\boldsymbol{x}, y\right)}\left[\mathrm{I}\left(y\ne c\right)\right] \\={}&amp;
 \sum_{c \in \mathcal{Y}} \mathrm{I}\left(\hat{y}= c\right) ( 1 - \mathbb{P}_{\,}\left(y= c, \boldsymbol{x}\right)) \\={}&amp;
-1 - \sum_{c \in \mathcal{Y}} \mathrm{I}\left(\hat{y}= c\right) ( 1 - \mathbb{P}_{\,}\left(y= c | \boldsymbol{x}\right) ) \mathbb{P}_{\,}\left(\boldsymbol{x}\right).
+1 - \sum_{c \in \mathcal{Y}} \mathrm{I}\left(\hat{y}= c\right) \mathbb{P}_{\,}\left(y= c | \boldsymbol{x}\right) \mathbb{P}_{\,}\left(\boldsymbol{x}\right).
 \end{aligned}
 \]</span></p>
-<p>Sice <span class="math inline">\(\mathbb{P}_{\,}\left(\boldsymbol{x}\right)\)</span> does not depend on <span class="math inline">\(\c\)</span>, the best choice for <span class="math inline">\(\hat{y}\)</span> is</p>
+<p>Sice <span class="math inline">\(\mathbb{P}_{\,}\left(\boldsymbol{x}\right)\)</span> does not depend on <span class="math inline">\(c\)</span>, the best choice for <span class="math inline">\(\hat{y}\)</span> is</p>
 <p><span class="math display">\[
 \hat{y}^*(\boldsymbol{x}) = \underset{c \in \mathcal{Y}}{\mathrm{argmax}}\, \mathbb{P}_{\,}\left(y= c | \boldsymbol{x}\right).
 \]</span></p>
@@ -287,6 +287,7 @@ As before, we wish to use <span class="math inline">\(\boldsymbol{x}\)</span> to
 \end{aligned}
 \]</span></p>
 <p>Since, for each <span class="math inline">\(\boldsymbol{x}\)</span>, <span class="math inline">\(\mathbb{E}_{\mathbb{P}_{\,}\left(y| \boldsymbol{x}\right)}\left[- \log \mathbb{P}_{\,}\left(y\vert \pi(\boldsymbol{x})\right)\right]\)</span> is maximized by <span class="math inline">\(\mathbb{P}_{\,}\left(y= 1 | \boldsymbol{x}\right)\)</span>, the expectation of <span class="math inline">\(\boldsymbol{x}\)</span> is also maximized at <span class="math inline">\(\pi^*(\boldsymbol{x}) = \mathbb{P}_{\,}\left(y= 1 | \boldsymbol{x}\right)\)</span>. We thus see that the cross-entropy loss and squared loss have the same minimizer, though each will deal with misspecification differently.</p>
+<p>In fact, there are an infinite set of loss functions that all have <span class="math inline">\(\mathbb{P}_{\,}\left(y= 1 | \boldsymbol{x}\right)\)</span> as their minimum. They are called ``proper scoring rules.’’ Each such loss can be derived from a any convex function defined on the vector <span class="math inline">\(\pi\)</span>, and vice–versa. (See Gneiting and Raftrey 2007).</p>
 <p>Each of these can be generalized to multi–category losses by taking <span class="math inline">\(\pi_c\)</span> to be the probability of category <span class="math inline">\(c\)</span> and</p>
 <p><span class="math display">\[
 \mathscr{L}(\pi, y) = \sum_{c \in \mathcal{Y}} \mathrm{I}\left(y= c\right) \mathscr{L}(\pi_c),
