@@ -125,7 +125,7 @@ window.Quarto = {
   <ul>
   <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
   <li><a href="#ordinary-least-squares-under-misspecification" id="toc-ordinary-least-squares-under-misspecification" class="nav-link" data-scroll-target="#ordinary-least-squares-under-misspecification">Ordinary least squares under misspecification</a></li>
-  <li><a href="#regression-as-loss-minimization" id="toc-regression-as-loss-minimization" class="nav-link" data-scroll-target="#regression-as-loss-minimization">Regression as loss minimization</a></li>
+  <li><a href="#regression-as-risk-minimization" id="toc-regression-as-risk-minimization" class="nav-link" data-scroll-target="#regression-as-risk-minimization">Regression as risk minimization</a></li>
   <li><a href="#linear-regression-and-least-squares-loss" id="toc-linear-regression-and-least-squares-loss" class="nav-link" data-scroll-target="#linear-regression-and-least-squares-loss">Linear regression and least squares loss</a>
   <ul class="collapse">
   <li><a href="#approximating-the-conditional-expectation" id="toc-approximating-the-conditional-expectation" class="nav-link" data-scroll-target="#approximating-the-conditional-expectation">Approximating the conditional expectation</a></li>
@@ -237,8 +237,8 @@ y_n = \mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}_n\right] + \varepsilon_n,
 \]</span></p>
 <p>This is a mysterious expression. In order to give it meaning, let us consider the more general problem of <em>empirical risk minimization</em>. We will see at the end that this is actually quite a good quantity for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> to converge to.</p>
 </section>
-<section id="regression-as-loss-minimization" class="level1">
-<h1>Regression as loss minimization</h1>
+<section id="regression-as-risk-minimization" class="level1">
+<h1>Regression as risk minimization</h1>
 <p>Let us step back. Ultimately, we want to guess <span class="math inline">\(y_\mathrm{new}\)</span>, for which we want a function <span class="math inline">\(f(\boldsymbol{x}_\mathrm{new})\)</span>. We hope <span class="math inline">\(\hat{y}_\mathrm{new}:= f(\boldsymbol{x}_\mathrm{new})\)</span> is “close” to <span class="math inline">\(y_\mathrm{new}\)</span>.</p>
 <p>What does “close” mean? There are many choices for measuring a “distance” between <span class="math inline">\(\hat{y}_\mathrm{new}\)</span> and <span class="math inline">\(y_\mathrm{new}\)</span>. Here are a few:</p>
 <ul>
@@ -300,7 +300,7 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A quick stroll through the internet suggests that “risk” and “loss” are somewhat inconsistently defined, so the main thing is to keep track of what you mean in a particular case.</p>
+<p>In optimization, the quantity you minimize is commonly called a “loss function”. Here, we use the term “loss function” in the ML sense to measure the discrepancy between a prediction and the truth. Then we take an empirical or population average to form a risk, which in turn becomes a “loss function” in the optimization sense when we try to minimize it. This double use of “loss” is as ubiquitous as it is unfortunate. All we can do is be aware of it and keep an eye on the context to avoid abiguity.</p>
 </div>
 </div>
 <p>So we would like to find</p>
@@ -410,7 +410,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\vphantom{}}\left[y_\mathr
 <h2 class="anchored" data-anchor-id="approximating-the-conditional-expectation">Approximating the conditional expectation</h2>
 <p>We now know that the optimal regression function is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span>. The problem is how to estimate it.</p>
 <p>We have been imagining that we know the full joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>. In that case, we can read off the conditional distribution by “slicing” through a particular <span class="math inline">\(\boldsymbol{x}\)</span>:</p>
-<div id="92c81c90" class="cell" data-execution_count="2">
+<div id="b358aa46" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -420,7 +420,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\vphantom{}}\left[y_\mathr
 </div>
 </div>
 <p>However, in practice, we don’t actually observe the full joint distribution, we observe data points. How should we proceed?</p>
-<div id="356a27f1" class="cell" data-execution_count="3">
+<div id="6af11d4d" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
