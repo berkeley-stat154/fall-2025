@@ -151,7 +151,10 @@ window.Quarto = {
   <li><a href="#first-version-the-ml-procedure-returns-a-category" id="toc-first-version-the-ml-procedure-returns-a-category" class="nav-link" data-scroll-target="#first-version-the-ml-procedure-returns-a-category">First version: the ML procedure returns a category</a></li>
   <li><a href="#second-version-the-ml-procedure-returns-a-probability" id="toc-second-version-the-ml-procedure-returns-a-probability" class="nav-link" data-scroll-target="#second-version-the-ml-procedure-returns-a-probability">Second version: the ML procedure returns a probability</a></li>
   <li><a href="#third-version-unconstraining-parameterizations-for-probabilities" id="toc-third-version-unconstraining-parameterizations-for-probabilities" class="nav-link" data-scroll-target="#third-version-unconstraining-parameterizations-for-probabilities">Third version: Unconstraining parameterizations for probabilities</a></li>
-  <li><a href="#fourth-version-the-ml-procedure-returns-a-threshold-discriminative-modeling" id="toc-fourth-version-the-ml-procedure-returns-a-threshold-discriminative-modeling" class="nav-link" data-scroll-target="#fourth-version-the-ml-procedure-returns-a-threshold-discriminative-modeling">Fourth version: The ML procedure returns a threshold (“Discriminative modeling”)</a></li>
+  <li><a href="#fourth-version-the-ml-procedure-returns-a-threshold-discriminative-modeling" id="toc-fourth-version-the-ml-procedure-returns-a-threshold-discriminative-modeling" class="nav-link" data-scroll-target="#fourth-version-the-ml-procedure-returns-a-threshold-discriminative-modeling">Fourth version: The ML procedure returns a threshold (“Discriminative modeling”)</a>
+  <ul class="collapse">
+  <li><a href="#perceptron-algorithm" id="toc-perceptron-algorithm" class="nav-link" data-scroll-target="#perceptron-algorithm">Perceptron algorithm</a></li>
+  </ul></li>
   <li><a href="#fifth-version-the-ml-procedure-returns-a-density-estimate-of-boldsymbolx-generative-modeling" id="toc-fifth-version-the-ml-procedure-returns-a-density-estimate-of-boldsymbolx-generative-modeling" class="nav-link" data-scroll-target="#fifth-version-the-ml-procedure-returns-a-density-estimate-of-boldsymbolx-generative-modeling">Fifth version: The ML procedure returns a density estimate of <span class="math inline">\(\boldsymbol{x}\)</span> (“Generative modeling”)</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -368,6 +371,29 @@ As before, we wish to use <span class="math inline">\(\boldsymbol{x}\)</span> to
 \hat\pi(y= c | \boldsymbol{x}) = \frac{\phi(f_c(\boldsymbol{x}))}{\sum_{c' \in \mathcal{Y}} \phi(f_{c'}(\boldsymbol{x}))}.
 \]</span></p>
 <p>This is true for any <span class="math inline">\(\phi\)</span>, and so a decision boundary is, in general, consistent with many different probability estimates <span class="math inline">\(\hat\pi(y= c | \boldsymbol{x})\)</span>. Conversely, a complete set of probability estimates are consistent with a wide variety of decision boundaries, all of which lead to identical classifications.</p>
+<section id="perceptron-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="perceptron-algorithm">Perceptron algorithm</h3>
+<p>A classical example of the threshold perspective is given by the perceptron algorithm, and by support vector classifiers. These classical tools are motivated by finding a decision boundary, and not by modeling a probability.</p>
+<p>This short section derive from <a href="../../lectures/unit2/unit2_perceptron.html">these more detailed notes</a>, which are optional at this point. Suppose we have regressors, <span class="math inline">\(\boldsymbol{x}_n\)</span>, all satisfying <span class="math inline">\(\left\Vert\boldsymbol{x}_n\right\Vert_2^2 = 1\)</span> (this is for notational convenience and can be relaxed). Let <span class="math inline">\(y_n \in \{-1, 1\}\)</span> — note the departure from our usual notation, in which the negative cases were <span class="math inline">\(0\)</span> rather than <span class="math inline">\(-1\)</span>. For a given <span class="math inline">\(\boldsymbol{\beta}\)</span>, we classify observation <span class="math inline">\(n\)</span> as</p>
+<p><span class="math display">\[
+\hat{y}_n = \mathrm{Sign}\left( \boldsymbol{x}_n^\intercal\boldsymbol{\beta}\right).
+\]</span></p>
+<p>That is, we look at the degree of alignment between <span class="math inline">\(\boldsymbol{x}_n\)</span> and <span class="math inline">\(\boldsymbol{\beta}\)</span> to determine the class of <span class="math inline">\(\hat{y}_n\)</span>. Note that this is the same as the decision rule in any classifier based on transformed linear regression.</p>
+<p>The perceptron algorithm is as follows:</p>
+<ul>
+<li>Set <span class="math inline">\(\boldsymbol{\beta}=0\)</span>.</li>
+<li>Loop indefinitely:
+<ul>
+<li>Draw <span class="math inline">\(n\in\{1,\dots,N\}\)</span> at random.</li>
+<li>If <span class="math inline">\(y_n\boldsymbol{x}_n^T\boldsymbol{\beta}&lt; 1\)</span>, set <span class="math inline">\(\boldsymbol{\beta}\leftarrow \boldsymbol{\beta}+ y_n\boldsymbol{x}_n\)</span>.</li>
+</ul></li>
+</ul>
+<p>Remarkably, this simple algorithm produces an effective classifier if there is a unit vector <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> which separates the data with margin <span class="math inline">\(\gamma\)</span>: <span class="math display">\[
+y_n\boldsymbol{x}_n^T\boldsymbol{\beta}^{*}&gt; \gamma&gt;0 \text{ for all } n=1,\dots,N
+\textrm{ and }\left\Vert\boldsymbol{\beta}^{*}\right\Vert_2^2 = 1.
+\]</span></p>
+<p>Under these conditions, remarkably, we have that the algorithm makes at most <span class="math inline">\(3 / \gamma^2\)</span> margin mistakes during training.</p>
+</section>
 </section>
 <section id="fifth-version-the-ml-procedure-returns-a-density-estimate-of-boldsymbolx-generative-modeling" class="level2">
 <h2 class="anchored" data-anchor-id="fifth-version-the-ml-procedure-returns-a-density-estimate-of-boldsymbolx-generative-modeling">Fifth version: The ML procedure returns a density estimate of <span class="math inline">\(\boldsymbol{x}\)</span> (“Generative modeling”)</h2>
@@ -382,6 +408,7 @@ As before, we wish to use <span class="math inline">\(\boldsymbol{x}\)</span> to
 \]</span></p>
 <p>We can then attempt to model the conditional density <span class="math inline">\(\mathbb{P}_{\,}\left(\boldsymbol{x}| y= c\right)\)</span> by forming density estimates the sets of points <span class="math inline">\(\mathcal{X}_c := \left\{ x_n: y_n = c \right\}\)</span>. Density estimation is difficult in high dimensions — arguably more difficult than estimating good decision boundaries — but generative modeling can be particularly effective in low dimensions, or when something special is known about the structure of <span class="math inline">\(\mathbb{P}_{\,}\left(\boldsymbol{x}| y= c\right)\)</span>.</p>
 <p>Note that the estimation <span class="math inline">\(\mathbb{P}_{\,}\left(\boldsymbol{x}| y= c\right)\)</span> does not admit a ready formulation as a direct minimization of classification error. Estimation of densities is typically considered an “unsupervised learning” problem for this reason, even though here we would use the unsupervised learning estimate in service of a supervised learning problem.</p>
+<p>A simple approximation to <span class="math inline">\(\mathbb{P}_{\,}\left(\boldsymbol{x}| y= c\right)\)</span> leads to the “naive Bayes” classifier: we simply model the components of <span class="math inline">\(\boldsymbol{x}\)</span> as independent, and estimate each component separately using histograms or kernel density estimators. See section 6.6.3 of <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span>.</p>
 <p>In your homework, you will show that making a certain Gaussian assumption on <span class="math inline">\(\mathbb{P}_{\,}\left(\boldsymbol{x}| y= c\right)\)</span> leads to logistic–regression like linear classification boundaries.</p>
 </section>
 </section>
@@ -395,6 +422,9 @@ As before, we wish to use <span class="math inline">\(\boldsymbol{x}\)</span> to
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-isl:2021:gareth" class="csl-entry" role="listitem">
 Gareth, J., W. Daniela, H. Trevor, and T. Robert. 2021. <em>An Introduction to Statistical Learning: <span>W</span>ith Applications in <span>Python</span></em>. Spinger.
+</div>
+<div id="ref-esl:2009:hastie" class="csl-entry" role="listitem">
+Hastie, T., R. Tibshirani, and J. Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference and Prediction</em>. 2nd ed. Springer.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
