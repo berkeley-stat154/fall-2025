@@ -59,7 +59,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-3c26bda9cedcf6dcb30ec7dd6948e637.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-9ca244728582364b54b6a88cc4015eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -279,13 +279,13 @@ $\expect{(\fbar(\xv_\new) - \fstar(\xv_\new)) (\fhat(\xv_\new) - \fbar(\xv_\new)
 further argument.
 ::: -->
 <p>Increasing model complexity can only decrease bias by allowing <span class="math inline">\(\hat{f}\)</span> to fit more expressive functions. There is only one place in this decomposition that expressivity can <em>hurt</em> our risk, which is the variance term. In some settings — including a version of simple linear regression here — we can show explicitly that increasing model complexity increases variance, though, as we will see, the story is not necessarily so simple, even for linear regression.</p>
-<p>In any case, this decomposition shows that the potential to increase the training set variability must be the source of any complexity cost. It is for this reason that it can be useful to limit the complexity of <span class="math inline">\(\hat{f}\)</span>, at the cost of failing to capture the true <span class="math inline">\(f^{\star}\)</span>, but with the potential benefit of providing an improved actual loss.</p>
+<p>In any case, this decomposition shows that the potential to increase the training set variability must be the source of any complexity cost. It is for this reason that it can be useful to limit the complexity of <span class="math inline">\(\hat{f}\)</span>, at the cost of failing to capture the true <span class="math inline">\(f^{\star}\)</span>, but with the potential benefit of providing an improved actual risk.</p>
 </section>
 </section>
 <section id="misspecified-linear-regression" class="level1">
 <h1>Misspecified linear regression</h1>
 <p>Let’s assume that we have regressors <span class="math inline">\(\boldsymbol{x}_n \in \mathbb{R}^{P}\)</span>, possibly created by feature expansions, and we would like to decide which regressors to include in our regression. Note that the larger <span class="math inline">\(P\)</span> is, the more expressive the regression can be, and the closer we can get to the true <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span>. However, we will see that choosing regressors typically comes at a cost.</p>
-<p>As we have shown, <span class="math inline">\(f^{\star}(y) = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right]\)</span> minimizes the population loss <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[(y- f(\boldsymbol{x}))^2\right]\)</span>, and the regression coefficient <span class="math inline">\(\beta^{*}= M_{xx}^{-1} M_{xy}\)</span> minimizes the linear regression loss <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta})^2\right]\)</span>, where</p>
+<p>As we have shown, <span class="math inline">\(f^{\star}(y) = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right]\)</span> minimizes the population risk <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[(y- f(\boldsymbol{x}))^2\right]\)</span>, and the regression coefficient <span class="math inline">\(\beta^{*}= M_{xx}^{-1} M_{xy}\)</span> minimizes the linear regression risk <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta})^2\right]\)</span>, where</p>
 <p><span class="math display">\[
 M_{xx} := \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
 \quad\textrm{and}\quad
@@ -301,7 +301,7 @@ M_{xy} := \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\r
 \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right]\right].
 \end{aligned}
 \]</span></p>
-<p>Note that <span class="math inline">\(\boldsymbol{X}\)</span> is random in the preceding expression, since our pairs <span class="math inline">\((x_n, y_n)\)</span> are IID — otherwise, the relatioship between population and sample loss doesn’t make sense. In an introductory linear models class, you might assume that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right] = \boldsymbol{X}\beta^{*}+ \boldsymbol{\varepsilon}\)</span> for <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right] = \boldsymbol{0}\)</span>. If that were the case, then</p>
+<p>Note that <span class="math inline">\(\boldsymbol{X}\)</span> is random in the preceding expression, since our pairs <span class="math inline">\((x_n, y_n)\)</span> are IID — otherwise, the relatioship between population and sample risk doesn’t make sense. In an introductory linear models class, you might assume that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right] = \boldsymbol{X}\beta^{*}+ \boldsymbol{\varepsilon}\)</span> for <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right] = \boldsymbol{0}\)</span>. If that were the case, then</p>
 <p><span class="math display">\[
 \begin{aligned}
 \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right]\right] ={}&amp;
@@ -316,10 +316,10 @@ M_{xy} := \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\r
 </section>
 <section id="biasvariance-decomposition-for-misspecified-linear-models" class="level2">
 <h2 class="anchored" data-anchor-id="biasvariance-decomposition-for-misspecified-linear-models">Bias–variance decomposition for misspecified linear models</h2>
-<p>The population loss evaluated at <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> can be decomposed as above into</p>
+<p>The population risk evaluated at <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> can be decomposed as above into</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathscr{L}(\hat{\boldsymbol{\beta}}) :={}&amp;
+\mathscr{R}(\hat{\boldsymbol{\beta}}) :={}&amp;
   \mathbb{E}_{\mathrm{new},\mathcal{D}}\left[(y- \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x})^2\right]
 \\={}&amp;
   \mathbb{E}_{\mathrm{new},\mathcal{D}}\left[(y- f^{\star}(\boldsymbol{x}) +
@@ -410,9 +410,9 @@ M_{yx} M_{xx}^{-1} M_{xx} M_{xx}^{-1} M_{xy} -
 <p>This can only decrease as <span class="math inline">\(P\)</span> increases. Perhaps the easiest way to see this is to note that</p>
 <p><span class="math display">\[
 \mathbb{E}_{\mathrm{new}}\left[(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}}^\intercal\boldsymbol{x})^2\right] =
-\mathscr{L}(\boldsymbol{\beta}) - \mathbb{E}_{\mathrm{new}}\left[(y- f^{\star}(\boldsymbol{x}))^2\right].
+\mathscr{R}(\boldsymbol{\beta}) - \mathbb{E}_{\mathrm{new}}\left[(y- f^{\star}(\boldsymbol{x}))^2\right].
 \]</span></p>
-<p>By making <span class="math inline">\(\boldsymbol{\beta}\)</span> more expressive, we can only decrease the population loss <span class="math inline">\(\mathscr{L}(\boldsymbol{\beta})\)</span>; since we cannot change the irreducible loss by doing so, we must be decreasing the bias term.</p>
+<p>By making <span class="math inline">\(\boldsymbol{\beta}\)</span> more expressive, we can only decrease the population risk <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span>; since we cannot change the irreducible risk by doing so, we must be decreasing the bias term.</p>
 <p>As expected, we thus see that increasing model complexity decreases the bias term.</p>
 </section>
 <section id="variance-term" class="level2">
