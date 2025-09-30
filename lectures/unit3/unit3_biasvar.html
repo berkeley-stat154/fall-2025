@@ -145,9 +145,13 @@ window.Quarto = {
   <ul>
   <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
   <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a></li>
-  <li><a href="#consequences-of-model-complexity" id="toc-consequences-of-model-complexity" class="nav-link" data-scroll-target="#consequences-of-model-complexity">Consequences of model complexity</a>
+  <li><a href="#consequences-of-model-complexity" id="toc-consequences-of-model-complexity" class="nav-link" data-scroll-target="#consequences-of-model-complexity">Consequences of model complexity</a></li>
+  <li><a href="#the-biasvariance-tradeoff-under-correct-specification" id="toc-the-biasvariance-tradeoff-under-correct-specification" class="nav-link" data-scroll-target="#the-biasvariance-tradeoff-under-correct-specification">The bias–variance tradeoff under correct specification</a>
   <ul class="collapse">
-  <li><a href="#the-biasvariance-tradeoff" id="toc-the-biasvariance-tradeoff" class="nav-link" data-scroll-target="#the-biasvariance-tradeoff">The bias–variance tradeoff</a></li>
+  <li><a href="#the-biasvariance-tradeoff-for-ridge-estimation" id="toc-the-biasvariance-tradeoff-for-ridge-estimation" class="nav-link" data-scroll-target="#the-biasvariance-tradeoff-for-ridge-estimation">The bias–variance tradeoff for ridge estimation</a></li>
+  </ul></li>
+  <li><a href="#the-biasvariance-tradeoff-more-generally" id="toc-the-biasvariance-tradeoff-more-generally" class="nav-link" data-scroll-target="#the-biasvariance-tradeoff-more-generally">The “bias–variance” tradeoff more generally</a>
+  <ul class="collapse">
   <li><a href="#only-asymptotic-variance-and-bias" id="toc-only-asymptotic-variance-and-bias" class="nav-link" data-scroll-target="#only-asymptotic-variance-and-bias">Only asymptotic variance and bias</a></li>
   <li><a href="#bias-term" id="toc-bias-term" class="nav-link" data-scroll-target="#bias-term">Bias term</a></li>
   <li><a href="#variance-term" id="toc-variance-term" class="nav-link" data-scroll-target="#variance-term">Variance term</a>
@@ -188,6 +192,7 @@ window.Quarto = {
 
 
 <p><span class="math inline">\(\,\)</span></p>
+<!-- \betavbar definition  -->
 <section id="goals" class="level1">
 <h1>Goals</h1>
 <ul>
@@ -212,9 +217,146 @@ window.Quarto = {
 <p>For this lecture, we return to squared loss and linear regression. We have discussed how we can generate many features for linear regression. In principle, we can generate an arbitrarily large number of features — bounded only by the number of distinct values the regressors can take. Which features should we include in the model?</p>
 <p>We will be discussing this as a practical matter throughout the course. But here, we will show that in linear regression the choice of which features to include involves an explicit tradeoff between two quantities, “bias” and “variance” which may (or may not) move in different directions as more regressors are included.</p>
 <p>Recall that when using the squared loss, the optimal linear predictor is given by <span class="math inline">\(\boldsymbol{\beta}^{*}= M_{xx}^{-1} M_{xy}\)</span>, where <span class="math inline">\(M_{xx} = \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]\)</span> and <span class="math inline">\(M_{xy} = \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}y\right]\)</span>. The optimal prediction function among all functions is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right]\)</span>.</p>
-<section id="the-biasvariance-tradeoff" class="level2">
-<h2 class="anchored" data-anchor-id="the-biasvariance-tradeoff">The bias–variance tradeoff</h2>
-<p>Recall that we can decompose the regret into two terms that behave in opposite directions with respect to model complexity:</p>
+</section>
+<section id="the-biasvariance-tradeoff-under-correct-specification" class="level1">
+<h1>The bias–variance tradeoff under correct specification</h1>
+<p>The classical bias–variance tradeoff occurs under (a) correct specification and (b) conditional on the training regressors, <span class="math inline">\(\boldsymbol{X}\)</span>. The assumption of correct specification is particularly problematic, and, as we see below, in its absence the bias–variance tradeoff becomes more complicated. However, it is good to be familiar with the classical version.</p>
+<p>Suppose we define <span class="math inline">\(\overline{\boldsymbol{\beta}}:= \mathbb{E}_{p(\boldsymbol{Y}\vert \boldsymbol{X})}\left[\hat{\boldsymbol{\beta}}\right]\)</span>, and assume that <span class="math inline">\(y= \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}+ \epsilon\)</span>, for some <span class="math inline">\(\epsilon\)</span> satisfying <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\epsilon | \boldsymbol{x}\right] = 0\)</span> and <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\epsilon^2 \vert \boldsymbol{x}\right] = \sigma^2\)</span>. For now, let’s not assume anything about <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> — it’s just some estimator that depends on the training data, <span class="math inline">\(\boldsymbol{X}\)</span> and <span class="math inline">\(\boldsymbol{Y}\)</span>, not necessarily the OLS estimator.</p>
+<p>We can then write <span class="math display">\[
+\begin{aligned}
+\mathscr{R}(\hat{\boldsymbol{\beta}}) ={}&amp;
+  \mathbb{E}_{p(\boldsymbol{x}, y)}\left[(y- \boldsymbol{x}^\intercal\hat{\boldsymbol{\beta}})^2\right]
+\\={}&amp;
+  \mathbb{E}_{p(\boldsymbol{x}, y)}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}+ \boldsymbol{x}^\intercal(\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}}) + \boldsymbol{x}^\intercal(\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}}))^2\right]
+\\={}&amp;
+  \mathbb{E}_{p(\boldsymbol{x}, y)}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*})^2\right] +
+  \mathbb{E}_{p(\boldsymbol{x}, y)}\left[\boldsymbol{x}^\intercal(\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\boldsymbol{x}\right] +
+  \mathbb{E}_{p(\boldsymbol{x}, y)}\left[\boldsymbol{x}^\intercal(\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}}) (\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}})^\intercal\boldsymbol{x}\right] +
+\\{}&amp;
+  2 \mathbb{E}_{p(\boldsymbol{x}, y)}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\boldsymbol{x}\right] +
+  2 \mathbb{E}_{p(\boldsymbol{x}, y)}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}) (\hat{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}})^\intercal\boldsymbol{x}\right] + \\{}&amp;
+  2 \mathbb{E}_{p(\boldsymbol{x}, y)}\left[\boldsymbol{x}^\intercal(\hat{\boldsymbol{\beta}}- \overline{\boldsymbol{\beta}}) (\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}})^\intercal\boldsymbol{x}\right] \\{}&amp;
+\\={}&amp;
+  \sigma^2 +
+  \mathrm{trace}\left(\mathbb{E}_{p(\boldsymbol{x}, y)}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\right) +
+  \mathrm{trace}\left(\mathbb{E}_{p(\boldsymbol{x}, y)}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] (\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}}) (\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}})^\intercal\right) +
+\\{}&amp;
+  2 \mathbb{E}_{p(\boldsymbol{x})}\left[\mathbb{E}_{p(y\vert \boldsymbol{x})}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*})\right] (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\boldsymbol{x}\right] + \\{}&amp;
+  2 \mathbb{E}_{p(\boldsymbol{x})}\left[\mathbb{E}_{p(y\vert \boldsymbol{x})}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*})\right] (\hat{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}})^\intercal\boldsymbol{x}\right] + \\{}&amp;
+  2 \mathrm{trace}\left(\mathbb{E}_{p(\boldsymbol{x}, y)}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] (\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\right).
+\\={}&amp;
+  \sigma^2 +
+  \mathrm{trace}\left(M_{xx} (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\right) +
+  \mathrm{trace}\left(M_{xx} (\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}}) (\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}})^\intercal\right) +
+\\{}&amp;
+  2 \mathrm{trace}\left(M_{xx} (\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\right)
+\end{aligned}
+\]</span> because, by correct specification, <span class="math inline">\(\mathbb{E}_{p(y\vert \boldsymbol{x})}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*})\right] = 0\)</span>.</p>
+<p>Naturally, <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}})\)</span> is random, since <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is a function of the training data, which is random. If we take the expectation of the preceding expression with respect to the training <span class="math inline">\(\boldsymbol{Y}\)</span>, but conditional on <span class="math inline">\(\boldsymbol{X}\)</span>, we get</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}_{p(\boldsymbol{Y}\vert \boldsymbol{X})}\left[\mathscr{R}(\hat{\boldsymbol{\beta}})\right] ={}&amp;
+  \underbrace{\sigma^2}_{\textrm{Irreducible error}}
++
+  \underbrace{\mathrm{trace}\left(M_{xx} (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\right)}_{\textrm{Bias term}}
++
+  \underbrace{\mathrm{trace}\left(M_{xx} \mathrm{Cov}_{p(\boldsymbol{Y}\vert \boldsymbol{X})}\left(\hat{\boldsymbol{\beta}}\right)\right)}_{\textrm{Variance term}}
+
+\end{aligned}
+\]</span> because <span class="math inline">\(\mathbb{E}_{p(\boldsymbol{Y}\vert \boldsymbol{X})}\left[\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}}\right] = 0\)</span>. We thus see that the expected regret is given by two terms — one involving the covariance of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> and one involving the bias <span class="math inline">\(\overline{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*}\)</span>.</p>
+<p>The decomposition only looks this nice when we have correct specification, and define bias by conditioning on <span class="math inline">\(\boldsymbol{X}\)</span>. And at this point, it’s not obvious that there’s a “tradeoff.” However, in at least some cases, there is, in the sense that increasing complexity tends to increase variance and decrease bias, and vice-versa.</p>
+<section id="the-biasvariance-tradeoff-for-ridge-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="the-biasvariance-tradeoff-for-ridge-estimation">The bias–variance tradeoff for ridge estimation</h2>
+<p>One such case is ridge regression under correct specification. Recall the ridge estimator, <span class="math display">\[
+\hat{\boldsymbol{\beta}}_\lambda := \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right)^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y},
+\]</span> which always exists. Let us see how the <span class="math inline">\(\lambda\)</span> parameter effects a bias variance tradeoff under the (unrealistic) assumption of correct specification. We will use the SVD of <span class="math inline">\(\boldsymbol{X}\)</span>,</p>
+<p><span class="math display">\[
+\boldsymbol{X}= \boldsymbol{U}\Lambda \boldsymbol{V}^\intercal,
+\]</span></p>
+<p>where <span class="math inline">\(\Lambda\)</span> is diagonal with entries <span class="math inline">\(\lambda_p\)</span> for <span class="math inline">\(p\in 1,\ldots, P\)</span>, <span class="math inline">\(\boldsymbol{V}\)</span> is <span class="math inline">\(P \times P\)</span>, <span class="math inline">\(\boldsymbol{U}\)</span> is <span class="math inline">\(N \times P\)</span>, and both <span class="math inline">\(\boldsymbol{V}\)</span> and <span class="math inline">\(\boldsymbol{U}\)</span> are orthogonal. In this form, we can write</p>
+<p><span class="math display">\[
+\boldsymbol{X}^\intercal\boldsymbol{X}= \boldsymbol{V}\Lambda \boldsymbol{U}^\intercal\boldsymbol{U}\Lambda \boldsymbol{V}^\intercal= \boldsymbol{V}\Lambda^2 \boldsymbol{V}^\intercal.
+\]</span> Note that <span class="math display">\[
+\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{X}= \boldsymbol{V}\frac{1}{N} \Lambda^2 \boldsymbol{V}^\intercal
+  \rightarrow \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] = M_{xx},
+\]</span> so we expect <span class="math inline">\(\lambda_p^2\)</span> to be of order <span class="math inline">\(N\)</span> if <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]\)</span> is non–degenerate.</p>
+<p>Letting <span class="math inline">\(\mathbf{L}= \Lambda^2 + \lambda \boldsymbol{I}_{\,}\)</span>, the diagonal matrix with <span class="math inline">\(\lambda_p^2 + \lambda\)</span> on the diagonal, the ridge estimator is</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\boldsymbol{\beta}}_\lambda ={}&amp;
+  \boldsymbol{V}\mathbf{L}^{-1} \Lambda \boldsymbol{U}^\intercal\boldsymbol{Y}\\={}&amp;
+  \boldsymbol{V}\mathbf{L}^{-1} \Lambda \boldsymbol{U}^\intercal(\boldsymbol{X}\boldsymbol{\beta}^{*}+ \epsilon)  \\={}&amp;
+  \boldsymbol{V}\mathbf{L}^{-1} \Lambda^2 \boldsymbol{V}^\intercal\boldsymbol{\beta}^{*}+ \boldsymbol{V}\mathbf{L}^{-1} \Lambda \boldsymbol{U}^\intercal\epsilon.
+\end{aligned}
+\]</span></p>
+<p>We thus see that</p>
+<p><span class="math display">\[
+\overline{\boldsymbol{\beta}}= \mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}_\lambda \vert \boldsymbol{X}\right]  =   \boldsymbol{V}\mathbf{L}^{-1} \Lambda^2 \boldsymbol{V}^\intercal\boldsymbol{\beta}^{*}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathrm{Cov}_{\,}\left(\hat{\boldsymbol{\beta}}_\lambda \vert \boldsymbol{X}\right)  ={}&amp;
+  \boldsymbol{V}\mathbf{L}^{-1} \Lambda \boldsymbol{U}^\intercal\mathbb{E}_{\vphantom{}}\left[\epsilon \epsilon^\intercal\right] \boldsymbol{U}\Lambda  \mathbf{L}^{-1} \boldsymbol{V}^\intercal\\={}&amp;
+  \sigma^2 \boldsymbol{V}\mathbf{L}^{-1} \Lambda^2 \mathbf{L}^{-1} \boldsymbol{V}^\intercal.
+\end{aligned}
+\]</span></p>
+<p>(Recalling that <span class="math inline">\(\lambda_p^2 \propto N\)</span>, so these expressions have the right scale.)</p>
+<p>If we plug these values into our bias–variance decomposition, and use the fact that <span class="math inline">\(\frac{1}{N} \boldsymbol{X}^\intercal\boldsymbol{X}= \frac{1}{N} \boldsymbol{V}\Lambda^2 \boldsymbol{V}^\intercal\approx M_{xx}\)</span>, we get that</p>
+<p><span class="math display">\[
+\begin{aligned}
+\overline{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*}={}&amp;
+  \boldsymbol{V}\left(\mathbf{L}^{-1} \Lambda^2 - \boldsymbol{I}_{\,}\right) \boldsymbol{V}^\intercal\boldsymbol{\beta}^{*}\quad \Rightarrow
+\\
+\textrm{Bias term}={}&amp;
+\mathrm{trace}\left(M_{xx} (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\right)
+\\\approx{}&amp;
+\frac{1}{N}
+\mathrm{trace}\left(\boldsymbol{V}\Lambda^2 \boldsymbol{V}^\intercal\boldsymbol{V}\left(\mathbf{L}^{-1} \Lambda^2 - \boldsymbol{I}_{\,}\right) \boldsymbol{V}^\intercal\boldsymbol{\beta}^{*}
+{\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{V}\left(\mathbf{L}^{-1} \Lambda^2 - \boldsymbol{I}_{\,}\right) \boldsymbol{V}^\intercal\right)
+\\={}&amp;
+\frac{1}{N}
+\mathrm{trace}\left(\Lambda^2 \left(\mathbf{L}^{-1} \Lambda^2 - \boldsymbol{I}_{\,}\right) \boldsymbol{V}^\intercal\boldsymbol{\beta}^{*}
+{\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{V}\left(\mathbf{L}^{-1} \Lambda^2 - \boldsymbol{I}_{\,}\right) \right)
+\\={}&amp;
+\frac{1}{N}
+\mathrm{trace}\left(
+  \left(\mathbf{L}^{-1} \Lambda^2 - \boldsymbol{I}_{\,}\right)
+  \Lambda^2 \left(\mathbf{L}^{-1} \Lambda^2 - \boldsymbol{I}_{\,}\right)
+  \boldsymbol{V}^\intercal\boldsymbol{\beta}^{*}{\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{V}\right)
+\\={}&amp;
+\frac{1}{N}
+\mathrm{trace}\left(
+  \mathrm{Diag}\left(
+    \left( \frac{\lambda_p^2}{\lambda_p^2 + \lambda} - 1\right)^2 \lambda_p^2
+  \right)
+  \boldsymbol{V}^\intercal\boldsymbol{\beta}^{*}{\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{V}\right)
+\end{aligned}
+\]</span></p>
+<p>As you can see, as <span class="math inline">\(\lambda \rightarrow 0\)</span>, the bias goes to zero, and the bias goes to a maximal value as <span class="math inline">\(\lambda \rightarrow \infty\)</span>.</p>
+<p>For the variance, we get</p>
+<p><span class="math display">\[
+\begin{aligned}
+\textrm{Variance term}={}&amp;
+  \mathrm{trace}\left(M_{xx} \sigma^2 \boldsymbol{V}\mathbf{L}^{-1} \Lambda^2 \mathbf{L}^{-1} \boldsymbol{V}^\intercal\right)
+\\\approx{}&amp;
+  \frac{\sigma^2}{N}
+    \mathrm{trace}\left(\boldsymbol{V}\Lambda^2 \boldsymbol{V}^\intercal\boldsymbol{V}\mathbf{L}^{-1} \Lambda^2 \mathbf{L}^{-1} \boldsymbol{V}^\intercal\right)
+\\=&amp;
+  \frac{\sigma^2}{N}
+    \mathrm{trace}\left(\Lambda^2 \mathbf{L}^{-1} \Lambda^2 \mathbf{L}^{-1}\right)
+\\=&amp;
+  \frac{\sigma^2}{N}
+    \mathrm{trace}\left(\mathrm{Diag}\left(\frac{\lambda_p^4}{(\lambda_p^2 + \lambda)^2}\right)\right).
+\end{aligned}
+\]</span></p>
+<p>Here, the variance goes in the opposite direction as <span class="math inline">\(\lambda\)</span>: as <span class="math inline">\(\lambda \rightarrow 0\)</span>, the variance term goes to its maximal value, and as <span class="math inline">\(\lambda \rightarrow \infty\)</span>, the variance goes to zero.</p>
+<p>When using a ridge estimator under correct specification, we would then expect the risk <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}}_\lambda)\)</span> to be the sum of two curves: a bias curve, which is increasing, and a variance curve, which is decreasing. At some intermediate value of <span class="math inline">\(\lambda\)</span>, the risk would be minimized.</p>
+</section>
+</section>
+<section id="the-biasvariance-tradeoff-more-generally" class="level1">
+<h1>The “bias–variance” tradeoff more generally</h1>
+<p>Recall that, in general, we can decompose the regret into two terms that behave in opposite directions with respect to model complexity:</p>
 <p><span class="math display">\[
 \mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(f^{\star}) =
 \mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(\boldsymbol{\beta}^{*}) + \mathscr{R}(\boldsymbol{\beta}^{*}) - \mathscr{R}(f^{\star}).
@@ -262,10 +404,8 @@ window.Quarto = {
 \underset{\textrm{"bias"}}{\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- f^{\star}(\boldsymbol{x}))^2\right]}.
 \end{aligned}
 \]</span></p>
-</section>
 <section id="only-asymptotic-variance-and-bias" class="level2">
 <h2 class="anchored" data-anchor-id="only-asymptotic-variance-and-bias">Only asymptotic variance and bias</h2>
-<!-- \betavbar definition  -->
 <p>Recall that the variance of <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> would be given by</p>
 <p><span class="math display">\[
 \mathbb{E}_{\mathcal{D}}\left[(\hat{\boldsymbol{\beta}}- \overline{\boldsymbol{\beta}})(\hat{\boldsymbol{\beta}}- \overline{\boldsymbol{\beta}})^\intercal\right]
@@ -430,14 +570,14 @@ N \cdot \textrm{Variance term }
 </section>
 <section id="omitted-regressors" class="level4">
 <h4 class="anchored" data-anchor-id="omitted-regressors">Omitted regressors</h4>
-<p>Now suppose that we have an omitted regressor, <span class="math inline">\(z_n\)</span>. Without loss of generality we can take <span class="math inline">\(y_n = {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}_n + z_n + \varepsilon_n\)</span>, so the omitted coefficient is <span class="math inline">\(1\)</span> (otherwise we could just rescale the standard deviation of <span class="math inline">\(z\)</span>). Assume that</p>
+<p>Now suppose that we have an omitted regressor, <span class="math inline">\(z_n\)</span>. Without loss of generality we can take <span class="math inline">\(y_n = {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}_n + z_n + \epsilon_n\)</span>, so the omitted coefficient is <span class="math inline">\(1\)</span> (otherwise we could just rescale the standard deviation of <span class="math inline">\(z\)</span>). Assume that</p>
 <ul>
 <li><span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[z\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(z\right) = \sigma_z^2\)</span>,</li>
-<li><span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\varepsilon\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(\varepsilon\right) = \sigma^2\)</span>,</li>
-<li><span class="math inline">\(\boldsymbol{x}\)</span>, <span class="math inline">\(z\)</span>, <span class="math inline">\(\varepsilon\)</span> are all independent.</li>
+<li><span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\epsilon\right] = 0\)</span>, <span class="math inline">\(\mathrm{Var}_{\,}\left(\epsilon\right) = \sigma^2\)</span>,</li>
+<li><span class="math inline">\(\boldsymbol{x}\)</span>, <span class="math inline">\(z\)</span>, <span class="math inline">\(\epsilon\)</span> are all independent.</li>
 </ul>
 <p>Note that <span class="math inline">\(M_{xy} = M_{xx} \boldsymbol{\beta}^{*}\)</span>, so there is no inconsistency assuming that <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> is the truth. We have</p>
-<p><span class="math inline">\(\varepsilon= y- {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}= z+ \varepsilon\)</span>,</p>
+<p><span class="math inline">\(\varepsilon= y- {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}= z+ \epsilon\)</span>,</p>
 <p>so</p>
 <p><span class="math display">\[
 \mathrm{Cov}_{\,}\left(\boldsymbol{x}\varepsilon\right) = M_{xx} (\sigma_z^2 + \sigma^2)
