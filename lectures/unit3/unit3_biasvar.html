@@ -256,12 +256,9 @@ window.Quarto = {
 <p><span class="math display">\[
 \begin{aligned}
 \mathbb{E}_{p(\boldsymbol{Y}\vert \boldsymbol{X})}\left[\mathscr{R}(\hat{\boldsymbol{\beta}})\right] ={}&amp;
-  \underbrace{\sigma^2}_{\textrm{Irreducible error}}
-+
-  \underbrace{\mathrm{trace}\left(M_{xx} (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\right)}_{\textrm{Bias term}}
-+
+  \underbrace{\sigma^2}_{\textrm{Irreducible error}} +
+  \underbrace{\mathrm{trace}\left(M_{xx} (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}}) (\boldsymbol{\beta}^{*}- \overline{\boldsymbol{\beta}})^\intercal\right)}_{\textrm{Bias term}} +
   \underbrace{\mathrm{trace}\left(M_{xx} \mathrm{Cov}_{p(\boldsymbol{Y}\vert \boldsymbol{X})}\left(\hat{\boldsymbol{\beta}}\right)\right)}_{\textrm{Variance term}}
-
 \end{aligned}
 \]</span> because <span class="math inline">\(\mathbb{E}_{p(\boldsymbol{Y}\vert \boldsymbol{X})}\left[\overline{\boldsymbol{\beta}}- \hat{\boldsymbol{\beta}}\right] = 0\)</span>. We thus see that the expected regret is given by two terms — one involving the covariance of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> and one involving the bias <span class="math inline">\(\overline{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*}\)</span>.</p>
 <p>The decomposition only looks this nice when we have correct specification, and define bias by conditioning on <span class="math inline">\(\boldsymbol{X}\)</span>. And at this point, it’s not obvious that there’s a “tradeoff.” However, in at least some cases, there is, in the sense that increasing complexity tends to increase variance and decrease bias, and vice-versa.</p>

@@ -205,12 +205,10 @@ window.Quarto = {
 =
 \underbrace{
   \mathbb{E}_{\mathcal{D}}\left[\left(\hat{f}(\boldsymbol{x}; \mathcal{D}) - \mathbb{E}_{\mathcal{D}}\left[\hat{f}(\boldsymbol{x}; \mathcal{D})\right]\right)^2\right]
-}_{\textrm{Variance}}
-+
+}_{\textrm{Variance}} +
 \underbrace{
   \left(\mathbb{E}_{\mathcal{D}}\left[\hat{f}(\boldsymbol{x}; \mathcal{D})\right] - f^{\star}(\boldsymbol{x})\right)^2
-}_{\textrm{Bias}}
-.
+}_{\textrm{Bias}}.
 \]</span></p>
 <p>The variance only increases the expected squared error, so if we could get a lower–variance estimator without changing the bias, we’d improve our loss. Ideally, we might imagine getting <span class="math inline">\(B\)</span> different, new datasets <span class="math inline">\(\mathcal{D}_1, \ldots, \mathcal{D}_B\)</span>, and then using</p>
 <p><span class="math display">\[

@@ -281,12 +281,10 @@ N_{t} ={}&amp; \textrm{\# of data points in $t$} \\
 \underbrace{
   \sum_{n \in t,x_{nk} &lt; c} (y_n - \bar{y}_c^-)^2 +
   \sum_{n \in t,x_{nk} \ge c} (y_n - \bar{y}_c^+)^2
-}_{\textrm{Loss after splitting}}
--
+}_{\textrm{Loss after splitting}} -
 \underbrace{
   \sum_{n \in t} (y_n - \bar{y}_t)^2
 }_{\textrm{Loss before splitting}}
-
 \]</span></p>
 <p>For each variable, the variable <span class="math inline">\(c\)</span> can be chosen by brute force by sorting <span class="math inline">\(x_{nk}\)</span> for <span class="math inline">\(n \in t\)</span>, which is computationally tractable because it’s only a one–dimensional problem. The CART algorithm chooses splits by finding a <span class="math inline">\(c\)</span> and <span class="math inline">\(k\)</span> optimally over all possible choices.</p>
 <p>We can rewrite this as</p>

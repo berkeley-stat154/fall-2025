@@ -410,7 +410,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\vphantom{}}\left[y_\mathr
 <h2 class="anchored" data-anchor-id="approximating-the-conditional-expectation">Approximating the conditional expectation</h2>
 <p>We now know that the optimal regression function is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span>. The problem is how to estimate it.</p>
 <p>We have been imagining that we know the full joint distribution of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>. In that case, we can read off the conditional distribution by “slicing” through a particular <span class="math inline">\(\boldsymbol{x}\)</span>:</p>
-<div id="ae697661" class="cell" data-execution_count="2">
+<div id="b1dfa753" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -420,7 +420,7 @@ f^{\star}(\boldsymbol{x}_\mathrm{new})  = \mathbb{E}_{\vphantom{}}\left[y_\mathr
 </div>
 </div>
 <p>However, in practice, we don’t actually observe the full joint distribution, we observe data points. How should we proceed?</p>
-<div id="f9589011" class="cell" data-execution_count="3">
+<div id="9f65f6e4" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -483,10 +483,8 @@ f_K(x; \boldsymbol{\beta}) ={}&amp; \sum_{k=1}^K \frac{1}{k!} \beta_k x^k.
 <p>In particular, suppose we fix a particular <span class="math inline">\(K\)</span> and use the regression estimate <span class="math inline">\(\hat{f}_K(\boldsymbol{x}) = \sum_{k=1}^K \frac{1}{k!} \hat{\beta}_k x^k\)</span>. Letting <span class="math inline">\(f^*_K\)</span> denote the minimizer of <span class="math inline">\(\mathscr{R}(\cdot)\)</span> among functions of the form <span class="math inline">\(f_K(\cdot)\)</span>, the risk decomposes as</p>
 <p><span class="math display">\[
 \mathscr{R}(\hat{f}_K) - \mathscr{R}(f^{\star}) =
-\underbrace{\mathscr{R}(\hat{f}_K) - \mathscr{R}(f^{\star}_K)}_{\textrm{Estimation error $\ge 0$}}
-+
-\underbrace{\mathscr{R}(f^{\star}_K) - \mathscr{R}(f^{\star})}_{\textrm{Model bias $\ge 0$}}
-.
+\underbrace{\mathscr{R}(\hat{f}_K) - \mathscr{R}(f^{\star}_K)}_{\textrm{Estimation error $\ge 0$}} +
+\underbrace{\mathscr{R}(f^{\star}_K) - \mathscr{R}(f^{\star})}_{\textrm{Model bias $\ge 0$}}.
 \]</span></p>
 <p>Each term is positive because (a) we cannot find the optimal <span class="math inline">\(f^{\star}_K\)</span> and (b) the optimal <span class="math inline">\(f^{\star}_K\)</span> is not, in general, equal to the true <span class="math inline">\(f^{\star}\)</span>.</p>
 <p>This decomposition is useful because you might expect <span class="math inline">\(K\)</span> to act in opposite directions in these two terms — large <span class="math inline">\(K\)</span> makes the first harder, since you have more to estimate, but large <span class="math inline">\(K\)</span> makes the second easier, since you are more likely to be able to express something close to the optimal <span class="math inline">\(f^{\star}\)</span>.</p>
