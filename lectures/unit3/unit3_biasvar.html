@@ -148,12 +148,8 @@ window.Quarto = {
   <li><a href="#consequences-of-model-complexity" id="toc-consequences-of-model-complexity" class="nav-link" data-scroll-target="#consequences-of-model-complexity">Consequences of model complexity</a>
   <ul class="collapse">
   <li><a href="#the-biasvariance-tradeoff" id="toc-the-biasvariance-tradeoff" class="nav-link" data-scroll-target="#the-biasvariance-tradeoff">The bias–variance tradeoff</a></li>
-  </ul></li>
-  <li><a href="#misspecified-linear-regression" id="toc-misspecified-linear-regression" class="nav-link" data-scroll-target="#misspecified-linear-regression">Misspecified linear regression</a>
-  <ul class="collapse">
-  <li><a href="#the-expectation-is-not-tractable-in-misspecified-models" id="toc-the-expectation-is-not-tractable-in-misspecified-models" class="nav-link" data-scroll-target="#the-expectation-is-not-tractable-in-misspecified-models">The expectation is not tractable in misspecified models</a></li>
-  <li><a href="#biasvariance-decomposition-for-misspecified-linear-models" id="toc-biasvariance-decomposition-for-misspecified-linear-models" class="nav-link" data-scroll-target="#biasvariance-decomposition-for-misspecified-linear-models">Bias–variance decomposition for misspecified linear models</a></li>
-  <li><a href="#bias-term-and-irreducible-error" id="toc-bias-term-and-irreducible-error" class="nav-link" data-scroll-target="#bias-term-and-irreducible-error">Bias term and irreducible error</a></li>
+  <li><a href="#only-asymptotic-variance-and-bias" id="toc-only-asymptotic-variance-and-bias" class="nav-link" data-scroll-target="#only-asymptotic-variance-and-bias">Only asymptotic variance and bias</a></li>
+  <li><a href="#bias-term" id="toc-bias-term" class="nav-link" data-scroll-target="#bias-term">Bias term</a></li>
   <li><a href="#variance-term" id="toc-variance-term" class="nav-link" data-scroll-target="#variance-term">Variance term</a>
   <ul class="collapse">
   <li><a href="#analyzing-the-variance-term" id="toc-analyzing-the-variance-term" class="nav-link" data-scroll-target="#analyzing-the-variance-term">Analyzing the variance term</a></li>
@@ -213,241 +209,110 @@ window.Quarto = {
 </section>
 <section id="consequences-of-model-complexity" class="level1">
 <h1>Consequences of model complexity</h1>
-<p>We have discussed how we can generate many features for linear regression. In principle, we can generate an arbitrarily large number of features — bounded only by the number of distinct values the regressors can take. Which features should we include in the model?</p>
+<p>For this lecture, we return to squared loss and linear regression. We have discussed how we can generate many features for linear regression. In principle, we can generate an arbitrarily large number of features — bounded only by the number of distinct values the regressors can take. Which features should we include in the model?</p>
 <p>We will be discussing this as a practical matter throughout the course. But here, we will show that in linear regression the choice of which features to include involves an explicit tradeoff between two quantities, “bias” and “variance” which may (or may not) move in different directions as more regressors are included.</p>
-<p>In particular, we know that the more features we include in the model, the closer our approximate can theoretically be to the truth. (This is a general feature of modeling under misspecification.) So why not always include all the features? Today we provide a simple argument why not.</p>
+<p>Recall that when using the squared loss, the optimal linear predictor is given by <span class="math inline">\(\boldsymbol{\beta}^{*}= M_{xx}^{-1} M_{xy}\)</span>, where <span class="math inline">\(M_{xx} = \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]\)</span> and <span class="math inline">\(M_{xy} = \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}y\right]\)</span>. The optimal prediction function among all functions is given by <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right]\)</span>.</p>
 <section id="the-biasvariance-tradeoff" class="level2">
 <h2 class="anchored" data-anchor-id="the-biasvariance-tradeoff">The bias–variance tradeoff</h2>
-<p>Recall that we want to use the training data to compute some <span class="math inline">\(\hat{f}(\boldsymbol{x})\)</span> to minimize <span class="math inline">\(\mathbb{E}_{\mathrm{new}}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]\)</span>.<br>
-How well does it do? Since the training data is also random, we want to evaluate it in terms of the expectation over the data <span class="math inline">\(\mathcal{D}\)</span> as well:</p>
+<p>Recall that we can decompose the regret into two terms that behave in opposite directions with respect to model complexity:</p>
+<p><span class="math display">\[
+\mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(f^{\star}) =
+\mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(\boldsymbol{\beta}^{*}) + \mathscr{R}(\boldsymbol{\beta}^{*}) - \mathscr{R}(f^{\star}).
+\]</span></p>
+<p>We discussed how, intuitively, if there is a price to be paid for model complexity, it should be found in the first term, <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(\boldsymbol{\beta}^{*})\)</span>. For the special case of squared error, we can make this decomposition more precise. In particular, we can write</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{E}_{\mathrm{new},\mathcal{D}}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right].
+\mathscr{R}(\hat{\boldsymbol{\beta}}) ={}&amp;
+  \mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\hat{\boldsymbol{\beta}})^2\right]
+\\={}&amp;
+  \mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}+ \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- \boldsymbol{x}^\intercal\hat{\boldsymbol{\beta}})^2\right]
+\\={}&amp;
+  \mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*})^2\right] + \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- \boldsymbol{x}^\intercal\hat{\boldsymbol{\beta}})^2\right] +
+  2 \mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*})\boldsymbol{x}^\intercal(\boldsymbol{\beta}^{*}- \hat{\boldsymbol{\beta}})\right].
+\\={}&amp;
+  \mathscr{R}(\boldsymbol{\beta}^{*}) + \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- \boldsymbol{x}^\intercal\hat{\boldsymbol{\beta}})^2\right] +
+    2 \mathbb{E}_{\vphantom{}}\left[(y\boldsymbol{x}^\intercal- {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}\boldsymbol{x}^\intercal)\right] (\boldsymbol{\beta}^{*}- \hat{\boldsymbol{\beta}})
+\\={}&amp;
+  \mathscr{R}(\boldsymbol{\beta}^{*}) + \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- \boldsymbol{x}^\intercal\hat{\boldsymbol{\beta}})^2\right],
+\end{aligned}
+\]</span> where in the final line we have plugged in the formula for <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> to show that the cross term is zero. We can similarly decompose</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathscr{R}(\boldsymbol{\beta}^{*}) ={}&amp;
+  \mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*})^2\right]
+\\={}&amp;
+  \mathbb{E}_{\vphantom{}}\left[(y- f^{\star}(\boldsymbol{x}) + f^{\star}(\boldsymbol{x}) - \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*})^2\right]
+\\={}&amp;
+  \mathbb{E}_{\vphantom{}}\left[(y- f^{\star}(\boldsymbol{x}))^2\right] + \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- f^{\star}(\boldsymbol{x}))^2\right] +
+  2 \mathbb{E}_{\vphantom{}}\left[(y- f^{\star}(\boldsymbol{x})) (\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- f^{\star}(\boldsymbol{x}))\right].
+\\={}&amp;
+  \mathscr{R}(f^{\star}) + \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- f^{\star}(\boldsymbol{x}))^2\right],
+\end{aligned}
+\]</span> where in the final line we used the fact that <span class="math inline">\(\mathbb{E}_{p(y\vert \boldsymbol{x})}\left[y- f^{\star}(\boldsymbol{x})\right] = 0\)</span>. Putting this together and slightly rewriting the first, we see that the regret is given by</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathscr{R}(\hat{\boldsymbol{\beta}}) - \mathscr{R}(f^{\star}) ={}&amp;
+\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- \boldsymbol{x}^\intercal\hat{\boldsymbol{\beta}})^2\right] +
+\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- f^{\star}(\boldsymbol{x}))^2\right]
+\\={}&amp;
+\mathbb{E}_{\vphantom{}}\left[\mathrm{trace}\left(\boldsymbol{x}\boldsymbol{x}^\intercal(\hat{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*}) (\hat{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*})^\intercal\right)\right] +
+\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- f^{\star}(\boldsymbol{x}))^2\right]
+\\={}&amp;
+\underset{\textrm{"variance"}}{\mathrm{trace}\left(M_{xx} (\hat{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*}) (\hat{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*})^\intercal\right)} +
+\underset{\textrm{"bias"}}{\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}- f^{\star}(\boldsymbol{x}))^2\right]}.
 \end{aligned}
 \]</span></p>
-<p>Here, <span class="math inline">\(\boldsymbol{x}_\mathrm{new},y_\mathrm{new}\)</span> are an independent sample from the same distribution that gave rise to the <span class="math inline">\(N\)</span> datapoints <span class="math inline">\(\mathcal{D}\)</span>, on which <span class="math inline">\(\hat{f}(\cdot)\)</span> depends.</p>
-<p>Let’s decompose this target. Define: <span class="math display">\[
-\begin{aligned}
-f^{\star}(\cdot) = \underset{f}{\mathrm{argmin}}\, \mathbb{E}_{\vphantom{}}\left[(f(\boldsymbol{x}) - y)^2\right]
-\quad\textrm{and}\quad
-\overline{f}(\cdot) = \mathbb{E}_{\vphantom{}}\left[\hat{f}(\cdot)\right] \\
-%\fbar(\cdot) = \lim_{N\rightarrow \infty} \fhat(\cdot).
-\end{aligned}
-\]</span></p>
-<p>We can then decompose our target into three terms:</p>
-<p><span id="eq-biasvariance"><span class="math display">\[
-\begin{aligned}
-&amp;\mathbb{E}_{\vphantom{}}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
-\\&amp;\quad={}
-\mathbb{E}_{\vphantom{}}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - \overline{f}(\boldsymbol{x}_\mathrm{new}) + \overline{f}(\boldsymbol{x}_\mathrm{new}) - f^{\star}(\boldsymbol{x}_\mathrm{new}) + f^{\star}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
-\\&amp;\quad={}
-\underset{\textrm{"variance"}}{
-  \mathbb{E}_{\vphantom{}}\left[(\hat{f}(\boldsymbol{x}_\mathrm{new}) - \overline{f}(\boldsymbol{x}_\mathrm{new}))^2\right]
-} +
-\underset{\textrm{"bias"}}{
-  \mathbb{E}_{\vphantom{}}\left[(\overline{f}(\boldsymbol{x}_\mathrm{new}) - f^{\star}(\boldsymbol{x}_\mathrm{new}))^2\right]
-} +
-\underset{\textrm{"irreducible error"}}{
-  \mathbb{E}_{\vphantom{}}\left[(f^{\star}(\boldsymbol{x}_\mathrm{new}) - y_\mathrm{new})^2\right]
-}.
-%  +
-% \\&amp;\quad\quad\quad
-%   \expect{(\fbar(\xv_\new) - \fstar(\xv_\new))
-%           (\fhat(\xv_\new) - \fbar(\xv_\new))},
-\end{aligned}
-\tag{1}\]</span></span></p>
-<p>As an exercise, show that the cross terms are zero in this decomposition.</p>
-<!-- where we expect the final term to go to zero since
-$\fhat(\xv_\new) - \fstar(\xv_\new) \rightarrow 0$ pointwise
-(though note that convergence in expectation is not automatically
-guaranteed). -->
-<p>Such an explicit decomposition is only available for squared error loss, but it provides a useful heuristic for thinking about model complexity in general.</p>
-<!-- ::: {.callout-note}
-Many authors use $\expect{\fhat(\cdot)}$ in place of
-$\lim_{N\rightarrow \infty} \fhat(\cdot)$.  Under some additional
-assumptions, $\expect{\fhat(\cdot)}$ and $\lim_{N\rightarrow \infty} \fhat(\cdot)$
-approach the same value quickly enough that the difference does not matter.
-However, outside of correctly specified linear models, 
-$\expect{\fhat(\cdot)}$ is typically hard to write down analytically.  Even
-linear models under misspecification do not have simple forms for
-$\expect{\fhat(\cdot)}$, but do have a simple form for
-$\lim_{N\rightarrow \infty} \fhat(\cdot)$.
-
-Note that if $\fbar(\xv_\new)$ is replaced with
-$\expect{\textrm{data}}{\fhat(\xv_\new)}$, then
-$\expect{(\fbar(\xv_\new) - \fstar(\xv_\new)) (\fhat(\xv_\new) - \fbar(\xv_\new))} = 0$ without
-further argument.
-::: -->
-<p>Increasing model complexity can only decrease bias by allowing <span class="math inline">\(\hat{f}\)</span> to fit more expressive functions. There is only one place in this decomposition that expressivity can <em>hurt</em> our risk, which is the variance term. In some settings — including a version of simple linear regression here — we can show explicitly that increasing model complexity increases variance, though, as we will see, the story is not necessarily so simple, even for linear regression.</p>
-<p>In any case, this decomposition shows that the potential to increase the training set variability must be the source of any complexity cost. It is for this reason that it can be useful to limit the complexity of <span class="math inline">\(\hat{f}\)</span>, at the cost of failing to capture the true <span class="math inline">\(f^{\star}\)</span>, but with the potential benefit of providing an improved actual risk.</p>
 </section>
-</section>
-<section id="misspecified-linear-regression" class="level1">
-<h1>Misspecified linear regression</h1>
-<p>Let’s assume that we have regressors <span class="math inline">\(\boldsymbol{x}_n \in \mathbb{R}^{P}\)</span>, possibly created by feature expansions, and we would like to decide which regressors to include in our regression. Note that the larger <span class="math inline">\(P\)</span> is, the more expressive the regression can be, and the closer we can get to the true <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right]\)</span>. However, we will see that choosing regressors typically comes at a cost.</p>
-<p>As we have shown, <span class="math inline">\(f^{\star}(y) = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right]\)</span> minimizes the population risk <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[(y- f(\boldsymbol{x}))^2\right]\)</span>, and the regression coefficient <span class="math inline">\(\beta^{*}= M_{xx}^{-1} M_{xy}\)</span> minimizes the linear regression risk <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[(y- \boldsymbol{x}^\intercal\boldsymbol{\beta})^2\right]\)</span>, where</p>
+<section id="only-asymptotic-variance-and-bias" class="level2">
+<h2 class="anchored" data-anchor-id="only-asymptotic-variance-and-bias">Only asymptotic variance and bias</h2>
+<!-- \betavbar definition  -->
+<p>Recall that the variance of <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> would be given by</p>
 <p><span class="math display">\[
-M_{xx} := \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
-\quad\textrm{and}\quad
-M_{xy} := \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right].
+\mathbb{E}_{\mathcal{D}}\left[(\hat{\boldsymbol{\beta}}- \overline{\boldsymbol{\beta}})(\hat{\boldsymbol{\beta}}- \overline{\boldsymbol{\beta}})^\intercal\right]
+\quad\textrm{where}\quad
+\overline{\boldsymbol{\beta}}:= \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right].
 \]</span></p>
-<section id="the-expectation-is-not-tractable-in-misspecified-models" class="level2">
-<h2 class="anchored" data-anchor-id="the-expectation-is-not-tractable-in-misspecified-models">The expectation is not tractable in misspecified models</h2>
-<p>We have shown that, for a fixed set of regressors, <span class="math inline">\(\hat{\boldsymbol{\beta}}\rightarrow \boldsymbol{\beta}^{*}\)</span>. But what is the <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right]\)</span>? We can write</p>
-<p><span class="math display">\[
+<p>However, exact bias and variance are actually difficult to describe if <span class="math inline">\(\boldsymbol{x}\)</span> is random and the model is misspecified. For example, <span class="math display">\[
 \begin{aligned}
 \mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right] ={}&amp; \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}\right]
 \\={}&amp;
 \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right]\right].
 \end{aligned}
 \]</span></p>
-<p>Note that <span class="math inline">\(\boldsymbol{X}\)</span> is random in the preceding expression, since our pairs <span class="math inline">\((x_n, y_n)\)</span> are IID — otherwise, the relatioship between population and sample risk doesn’t make sense. In an introductory linear models class, you might assume that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right] = \boldsymbol{X}\beta^{*}+ \boldsymbol{\varepsilon}\)</span> for <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right] = \boldsymbol{0}\)</span>. If that were the case, then</p>
+<p>Note that <span class="math inline">\(\boldsymbol{X}\)</span> is random in the preceding expression, since our pairs <span class="math inline">\((x_n, y_n)\)</span> are IID — otherwise, the relatioship between population and sample risk doesn’t make sense. In an introductory linear models class, you might assume that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right] = \boldsymbol{X}\boldsymbol{\beta}^{*}+ \boldsymbol{\varepsilon}\)</span> for <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right] = \boldsymbol{0}\)</span>. If that were the case, then</p>
 <p><span class="math display">\[
 \begin{aligned}
 \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{Y}\vert \boldsymbol{X}\right]\right] ={}&amp;
-\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal(\boldsymbol{X}\beta^{*}+ \boldsymbol{\varepsilon})\right] \\={}&amp;
-\beta^{*}+ \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right]\right] \\={}&amp;
-\beta^{*}.
+\mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal(\boldsymbol{X}\boldsymbol{\beta}^{*}+ \boldsymbol{\varepsilon})\right] \\={}&amp;
+\boldsymbol{\beta}^{*}+ \mathbb{E}_{\vphantom{}}\left[(\boldsymbol{X}^\intercal\boldsymbol{X})^{-1} \boldsymbol{X}^\intercal\mathbb{E}_{\vphantom{}}\left[\boldsymbol{\varepsilon}| \boldsymbol{X}\right]\right] \\={}&amp;
+\boldsymbol{\beta}^{*}.
 &amp; \textrm{(Under correct specification)}
 \end{aligned}
 \]</span></p>
-<p>However, under misspecification, there is no such simple result — in particular, there is no reason to think there is any <span class="math inline">\(\boldsymbol{\beta}\)</span> such that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y- \boldsymbol{\beta}^\intercal\boldsymbol{x}| \boldsymbol{x}\right] = 0\)</span>.</p>
-<p>By imposing stronger–than–standard conditions on the distribution of <span class="math inline">\(\boldsymbol{x}\)</span>, one can show that <span class="math inline">\(\sqrt{N} (\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right] - \boldsymbol{\beta}^{*}) \rightarrow 0\)</span>. We will assume that this result holds without further elaboration, so that we can use <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> in place of the intractable <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right]\)</span> in the bias–variance decomposition.</p>
+<p>However, under misspecification, there is no such simple result — in particular, there is no reason to think there is any <span class="math inline">\(\boldsymbol{\beta}\)</span> such that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[y- \boldsymbol{\beta}^\intercal\boldsymbol{x}| \boldsymbol{x}\right] = 0\)</span>. However, the variance term in fact corresponds to an asymptotic variance, and <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> to an asymptotic bias.</p>
 </section>
-<section id="biasvariance-decomposition-for-misspecified-linear-models" class="level2">
-<h2 class="anchored" data-anchor-id="biasvariance-decomposition-for-misspecified-linear-models">Bias–variance decomposition for misspecified linear models</h2>
-<p>The population risk evaluated at <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> can be decomposed as above into</p>
-<p><span class="math display">\[
-\begin{aligned}
-\mathscr{R}(\hat{\boldsymbol{\beta}}) :={}&amp;
-  \mathbb{E}_{\mathrm{new},\mathcal{D}}\left[(y- \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x})^2\right]
-\\={}&amp;
-  \mathbb{E}_{\mathrm{new},\mathcal{D}}\left[(y- f^{\star}(\boldsymbol{x}) +
-           f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}+
-           {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x})^2\right]
-\\={}&amp;
-  \underset{\textrm{"irreducible error"}}{
-    \mathbb{E}_{\mathrm{new}}\left[(y- f^{\star}(\boldsymbol{x}))^2\right]
-    } +
-  \underset{\textrm{"bias"}}{
-  \mathbb{E}_{\mathrm{new}}\left[(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})^2\right]
-    } +
-  \underset{\textrm{"variance"}}{
-    \mathbb{E}_{\mathrm{new},\mathcal{D}}\left[({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x})^2\right]
-  } +
-\\ &amp; \quad
-  2 \mathbb{E}_{\mathrm{new}}\left[(y- f^{\star}(\boldsymbol{x}))(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right] +
-\\ &amp; \quad
-  2 \mathbb{E}_{\mathrm{new}}\left[(y- f^{\star}(\boldsymbol{x}))
-                  ({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right]^\intercal\boldsymbol{x})\right] +
-\\ &amp; \quad
-  2 \mathbb{E}_{\mathrm{new}}\left[({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right]^\intercal\boldsymbol{x})
-                  (f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right].
-\end{aligned}
-\]</span></p>
-<p>By definition,</p>
-<p><span class="math display">\[
-\mathbb{E}_{\vphantom{}}\left[y- f^{\star}(\boldsymbol{x}) | \boldsymbol{x}\right] =
-\mathbb{E}_{\vphantom{}}\left[y- \mathbb{E}_{\vphantom{}}\left[y| \boldsymbol{x}\right] | \boldsymbol{x}\right] = 0,
-\]</span></p>
-<p>so we have by iterated expectations</p>
-<p><span class="math display">\[
-\mathbb{E}_{\vphantom{}}\left[(y- f^{\star}(\boldsymbol{x}))(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right] = 0
-\quad\textrm{and}\quad
-\mathbb{E}_{\vphantom{}}\left[(y- f^{\star}(\boldsymbol{x}))({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x})\right] = 0.
-\]</span></p>
-<p>Now,</p>
-<p><span class="math display">\[
-\begin{aligned}
-\mathbb{E}_{\vphantom{}}\left[({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right]^\intercal\boldsymbol{x})
-        (f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right] ={}&amp;
-  ({\boldsymbol{\beta}^{*}} - \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right])^\intercal
-  \mathbb{E}_{\vphantom{}}\left[\boldsymbol{x}(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})\right]
-\\={}&amp;
-({\boldsymbol{\beta}^{*}} - \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right])^\intercal
-  \left( M_{xy} - M_{xx} \boldsymbol{\beta}^{*}\right)
-\rightarrow 0,
-\end{aligned}
-\]</span></p>
-<p>since <span class="math inline">\(\sqrt{N}(\hat{\boldsymbol{\beta}}- \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}\right]) \rightarrow 0\)</span>. So, as <span class="math inline">\(N\)</span> grows, only the irreducible error, bias, and variance terms contribute.</p>
-</section>
-<section id="bias-term-and-irreducible-error" class="level2">
-<h2 class="anchored" data-anchor-id="bias-term-and-irreducible-error">Bias term and irreducible error</h2>
-<p>The first term, <span class="math inline">\(\mathbb{E}_{\mathrm{new}}\left[(y- f^{\star}(\boldsymbol{x}))^2\right]\)</span>, has nothing to do with our model, and accounts for any unmodeled variation that might exist in the data. For example, there is no guarantee that, if you observe the same <span class="math inline">\(\boldsymbol{x}\)</span> repeatedly, that you will observe the same <span class="math inline">\(y\)</span>. Since you are only using <span class="math inline">\(\boldsymbol{x}\)</span> to predict, there is no way to predict this variation in <span class="math inline">\(y\)</span> without getting some new data.</p>
+<section id="bias-term" class="level2">
+<h2 class="anchored" data-anchor-id="bias-term">Bias term</h2>
 <p>The second term is the “bias” term. Note that the bias term is actually the expected square of the bias at a particular <span class="math inline">\(\boldsymbol{x}\)</span>:</p>
 <p><span class="math display">\[
 \textrm{Bias term: }\quad
 \mathbb{E}_{\mathrm{new}}\left[(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})^2\right]
 \]</span></p>
-<p>This contrasts somewhat with the common defintion of statistical bias</p>
+<p>This contrasts somewhat with the common defintion of statistical bias, which would be</p>
 <p><span class="math display">\[
-\textrm{Statistical Bias at $\boldsymbol{x}$: }\quad
-f^{\star}(\boldsymbol{x}) - \mathbb{E}_{\mathcal{D}}\left[\hat{f}(\boldsymbol{x})\right] =
-f^{\star}(\boldsymbol{x}) - \mathbb{E}_{\mathcal{D}}\left[\hat{\boldsymbol{\beta}}^\intercal\right]\boldsymbol{x}=
-f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}+ \textrm{ A vanishing term}.
+\textrm{Statistical Bias at $\boldsymbol{x}$ }=
+\mathbb{E}_{\vphantom{}}\left[f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}\right].
 \]</span></p>
 <p>The average statistical bias can cancel if it is high for some <span class="math inline">\(\boldsymbol{x}\)</span> and low for others, but since we square the bias before averaging, there can be no such cancelation in the bias term.</p>
-<p>We can write the bias term explicitly using the fact that <span class="math inline">\(\mathbb{E}_{\mathrm{new}}\left[f^{\star}(\boldsymbol{x})\boldsymbol{x}^\intercal\right] = M_{xy}\)</span> (verify as an exercise):</p>
-<p><span class="math display">\[
-\begin{aligned}
-\mathbb{E}_{\mathrm{new}}\left[(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})^2\right]
-={}&amp;
-\mathbb{E}_{\mathrm{new}}\left[f^{\star}(\boldsymbol{x})^2\right] +
-{\boldsymbol{\beta}^{*}}^\intercal\mathbb{E}_{\mathrm{new}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right] \boldsymbol{\beta}^{*}-
-2 \mathbb{E}_{\mathrm{new}}\left[f^{\star}(\boldsymbol{x})\boldsymbol{x}^\intercal\right]\boldsymbol{\beta}^{*}
-\\={}&amp;
-\mathbb{E}_{\mathrm{new}}\left[f^{\star}(\boldsymbol{x})^2\right] +
-{\boldsymbol{\beta}^{*}}^\intercal M_{xx} \boldsymbol{\beta}^{*}-
-2 M_{yx} \boldsymbol{\beta}^{*}
-\\={}&amp;
-\mathbb{E}_{\mathrm{new}}\left[f^{\star}(\boldsymbol{x})^2\right] +
-M_{yx} M_{xx}^{-1} M_{xx} M_{xx}^{-1} M_{xy} -
-2 M_{yx} M_{xx}^{-1} M_{xy}
-\\={}&amp;
-\mathbb{E}_{\mathrm{new}}\left[f^{\star}(\boldsymbol{x})^2\right] - M_{yx} M_{xx}^{-1} M_{xy}.
-\end{aligned}
+<p>Note that we can only decrease the bias term by adding more regressors. This can be seen by undoing the derivation above and re-writing <span class="math display">\[
+\mathbb{E}_{\mathrm{new}}\left[(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x})^2\right] =
+\mathscr{R}(\boldsymbol{\beta}^{*}) - \mathbb{E}_{\mathrm{new}}\left[(y- f^{\star}(\boldsymbol{x}))^2\right].
 \]</span></p>
-<p>This can only decrease as <span class="math inline">\(P\)</span> increases. Perhaps the easiest way to see this is to note that</p>
-<p><span class="math display">\[
-\mathbb{E}_{\mathrm{new}}\left[(f^{\star}(\boldsymbol{x}) - {\boldsymbol{\beta}}^\intercal\boldsymbol{x})^2\right] =
-\mathscr{R}(\boldsymbol{\beta}) - \mathbb{E}_{\mathrm{new}}\left[(y- f^{\star}(\boldsymbol{x}))^2\right].
-\]</span></p>
-<p>By making <span class="math inline">\(\boldsymbol{\beta}\)</span> more expressive, we can only decrease the population risk <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta})\)</span>; since we cannot change the irreducible risk by doing so, we must be decreasing the bias term.</p>
-<p>As expected, we thus see that increasing model complexity decreases the bias term.</p>
+<p>By making the set of regressors more expressive, we can only decrease the population risk <span class="math inline">\(\mathscr{R}(\boldsymbol{\beta}^{*})\)</span>; since we cannot change the irreducible risk by doing so, we must be decreasing the bias term.</p>
 </section>
 <section id="variance-term" class="level2">
 <h2 class="anchored" data-anchor-id="variance-term">Variance term</h2>
-<p>The variance term is the only term that depends on the training data. We can expand it as follows:</p>
-<p><span class="math display">\[
-\begin{aligned}
-\mathbb{E}_{\mathrm{new},\mathcal{D}}\left[({\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}- \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x})^2\right]
-={}&amp;
-\mathbb{E}_{\mathrm{new},\mathcal{D}}\left[
-  ({\boldsymbol{\beta}^{*}} - \hat{\boldsymbol{\beta}})^\intercal\boldsymbol{x}\boldsymbol{x}^\intercal({\boldsymbol{\beta}^{*}} - \hat{\boldsymbol{\beta}})
-\right]
-\\={}&amp;
-\mathbb{E}_{\mathrm{new},\mathcal{D}}\left[
-  \mathrm{trace}\left(
-  \boldsymbol{x}\boldsymbol{x}^\intercal({\boldsymbol{\beta}^{*}} - \hat{\boldsymbol{\beta}}) ({\boldsymbol{\beta}^{*}} - \hat{\boldsymbol{\beta}})^\intercal
-  \right)
-\right]
-\\={}&amp;
-  \mathrm{trace}\left(
-  \mathbb{E}_{\mathrm{new}}\left[\boldsymbol{x}\boldsymbol{x}^\intercal\right]
-  \mathbb{E}_{\mathcal{D}}\left[
-    ({\boldsymbol{\beta}^{*}} - \hat{\boldsymbol{\beta}}) ({\boldsymbol{\beta}^{*}} - \hat{\boldsymbol{\beta}})^\intercal
-  \right]
-\right)
-\\={}&amp;
-  \mathrm{trace}\left(
-    M_{xx}
-  \mathbb{E}_{\mathcal{D}}\left[
-    ({\boldsymbol{\beta}^{*}} - \hat{\boldsymbol{\beta}}) ({\boldsymbol{\beta}^{*}} - \hat{\boldsymbol{\beta}})^\intercal
-  \right]
-\right).
-\end{aligned}
-\]</span></p>
-<p>Again, in an introductory linear models course, you might have seen an application of the CLT to <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>:</p>
+<p>In an introductory linear models course, you might have seen an application of the CLT to <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>:</p>
 <p><span class="math display">\[
 \sqrt{N} (\hat{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*}) \rightarrow
 \mathcal{N}\left(\boldsymbol{0}, \sigma^2 M_{xx}^{-1}\right)
@@ -493,7 +358,7 @@ M_{xy} - M_{xx} M_{xx}^{-1}M_{xy} = 0,
 \]</span></p>
 <p>Note that, unlike in standard correctly specified regression,</p>
 <p><span class="math display">\[
-\mathbb{E}_{\vphantom{}}\left[\varepsilon_n \vert \boldsymbol{x}\right] = \mathbb{E}_{\vphantom{}}\left[y_n \vert \boldsymbol{x}\right] - \boldsymbol{x}^\intercal\beta^{*}\ne 0!
+\mathbb{E}_{\vphantom{}}\left[\varepsilon_n \vert \boldsymbol{x}\right] = \mathbb{E}_{\vphantom{}}\left[y_n \vert \boldsymbol{x}\right] - \boldsymbol{x}^\intercal\boldsymbol{\beta}^{*}\ne 0!
 \]</span></p>
 <p>In general, <span class="math inline">\(\varepsilon_n\)</span> and <span class="math inline">\(\boldsymbol{x}\)</span> have some joint distribution. Putting this together,</p>
 <p><span class="math display">\[
@@ -512,6 +377,7 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>Note that the CLT — which is converngence in distribution — is insufficient to conclude that <span class="math inline">\(\mathrm{Var}_{\,}\left(\sqrt{N} \hat{\boldsymbol{\beta}}\right) \rightarrow M_{xx}^{-1} V M_{xx}^{-1}\)</span>. However, if <span class="math inline">\(\mathrm{Var}_{\,}\left(\sqrt{N} \hat{\boldsymbol{\beta}}\right)\)</span> does converge to something, which is true under stronger assumptions that we do not discuss here, it must converge to <span class="math inline">\(M_{xx}^{-1} V M_{xx}^{-1}\)</span>.</p>
+<p>Similarly, if <span class="math inline">\(\overline{\boldsymbol{\beta}}= \mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}\right]\)</span> converges to something, then we must have <span class="math inline">\(\sqrt{N}\left(\overline{\boldsymbol{\beta}}- \boldsymbol{\beta}^{*}\right) \rightarrow 0\)</span>, since the expectation of a normal random variable is zero. It is in this sense that we are justified in using <span class="math inline">\(\boldsymbol{\beta}^{*}\)</span> in place of <span class="math inline">\(\overline{\boldsymbol{\beta}}\)</span> in what we’re calling a “variance” term.</p>
 </div>
 </div>
 <p>Combining with the variance term, we can finally get that <span class="math display">\[
