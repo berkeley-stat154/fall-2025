@@ -8,7 +8,7 @@
 
 <meta name="author" content="Ryan Giordano">
 
-<title>Cross-validation</title>
+<title>Regret decomposition</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -143,18 +123,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
-  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a></li>
-  <li><a href="#test-sets" id="toc-test-sets" class="nav-link" data-scroll-target="#test-sets">Test sets</a>
-  <ul class="collapse">
-  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation">Cross validation</a></li>
-  </ul></li>
-  <li><a href="#using-cv-as-selection" id="toc-using-cv-as-selection" class="nav-link" data-scroll-target="#using-cv-as-selection">Using CV as selection</a>
-  <ul class="collapse">
-  <li><a href="#putting-it-together" id="toc-putting-it-together" class="nav-link" data-scroll-target="#putting-it-together">Putting it together</a></li>
-  </ul></li>
-  <li><a href="#choosing-the-right-exchangeable-unit" id="toc-choosing-the-right-exchangeable-unit" class="nav-link" data-scroll-target="#choosing-the-right-exchangeable-unit">Choosing the right exchangeable unit</a></li>
-  <li><a href="#repeating-the-whole-procedure" id="toc-repeating-the-whole-procedure" class="nav-link" data-scroll-target="#repeating-the-whole-procedure">Repeating the whole procedure</a></li>
+  <li><a href="#regret-decomposition" id="toc-regret-decomposition" class="nav-link active" data-scroll-target="#regret-decomposition">Regret decomposition</a></li>
+  <li><a href="#estimation-error-decomposition" id="toc-estimation-error-decomposition" class="nav-link" data-scroll-target="#estimation-error-decomposition">Estimation error decomposition</a></li>
   </ul>
 </nav>
     </div>
@@ -163,7 +133,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Cross-validation</h1>
+<h1 class="title">Regret decomposition</h1>
 </div>
 
 
@@ -186,135 +156,77 @@ window.Quarto = {
 </header>
 
 
+<section id="regret-decomposition" class="level1">
+<h1>Regret decomposition</h1>
+<p>Suppose we have a function class <span class="math inline">\(\mathcal{F}\)</span>, which is a strict subset of all possible functions, and a risk function <span class="math inline">\(\mathscr{R}(\cdot)\)</span> defined on functions. For example, we have considered the special case</p>
 <p><span class="math display">\[
-\def\train{\textrm{train}}
-\def\test{\textrm{test}}
-\def\meanm{\frac{1}{M} \sum_{m=1}^M}
+\mathcal{F}_{lin} = \{ f: f(\boldsymbol{x}) = \boldsymbol{x}^\intercal\boldsymbol{\beta}\textrm{ for some }\boldsymbol{\beta}\in \mathbb{R}^{P} \}
+\quad\textrm{and}\quad
+\mathscr{R}(\cdot) = \mathbb{E}_{\boldsymbol{x}, y}\left[(y- f(\boldsymbol{x}))^2\right],
 \]</span></p>
-<section id="goals" class="level1">
-<h1>Goals</h1>
+<p>Note that L1 and L2 regression could equivalently be written as <span class="math display">\[
+\mathcal{F}_{L1} = \{ f: f\in \mathcal{F}_{lin} \textrm{ with }\left\Vert\boldsymbol{\beta}\right\Vert_1 \le C \textrm{ for some }C &gt; 0 \}
+\quad\quad
+\mathcal{F}_{L2} = \{ f: f\in \mathcal{F}_{lin} \textrm{ with }\left\Vert\boldsymbol{\beta}\right\Vert_2 \le C \textrm{ for some }C &gt; 0 \}.
+\]</span> It is good to keep these examples in mind, but now we will keep our notation more general.</p>
+<p>Suppose we define <span class="math display">\[
+\hat{f}:= \underset{f\in \mathcal{F}}{\mathrm{argmin}}\, \hat{\mathscr{R}}(f)
+\quad\quad
+\overline{f}:= \underset{f\in \mathcal{F}}{\mathrm{argmin}}\, \mathscr{R}(f)
+\quad\quad
+f^{\star}:= \underset{f}{\mathrm{argmin}}\, \mathscr{R}(f).
+\]</span> The analogies for linear regression would be <span class="math inline">\(\hat{f}(\boldsymbol{x}) = \hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x}\)</span>, <span class="math inline">\(\overline{f}(\boldsymbol{x}) = {\boldsymbol{\beta}^{*}}^\intercal\boldsymbol{x}\)</span>, and <span class="math inline">\(f^{\star}(\boldsymbol{x}) = \mathbb{E}_{\vphantom{}}\left[y\vert \boldsymbol{x}\right]\)</span>.</p>
+<p>We are interested in the regret, <span class="math inline">\(\mathscr{R}(\hat{f}) - \mathscr{R}(f^{\star})\)</span>. Recall that we can decompose the regret into two terms:</p>
+<p><span class="math display">\[
+\mathscr{R}(\hat{f}) - \mathscr{R}(f^{\star}) =
+\underbrace{\mathscr{R}(\hat{f}) - \mathscr{R}(\overline{f})}_{\textrm{Estimation error}} +
+\underbrace{\mathscr{R}(\overline{f}) - \mathscr{R}(f^{\star})}_{\textrm{Representation error}}.
+\]</span></p>
+<p>Intuitively, as our model class <span class="math inline">\(\mathcal{F}\)</span> gets more complex (e.g. as we reduce the regularization penalty, or add more basis functions to the regression space), we make the representation error lower, but may increase the estimation error.</p>
+<p>In an oversimplification, estimation error loosely corresponds to “variance” and representation error to “bias” in correctly specified linear regeression, though this analogy is misleading, since estimation error can be cause both by statistical bias and variance.</p>
+<p>However, it is clear that, if there is a cost to expressive <span class="math inline">\(\mathcal{F}\)</span>, it <strong>must</strong> come from estimation error, and if it were not necessary to fit <span class="math inline">\(f\)</span> from the data, we would simply make <span class="math inline">\(\mathcal{F}\)</span> as expressive as possible. Therefore, for this unit, we will focus on understanding the relationship between <span class="math inline">\(\mathscr{R}(\hat{f}) - \mathscr{R}(\overline{f})\)</span> and complexity of <span class="math inline">\(\mathcal{F}\)</span>.</p>
+</section>
+<section id="estimation-error-decomposition" class="level1">
+<h1>Estimation error decomposition</h1>
+<p>Let <span class="math inline">\(\hat{\mathscr{R}}(f)\)</span> denote the empirical risk evaluated at <span class="math inline">\(f\)</span>. Note that this empirical risk may in practice include a regularization term in order to enforce membership in <span class="math inline">\(\mathcal{F}\)</span>, but we will ignore this in the notation — we will treat <span class="math inline">\(\hat{\mathscr{R}}(\cdot)\)</span> as something that you (a) minimize to find <span class="math inline">\(\hat{f}\)</span> and (b) which obeys the LLN for any particular <span class="math inline">\(f\)</span> in the sense that <span class="math inline">\(\hat{\mathscr{R}}(f) \rightarrow \mathscr{R}(f)\)</span> as <span class="math inline">\(N \rightarrow \infty\)</span>.</p>
+<p>We can further decompose the estimation error:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\underbrace{\mathscr{R}(\hat{f}) - \mathscr{R}(\overline{f})}_{\textrm{Estimation error}} ={}&amp;
+\underbrace{\mathscr{R}(\hat{f}) - \hat{\mathscr{R}}(\hat{f})}_{\textrm{"Generalization error"}} +
+\underbrace{\hat{\mathscr{R}}(\hat{f}) - \hat{\mathscr{R}}(\overline{f})}_{\textrm{"Negative term" $\le 0$}} +
+\underbrace{\hat{\mathscr{R}}(\overline{f}) - \mathscr{R}(\overline{f})}_{\textrm{LLN term}}
+\end{aligned}
+\]</span></p>
+<p>This decomposition is useful because</p>
 <ul>
-<li>Introduce cross–validation as an estimator of population loss and some best practices:
-<ul>
-<li>Costs and benefits of leave–one–out verus k–fold (bias / variance tradeoff)</li>
-<li>The importance of choosing the right independent unit</li>
-<li>The importance of repeating the full procedure</li>
-</ul></li>
+<li><span class="math inline">\(\mathscr{R}(\hat{f}) - \mathscr{R}(\overline{f}) \ge 0\)</span> because <span class="math inline">\(\overline{f}\)</span> minimizes <span class="math inline">\(\mathscr{R}(\cdot)\)</span></li>
+<li><span class="math inline">\(\hat{\mathscr{R}}(\hat{f}) - \hat{\mathscr{R}}(\overline{f}) \le 0\)</span> because <span class="math inline">\(\hat{f}\)</span> minimizes <span class="math inline">\(\hat{\mathscr{R}}(\cdot)\)</span></li>
+<li><span class="math inline">\(\hat{\mathscr{R}}(\overline{f}) - \mathscr{R}(\overline{f}) \rightarrow 0\)</span> by the LLN because <span class="math inline">\(\overline{f}\)</span> is fixed.</li>
 </ul>
-</section>
-<section id="reading" class="level1">
-<h1>Reading</h1>
-<p>The primary reading for this section is <span class="citation" data-cites="isl:2021:gareth">Gareth et al. (<a href="#ref-isl:2021:gareth" role="doc-biblioref">2021</a>)</span> Chapter 5.1 and <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> chapter 7.10, for which these notes are just a small supplement.</p>
-</section>
-<section id="test-sets" class="level1">
-<h1>Test sets</h1>
-<p>Recall that we want to control or at least estimate the generalization error, <span class="math inline">\(\hat{\mathscr{R}}(\hat{f}) - \mathscr{R}(\hat{f})\)</span>, since we have reason to believe that the other terms in the risk decomposition cannot hurt us.</p>
-<p>However, the estimator <span class="math inline">\(\hat{\mathscr{R}}(\hat{f}) = \frac{1}{N} \sum_{n=1}^N\mathscr{L}(\hat{f}(\boldsymbol{x}_n), y_n)\)</span> is not considered a reliable estimator of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> because <span class="math inline">\(\hat{f}\)</span> is not independent of <span class="math inline">\((\boldsymbol{x}_n, y_n)\)</span>. But suppose we have an actual new dataset, <span class="math inline">\(\mathcal{D}_\mathrm{new}= ((\boldsymbol{x}_1, y_1), \ldots (\boldsymbol{x}_M, y_M))\)</span>. Then we could just etsimate:</p>
+<p>The key term that we don’t know anything about is <span class="math inline">\(\mathscr{R}(\hat{f}) - \hat{\mathscr{R}}(\hat{f})\)</span>, the generalization error. The generalization error measures how well the empirical risk approximates the true risk when evaluated at <span class="math inline">\(\hat{f}\)</span>. Intuitively, we might expect that the generalization error is positive, since we <em>choose</em> <span class="math inline">\(\hat{f}\)</span> to minimize <span class="math inline">\(\hat{\mathscr{R}}(\cdot)\)</span>, and so <span class="math inline">\(\hat{\mathscr{R}}(\hat{f})\)</span> might be an “optimistic” estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span>. In particular, we cannot apply the LLN to <span class="math inline">\(\hat{\mathscr{R}}(\hat{f})\)</span> because <span class="math display">\[
+\hat{\mathscr{R}}(\hat{f}) = \frac{1}{N} \sum_{n=1}^N\underbrace{\mathscr{L}(\hat{f}(\boldsymbol{x}_n), y_n)}_{\textrm{Not IID!}},
+\]</span> and the observations are not IID, since <span class="math inline">\(\hat{f}\)</span> depends on all the training data.</p>
+<p>In itself, this decomposition does not tell us anything, because the genearlization error might be very positive, but canceled by a large “negative term.” However, if we are able to show that the generalization error goes to zero, then</p>
 <p><span class="math display">\[
-\hat{\mathscr{R}}_\mathrm{new}(\hat{f}) \approx \frac{1}{M} \sum_{m=1}^M \mathscr{L}(\hat{f}(\boldsymbol{x}_m),y_m).
+\begin{aligned}
+&amp;\textrm{If generalization error $\rightarrow 0$, then }\\
+&amp;0 \le
+\mathscr{R}(\hat{f}) - \mathscr{R}(\overline{f}) \le
+\left|\mathscr{R}(\hat{f}) - \hat{\mathscr{R}}(\hat{f})\right| + \left|\hat{\mathscr{R}}(\overline{f}) - \mathscr{R}(\overline{f})\right|
+\rightarrow 0
+\quad
+\Rightarrow\\
+&amp;\mathscr{R}(\hat{f}) - \mathscr{R}(\overline{f}) \rightarrow 0.
+\end{aligned}
 \]</span></p>
-<p>This <em>is</em> a consistent estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> since we did not use <span class="math inline">\(\mathcal{D}_\mathrm{new}\)</span> to train <span class="math inline">\(\hat{f}\)</span>, and so <span class="math inline">\(\hat{f}\)</span> is independent of <span class="math inline">\(\boldsymbol{x}_m, y_m\)</span>.</p>
-<p>One might ask, if you had <span class="math inline">\(\mathcal{D}_\mathrm{new}\)</span>, why didn’t you just use it to train <span class="math inline">\(\hat{f}\)</span>? Conversely, you might imagine taking the data you do have, and splitting it (randomly) into a “training set” <span class="math inline">\(\mathcal{D}_\train\)</span> and a “test set” <span class="math inline">\(\mathcal{D}_\test\)</span>, using only <span class="math inline">\(\mathcal{D}_\train\)</span> to compute <span class="math inline">\(\hat{f}\)</span>, and <span class="math inline">\(\mathcal{D}_\test\)</span> to estimate <span class="math inline">\(\hat{\mathscr{R}}_\test(\hat{f})\)</span> using the above formula. There are costs and benefits to doing this:</p>
-<ul>
-<li>You have less data to train <span class="math inline">\(\hat{f}\)</span></li>
-<li>You have a good estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span></li>
-</ul>
-<p>Putting more data in <span class="math inline">\(\mathcal{D}_\train\)</span> ameliorates the first cost, at the risk of making your estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> worse.</p>
-<section id="cross-validation" class="level2">
-<h2 class="anchored" data-anchor-id="cross-validation">Cross validation</h2>
-<p>A clever way to use nearly all the data to compute <span class="math inline">\(\hat{f}\)</span> and still get a reasonable test set error is to <em>repeat</em> the above procedure many times, each time with a different <span class="math inline">\(\test\)</span> set.</p>
-<p>As an extreme, let <span class="math inline">\(\hat{f}_{-n}\)</span> denote an estimate of <span class="math inline">\(\hat{f}\)</span> with the <span class="math inline">\(n\)</span>–th datapoint removed. Since you have removed only one datapoint, we might hope that <span class="math inline">\(\hat{f}_{-n} \approx \hat{f}\)</span>, so we have paid little estimation cost. Of course, the estimate</p>
-<p><span class="math display">\[
-\hat{\mathscr{R}}_\test(\hat{f}_{-n})  = \mathscr{R}(\hat{f}_{-n}(\boldsymbol{x}_n), y_n)
-\]</span></p>
-<p>uses a single datapoint, and so is very variable, if nearly unbiased. However, we can do this for <em>each</em> datapoint and average the results to reduce the variance of the test error estimate. This is called the “leave–one–out CV estimator,” or LOO-CV:</p>
-<p><span class="math display">\[
-\hat{\mathscr{R}}_{LOO} := \frac{1}{N} \sum_{n=1}^N\mathscr{R}(\hat{f}_{-n}(\boldsymbol{x}_n), y_n).
-\]</span></p>
-<p>Of course, you can do the same thing leaving two points out, or three, or so on, giving “leave–k–out CV” estimators. In the extreme where you leave a fraction <span class="math inline">\(N/K\)</span> points out, you get “K–fold” CV estimators.</p>
-<p>How many should you leave out? There seems to be to be a striking lack of useful theory. The rules of thumb are:</p>
-<ul>
-<li>By leaving out more datapoints you “bias” your estimate if your estimate of <span class="math inline">\(\hat{f}\)</span> depends strongly on how many datapoints you have</li>
-<li>By leaving out more datapoints you reduce the “variance” of your estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> by making the test set larger.</li>
-</ul>
-<p>So there appears to be a sort of meta–bias–variance tradeoff in the estimation of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span>. Common practice is five or ten–fold cross–validation.</p>
-</section>
-</section>
-<section id="using-cv-as-selection" class="level1">
-<h1>Using CV as selection</h1>
-<p>Typically we actually want to use CV not just to estimate <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> for a particular procedure, but to choose among a variety of procedures. For example, we might have a family of ridge regressions:</p>
-<p><span class="math display">\[
-\hat{\boldsymbol{\beta}}(\lambda) := \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \frac{1}{N} \sum_{n=1}^N(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n - y_n)^2 + \lambda \left\Vert\boldsymbol{\beta}\right\Vert_2^2,
-\]</span></p>
-<p>and we would like to choose <span class="math inline">\(\lambda\)</span> to minimize</p>
-<p><span class="math display">\[
-\lambda^* := \underset{\lambda}{\mathrm{argmin}}\, \mathscr{R}(\hat{\boldsymbol{\beta}}(\lambda)).
-\]</span></p>
-<p>Of course we do not know <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}}(\lambda))\)</span>, but we can use our standard trick, and estimate</p>
-<p><span class="math display">\[
-\hat{\lambda}:= \underset{\lambda}{\mathrm{argmin}}\, \hat{\mathscr{R}}_{CV}(\hat{\boldsymbol{\beta}}(\lambda)).
-\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Why not simply minimize <span class="math inline">\(\boldsymbol{\beta}, \lambda := \underset{\boldsymbol{\beta}, \lambda}{\mathrm{argmin}}\, \frac{1}{N} \sum_{n=1}^N(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n - y_n)^2 + \lambda \left\Vert\boldsymbol{\beta}\right\Vert_2^2?\)</span></p>
-</div>
-</div>
-<p>Of course, once we have an estimate <span class="math inline">\(\hat{\lambda}\)</span>, we can then take it and use the whole dataset as training with that particular <span class="math inline">\(\hat{\lambda}\)</span>.</p>
-<p>Note that we have divided the problem into “hyperparameters” (<span class="math inline">\(\lambda\)</span>) which are estimated with cross–validation, and “parameters” (<span class="math inline">\(\boldsymbol{\beta}\)</span>) which have been estimated with the training set. What is a parameter and what is a hyperparameter? In one sense, “hyperparameters are just vibes” (“In Defense of Typing Monkeys,” <span class="citation" data-cites="recht:2025:argmin">Recht (<a href="#ref-recht:2025:argmin" role="doc-biblioref">2025</a>)</span>); often our hyperparameters are extremely expressive. However, typical practice treats parameters as high–dimensional and capable of overfitting, and hyperparameters as a low to moderate–dimensional set of levers for controlling overfitting.</p>
-<section id="putting-it-together" class="level2">
-<h2 class="anchored" data-anchor-id="putting-it-together">Putting it together</h2>
-<p>The <a href="https://scikit-learn.org/stable/modules/cross_validation.html">scikit webpage has this picture</a>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../assets/scikit_cv.png" class="img-fluid figure-img" style="width:4in"></p>
-<figcaption>scikit_cv</figcaption>
-</figure>
-</div>
-<p>Note that there are two different places where the map <span class="math inline">\(\mathcal{D}\mapsto \hat{f}\)</span> happens (during and after hyperparameter selection), and two different uses of test sets (hyperparameter evaluation and “final” evaluation).</p>
-</section>
-</section>
-<section id="choosing-the-right-exchangeable-unit" class="level1">
-<h1>Choosing the right exchangeable unit</h1>
-<p>Suppose you have an imagine segmentation task where you have to identify whether each pixel is a tumor, and if so, what kind of tumor it is. Suppose the images come from multiple different hospitals. What should you leave out when you run cross–validation? There are many choices:</p>
-<ul>
-<li>Randomly chosen individual pixels</li>
-<li>Randomly chosen contiguous sub–images</li>
-<li>Randomly chosen images</li>
-<li>All images from a randomly chosen hospital</li>
-</ul>
-<p>Which choice is correct? <em>The answer depends on what you’re going to do with your ML procedure.</em> Usually the coarsest answer is the best, but often that limits the number “independent” units you have.</p>
-</section>
-<section id="repeating-the-whole-procedure" class="level1">
-<h1>Repeating the whole procedure</h1>
-<p>The test set is only a real test set if <span class="math inline">\(\hat{f}\)</span> is truly independent of <span class="math inline">\(\mathcal{D}_\test\)</span>. It’s easy to accidentally induce dependence, and you should be on guard against using the whole dataset to make some decisions, leading to poor estimates of test performance.</p>
-<p>Here is a sylized version of an example from <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> Chapter 7.10.3, which is easier to understand mathematically, but less realistic. Suppose we have binary <span class="math inline">\(y_n\)</span>, with 50/50 probability of being <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, and linearly independent binary regressors <span class="math inline">\(\boldsymbol{x}_n \in \{0,1\}^{2^N}\)</span> which are totally independent of <span class="math inline">\(y_n\)</span>. Let’s use squared error for simplicity. Since the regressors and response are independent, the loss <span class="math inline">\(\mathscr{R}(\hat{f}) \ge \mathrm{Var}_{\,}\left(y^2\right) = 0.25\)</span>.</p>
-<p>For any given regressor, the probability that <span class="math inline">\(x_{pn} = y_n\)</span> for all <span class="math inline">\(n\)</span> is given by <span class="math inline">\(0.5^N\)</span>, which is a very small number. However, if <span class="math inline">\(\boldsymbol{x}_n\)</span> is very high dimensional so that <span class="math inline">\(P \gg 0.5^N\)</span>, then with high probability there will be at least one <span class="math inline">\(p\)</span> with <span class="math inline">\(x_{pn} = y_n\)</span>.</p>
-<p>Suppose we first comb through the dataset to choose the regressor that best matches <span class="math inline">\(y_n\)</span>, choosing <span class="math inline">\(x_{pn}\)</span>. We then use cross–validation to estimate <span class="math inline">\(\mathscr{R}(\hat{\beta})\)</span>, where <span class="math inline">\(\hat{\beta}\)</span> is chosen using OLS. Our CV loss is zero, since <span class="math inline">\(x_{pn} = y_n\)</span> on all the datapoints, even the left–out set!</p>
-<p>What went wrong? The problem is that we used the whole dataset to choose the regressor first, and then pretended we didn’t. To avoid this kind of problem, always do the whole analysis from the start with every fresh train / test split.</p>
-
+<p>That is, low generalization error is <strong>sufficient but not necessary</strong> for low estimation error.</p>
+<p>This is nice, because we don’t know anything about <span class="math inline">\(\overline{f}\)</span>, and so cannot practically evaluate it. However, we do know <span class="math inline">\(\hat{f}\)</span>, <span class="math inline">\(\hat{\mathscr{R}}\)</span>, and, as we will see, can either estimate <span class="math inline">\(\mathscr{R}\)</span> using out-of-sample data, or study it using statistical properties of <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(\hat{\mathscr{R}}\)</span>. This unit, then is devoted to studying the generlization error, both from a practical and theoretical point of view.</p>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-isl:2021:gareth" class="csl-entry" role="listitem">
-Gareth, J., W. Daniela, H. Trevor, and T. Robert. 2021. <em>An Introduction to Statistical Learning: <span>W</span>ith Applications in <span>Python</span></em>. Spinger.
-</div>
-<div id="ref-esl:2009:hastie" class="csl-entry" role="listitem">
-Hastie, T., R. Tibshirani, and J. Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference and Prediction</em>. 2nd ed. Springer.
-</div>
-<div id="ref-recht:2025:argmin" class="csl-entry" role="listitem">
-Recht, B. 2025. <span>“Argmin Blog.”</span> <a href="https://www.argmin.net/">https://www.argmin.net/</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
