@@ -266,9 +266,9 @@ As before, we wish to use <span class="math inline">\(\boldsymbol{x}\)</span> to
 <p><span class="math display">\[
 \begin{aligned}
 \lossce(\pi, y) ={}&amp; - \log \mathbb{P}_{\,}\left(y\vert \pi\right) \\
-={}&amp; - \log \pi^y(1-\pi)^{y-1} \\
-={}&amp; - y\log \pi - (y- 1) \log (1-\pi) \\
-={}&amp; - y\log \frac{\pi}{1 - \pi} + \log (1-\pi).
+={}&amp; - \log \pi^y(1-\pi)^{1 - y} \\
+={}&amp; - y\log \pi - (1 - y) \log (1-\pi) \\
+={}&amp; - y\log \frac{\pi}{1 - \pi} - \log (1-\pi).
 \end{aligned}
 \]</span></p>
 <p>This is also known as the “cross–entropy loss,” since the maximum likelihood estimator is also the minimizer of the Kullback–Liebler divergence. (See the 254 homework problem for unit 2.)</p>
