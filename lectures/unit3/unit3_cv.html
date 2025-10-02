@@ -219,7 +219,7 @@ window.Quarto = {
 <li>You have less data to train <span class="math inline">\(\hat{f}\)</span></li>
 <li>You have a good estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span></li>
 </ul>
-<p>Putting more data in <span class="math inline">\(\mathcal{D}_\train\)</span> ameliorates the first cost, at the risk of making your estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> worse.</p>
+<p>Putting more data in <span class="math inline">\(\mathcal{D}_\train\)</span> ameliorates the first cost, at the risk of making your estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> worse. There is no universally correct way to make this tradeoff.</p>
 <section id="cross-validation" class="level2">
 <h2 class="anchored" data-anchor-id="cross-validation">Cross validation</h2>
 <p>A clever way to use nearly all the data to compute <span class="math inline">\(\hat{f}\)</span> and still get a reasonable test set error is to <em>repeat</em> the above procedure many times, each time with a different <span class="math inline">\(\test\)</span> set.</p>
@@ -237,7 +237,7 @@ window.Quarto = {
 <li>By leaving out more datapoints you “bias” your estimate if your estimate of <span class="math inline">\(\hat{f}\)</span> depends strongly on how many datapoints you have</li>
 <li>By leaving out more datapoints you reduce the “variance” of your estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> by making the test set larger.</li>
 </ul>
-<p>So there appears to be a sort of meta–bias–variance tradeoff in the estimation of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span>. Common practice is five or ten–fold cross–validation.</p>
+<p>So there appears to be a sort of meta–bias–variance tradeoff in the estimation of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span>. However, it’s worth acknowledging that these rules of thumb are not universally true, and their theoretical support seems weak. Common practice is five or ten–fold cross–validation.</p>
 </section>
 </section>
 <section id="using-cv-as-selection" class="level1">
