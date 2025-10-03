@@ -693,6 +693,16 @@
     ]
   },
   {
+    "objectID": "labs/labs.html#lab-5",
+    "href": "labs/labs.html#lab-5",
+    "title": "Labs",
+    "section": "Lab 5",
+    "text": "Lab 5\nLab 5 Exercise - Earthquake Afterschok Prediction Reading",
+    "crumbs": [
+      "Labs"
+    ]
+  },
+  {
     "objectID": "labs/lab6_exercise.html",
     "href": "labs/lab6_exercise.html",
     "title": "Lab 6 Exercise - Cross Validation Competition",
@@ -718,7 +728,7 @@
     "href": "labs/earthquake_reading/exercise.html",
     "title": "Lab 5 Exercise - Earthquake Aftershock Prediction Reading",
     "section": "",
-    "text": "The assignment\nPlease read the following papers carefully, in groups of up to four, and answer the following questions elaborately. Your answers are to be submitted to Gradescope in PDF format.\n\n\nThe papers\n\nDeVries, P. M., Viégas, F., Wattenberg, M., & Meade, B. J. (2018). Deep learning of aftershock patterns following large earthquakes. Nature, 560(7720), 632-634.\nMignan, A., & Broccardo, M. (2019). One neuron versus deep learning in aftershock prediction. Nature, 574(7776), E1-E3.\n\nThe DeVries et al. paper introduces a deep neural network (DNN) classifier to predict earthquake afterschocks. The Mignan and Broccardo paper criticizes it.\n\n\nThe questions\nIn the DeVries et al. paper:\n\nDoes the training set comprise IID observations?\nIs the test set independent of the training set?\nWhat target are the authors trying to predict?\nWhat loss function did the authors use to train the model?\nWhat metric did the authors use to evaluate the model on the test set? Is it different from the loss function? If so, why did the authors choose to make this distinction?\nWhat baselines is the model compared against?\nThe authors compare (first page, middle of second column) the precision of the model against the precision of a baseline, at particular thresholds. Does this make sense?\nHow did the authors choose the particular DNN architecture (number of layers, etc.)? Did they try to optimize it?\nWas manual feature engineering performed?\nWould you have made different choices in any of the former questions had you been the authors?\n\nIn the Mignan and Broccardo paper:\n\nWhat decisions of DeVries et al. from among the former questions do Mignan and Broccardo criticize?\nWhich model is preferable (DNN or logistic regression) given that the two have the same AUC on the test set? Which would you use in practice? Why?\nWas manual feature engineering performed for the logistic regression model? Was it different from the DNN model?\nMignan and Broccardo claim that another model of theirs has better performance than the DNN (AUC 0.86 compared to 0.85, second page first paragraph). Do you agree?\nDo you agree with Mignan and Broccardo’s main criticism of DeVries et al.?"
+    "text": "The assignment\nPlease read the following papers carefully, in groups of up to four, and answer the following questions elaborately. Your answers are to be submitted to Gradescope in PDF format.\n\n\nThe papers\n\nDeVries, P. M., Viégas, F., Wattenberg, M., & Meade, B. J. (2018). Deep learning of aftershock patterns following large earthquakes. Nature, 560(7720), 632-634.\nMignan, A., & Broccardo, M. (2019). One neuron versus deep learning in aftershock prediction. Nature, 574(7776), E1-E3.\n\nThe DeVries et al. paper introduces a deep neural network (DNN) classifier to predict earthquake afterschocks. The Mignan and Broccardo paper criticizes it.\n\n\nThe questions\nIn the DeVries et al. paper:\n\nDoes the training set comprise IID observations?\nIs the test set independent of the training set?\nWhat target are the authors trying to predict?\nWhat loss function did the authors use to train the model?\nWhat metric did the authors use to evaluate the model on the test set? Is it different from the loss function? If so, why?\nWhat baselines is the model compared against?\nThe authors compare (first page, middle of second column) the precision of the model against the precision of a baseline, at particular thresholds. Does this make sense?\nHow did the authors choose the particular DNN architecture (number of layers, etc.)? Did they try to optimize it?\nWas manual feature engineering performed?\nWould you have made different choices in any of the former questions if you had been the authors?\n\nIn the Mignan and Broccardo paper:\n\nWhat decisions of DeVries et al. from among the former questions do Mignan and Broccardo criticize?\nWhich model is preferable (DNN or logistic regression) given that the two have the same AUC on the test set? Which would you use in practice? Why?\nWas manual feature engineering performed for the logistic regression model? Was it different from the DNN model? Why?\nMignan and Broccardo claim that another model of theirs has better performance than the DNN (AUC 0.86 compared to 0.85, second page first paragraph). Do you agree?\nDo you agree with Mignan and Broccardo’s main criticism of DeVries et al.?"
   },
   {
     "objectID": "grading.html",
