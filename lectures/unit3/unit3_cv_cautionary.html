@@ -8,7 +8,7 @@
 
 <meta name="author" content="Ryan Giordano">
 
-<title>Cross-validation</title>
+<title>Cross-validation cautionary notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,14 +144,11 @@ window.Quarto = {
    
   <ul>
   <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
-  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a></li>
-  <li><a href="#test-sets" id="toc-test-sets" class="nav-link" data-scroll-target="#test-sets">Test sets</a>
+  <li><a href="#three-examples-of-cv-failure" id="toc-three-examples-of-cv-failure" class="nav-link" data-scroll-target="#three-examples-of-cv-failure">Three examples of CV failure</a>
   <ul class="collapse">
-  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation">Cross validation</a></li>
-  </ul></li>
-  <li><a href="#using-cv-as-selection" id="toc-using-cv-as-selection" class="nav-link" data-scroll-target="#using-cv-as-selection">Using CV as selection</a>
-  <ul class="collapse">
-  <li><a href="#putting-it-together" id="toc-putting-it-together" class="nav-link" data-scroll-target="#putting-it-together">Putting it together</a></li>
+  <li><a href="#images-example" id="toc-images-example" class="nav-link" data-scroll-target="#images-example">Images example</a></li>
+  <li><a href="#super-useful-feature-example" id="toc-super-useful-feature-example" class="nav-link" data-scroll-target="#super-useful-feature-example">Super useful feature example</a></li>
+  <li><a href="#lots-of-regressors-example" id="toc-lots-of-regressors-example" class="nav-link" data-scroll-target="#lots-of-regressors-example">Lots of regressors example</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -161,7 +158,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Cross-validation</h1>
+<h1 class="title">Cross-validation cautionary notes</h1>
 </div>
 
 
@@ -192,91 +189,46 @@ window.Quarto = {
 <section id="goals" class="level1">
 <h1>Goals</h1>
 <ul>
-<li>Introduce cross–validation as an estimator of population loss and some best practices:
-<ul>
-<li>Costs and benefits of leave–one–out verus k–fold (bias / variance tradeoff)</li>
-<li>The importance of choosing the right independent unit</li>
-<li>The importance of repeating the full procedure</li>
-</ul></li>
+<li>Point out some ways that CV can fail</li>
 </ul>
 </section>
-<section id="reading" class="level1">
-<h1>Reading</h1>
-<p>The primary reading for this section is <span class="citation" data-cites="isl:2021:gareth">Gareth et al. (<a href="#ref-isl:2021:gareth" role="doc-biblioref">2021</a>)</span> Chapter 5.1 and <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> chapter 7.10, for which these notes are just a small supplement.</p>
+<section id="three-examples-of-cv-failure" class="level1">
+<h1>Three examples of CV failure</h1>
+<p>Please discuss precisely which assumption behind CV goes wrong in each of the following scenarios.</p>
+<section id="images-example" class="level2">
+<h2 class="anchored" data-anchor-id="images-example">Images example</h2>
+<p>Suppose you have an imagine segmentation task where you have to identify whether each pixel is a tumor. You cast this problem as a classification problem, in which each pixel is classified correctly. Let <span class="math inline">\(x_{ip}\)</span> denote the information in pixel <span class="math inline">\(p\)</span> of image <span class="math inline">\(i\)</span>, and <span class="math inline">\(y_{ip}\)</span> the tumor classification. Your risk function thus looks like</p>
+<p><span class="math display">\[
+\hat{\mathscr{R}}(f) = \sum_{\textrm{image }i} \sum_{\textrm{pixel }p} \mathscr{L}(f(x_{ip}, y_{pi})).
+\]</span></p>
+<p>Suppose you perform CV leaving out individual pixels, and find you have excellent out–of–sample risk, but then try on genuinely new images, and find that CV performs very badly.</p>
+<!-- What should you leave
+out when you run cross--validation?  There are many choices:
+
+- Randomly chosen individual pixels
+- Randomly chosen contiguous sub--images
+- Randomly chosen images
+- All images from a randomly chosen hospital -->
 </section>
-<section id="test-sets" class="level1">
-<h1>Test sets</h1>
-<p>Recall that we want to control or at least estimate the generalization error, <span class="math inline">\(\hat{\mathscr{R}}(\hat{f}) - \mathscr{R}(\hat{f})\)</span>, since we have reason to believe that the other terms in the risk decomposition cannot hurt us.</p>
-<p>However, the estimator <span class="math inline">\(\hat{\mathscr{R}}(\hat{f}) = \frac{1}{N} \sum_{n=1}^N\mathscr{L}(\hat{f}(\boldsymbol{x}_n), y_n)\)</span> is not considered a reliable estimator of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> because <span class="math inline">\(\hat{f}\)</span> is not independent of <span class="math inline">\((\boldsymbol{x}_n, y_n)\)</span>. But suppose we have an actual new dataset, <span class="math inline">\(\mathcal{D}_\mathrm{new}= ((\boldsymbol{x}_1, y_1), \ldots (\boldsymbol{x}_M, y_M))\)</span>. Then we could just etsimate:</p>
-<p><span class="math display">\[
-\hat{\mathscr{R}}_\mathrm{new}(\hat{f}) \approx \frac{1}{M} \sum_{m=1}^M \mathscr{L}(\hat{f}(\boldsymbol{x}_m),y_m).
-\]</span></p>
-<p>This <em>is</em> a consistent estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> since we did not use <span class="math inline">\(\mathcal{D}_\mathrm{new}\)</span> to train <span class="math inline">\(\hat{f}\)</span>, and so <span class="math inline">\(\hat{f}\)</span> is independent of <span class="math inline">\(\boldsymbol{x}_m, y_m\)</span>.</p>
-<p>One might ask, if you had <span class="math inline">\(\mathcal{D}_\mathrm{new}\)</span>, why didn’t you just use it to train <span class="math inline">\(\hat{f}\)</span>? Conversely, you might imagine taking the data you do have, and splitting it (randomly) into a “training set” <span class="math inline">\(\mathcal{D}_\train\)</span> and a “test set” <span class="math inline">\(\mathcal{D}_\test\)</span>, using only <span class="math inline">\(\mathcal{D}_\train\)</span> to compute <span class="math inline">\(\hat{f}\)</span>, and <span class="math inline">\(\mathcal{D}_\test\)</span> to estimate <span class="math inline">\(\hat{\mathscr{R}}_\test(\hat{f})\)</span> using the above formula. There are costs and benefits to doing this:</p>
-<ul>
-<li>You have less data to train <span class="math inline">\(\hat{f}\)</span></li>
-<li>You have a good estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span></li>
-</ul>
-<p>Putting more data in <span class="math inline">\(\mathcal{D}_\train\)</span> ameliorates the first cost, at the risk of making your estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> worse. There is no universally correct way to make this tradeoff.</p>
-<section id="cross-validation" class="level2">
-<h2 class="anchored" data-anchor-id="cross-validation">Cross validation</h2>
-<p>A clever way to use nearly all the data to compute <span class="math inline">\(\hat{f}\)</span> and still get a reasonable test set error is to <em>repeat</em> the above procedure many times, each time with a different <span class="math inline">\(\test\)</span> set.</p>
-<p>As an extreme, let <span class="math inline">\(\hat{f}_{-n}\)</span> denote an estimate of <span class="math inline">\(\hat{f}\)</span> with the <span class="math inline">\(n\)</span>–th datapoint removed. Since you have removed only one datapoint, we might hope that <span class="math inline">\(\hat{f}_{-n} \approx \hat{f}\)</span>, so we have paid little estimation cost. Of course, the estimate</p>
-<p><span class="math display">\[
-\hat{\mathscr{R}}_\test(\hat{f}_{-n})  = \mathscr{R}(\hat{f}_{-n}(\boldsymbol{x}_n), y_n)
-\]</span></p>
-<p>uses a single datapoint, and so is very variable, if nearly unbiased. However, we can do this for <em>each</em> datapoint and average the results to reduce the variance of the test error estimate. This is called the “leave–one–out CV estimator,” or LOO-CV:</p>
-<p><span class="math display">\[
-\hat{\mathscr{R}}_{LOO} := \frac{1}{N} \sum_{n=1}^N\mathscr{R}(\hat{f}_{-n}(\boldsymbol{x}_n), y_n).
-\]</span></p>
-<p>Of course, you can do the same thing leaving two points out, or three, or so on, giving “leave–k–out CV” estimators. In the extreme where you leave a fraction <span class="math inline">\(N/K\)</span> points out, you get “K–fold” CV estimators.</p>
-<p>How many should you leave out? There seems to be to be a striking lack of useful theory. The rules of thumb are:</p>
-<ul>
-<li>By leaving out more datapoints you “bias” your estimate if your estimate of <span class="math inline">\(\hat{f}\)</span> depends strongly on how many datapoints you have</li>
-<li>By leaving out more datapoints you reduce the “variance” of your estimate of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> by making the test set larger.</li>
-</ul>
-<p>So there appears to be a sort of meta–bias–variance tradeoff in the estimation of <span class="math inline">\(\mathscr{R}(\hat{f})\)</span>. However, it’s worth acknowledging that these rules of thumb are not universally true, and their theoretical support seems weak. Common practice is five or ten–fold cross–validation.</p>
+<section id="super-useful-feature-example" class="level2">
+<h2 class="anchored" data-anchor-id="super-useful-feature-example">Super useful feature example</h2>
+<p>This is a popular (but probably apocryphal example)[https://gwern.net/tank]:</p>
+<p>“The Army trained a program to differentiate American tanks from Russian tanks with 100% [CV] accuracy. Only later did analysts realized that the American tanks had been photographed on a sunny day and the Russian tanks had been photographed on a cloudy day. The computer had learned to detect brightness.”</p>
+<p>Whether or not this actually happened, how would you characterize the failure of CV to give a good estimate of the out-of-sample risk?</p>
 </section>
-</section>
-<section id="using-cv-as-selection" class="level1">
-<h1>Using CV as selection</h1>
-<p>Typically we actually want to use CV not just to estimate <span class="math inline">\(\mathscr{R}(\hat{f})\)</span> for a particular procedure, but to choose among a variety of procedures. For example, we might have a family of ridge regressions:</p>
-<p><span class="math display">\[
-\hat{\boldsymbol{\beta}}(\lambda) := \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \frac{1}{N} \sum_{n=1}^N(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n - y_n)^2 + \lambda \left\Vert\boldsymbol{\beta}\right\Vert_2^2,
-\]</span></p>
-<p>and we would like to choose <span class="math inline">\(\lambda\)</span> to minimize</p>
-<p><span class="math display">\[
-\lambda^* := \underset{\lambda}{\mathrm{argmin}}\, \mathscr{R}(\hat{\boldsymbol{\beta}}(\lambda)).
-\]</span></p>
-<p>Of course we do not know <span class="math inline">\(\mathscr{R}(\hat{\boldsymbol{\beta}}(\lambda))\)</span>, but we can use our standard trick, and estimate</p>
-<p><span class="math display">\[
-\hat{\lambda}:= \underset{\lambda}{\mathrm{argmin}}\, \hat{\mathscr{R}}_{CV}(\hat{\boldsymbol{\beta}}(\lambda)).
-\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercise">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Why not simply minimize <span class="math inline">\(\boldsymbol{\beta}, \lambda := \underset{\boldsymbol{\beta}, \lambda}{\mathrm{argmin}}\, \frac{1}{N} \sum_{n=1}^N(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n - y_n)^2 + \lambda \left\Vert\boldsymbol{\beta}\right\Vert_2^2?\)</span></p>
-</div>
-</div>
-<p>Of course, once we have an estimate <span class="math inline">\(\hat{\lambda}\)</span>, we can then take it and use the whole dataset as training with that particular <span class="math inline">\(\hat{\lambda}\)</span>.</p>
-<p>Note that we have divided the problem into “hyperparameters” (<span class="math inline">\(\lambda\)</span>) which are estimated with cross–validation, and “parameters” (<span class="math inline">\(\boldsymbol{\beta}\)</span>) which have been estimated with the training set. What is a parameter and what is a hyperparameter? In one sense, “hyperparameters are just vibes” (“In Defense of Typing Monkeys,” <span class="citation" data-cites="recht:2025:argmin">Recht (<a href="#ref-recht:2025:argmin" role="doc-biblioref">2025</a>)</span>); often our hyperparameters are extremely expressive. However, typical practice treats parameters as high–dimensional and capable of overfitting, and hyperparameters as a low to moderate–dimensional set of levers for controlling overfitting.</p>
-<section id="putting-it-together" class="level2">
-<h2 class="anchored" data-anchor-id="putting-it-together">Putting it together</h2>
-<p>The <a href="https://scikit-learn.org/stable/modules/cross_validation.html">scikit webpage has this picture</a>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../assets/scikit_cv.png" class="img-fluid figure-img" style="width:4in"></p>
-<figcaption>scikit_cv</figcaption>
-</figure>
-</div>
-<p>Note that there are two different places where the map <span class="math inline">\(\mathcal{D}\mapsto \hat{f}\)</span> happens (during and after hyperparameter selection), and two different uses of test sets (hyperparameter evaluation and “final” evaluation).</p>
+<section id="lots-of-regressors-example" class="level2">
+<h2 class="anchored" data-anchor-id="lots-of-regressors-example">Lots of regressors example</h2>
+<!-- The test set is only a real test set if $\fhat$ is truly  independent of
+$\data_\test$.  It's easy to accidentally induce dependence, and you should
+be on guard against using the whole dataset to make some decisions, leading
+to poor estimates of test performance. -->
+<p>Here is a sylized version of an example from <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> Chapter 7.10.3, which is easier to understand mathematically, but less realistic. Suppose we have binary <span class="math inline">\(y_n\)</span>, with 50/50 probability of being <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, and linearly independent binary regressors <span class="math inline">\(\boldsymbol{x}_n \in \{0,1\}^{2^N}\)</span> which are totally independent of <span class="math inline">\(y_n\)</span>. Let’s use squared error for simplicity. Since the regressors and response are independent, the loss <span class="math inline">\(\mathscr{R}(\hat{f}) \ge \mathrm{Var}_{\,}\left(y^2\right) = 0.25\)</span>.</p>
+<p>For any given regressor, the probability that <span class="math inline">\(x_{pn} = y_n\)</span> for all <span class="math inline">\(n\)</span> is given by <span class="math inline">\(0.5^N\)</span>, which is a very small number. However, if <span class="math inline">\(\boldsymbol{x}_n\)</span> is very high dimensional so that <span class="math inline">\(P \gg 0.5^N\)</span>, then with high probability there will be at least one <span class="math inline">\(p\)</span> with <span class="math inline">\(x_{pn} = y_n\)</span>.</p>
+<p>Suppose we first comb through the dataset to choose the regressor that best matches <span class="math inline">\(y_n\)</span>, choosing <span class="math inline">\(x_{pn}\)</span>. We then use cross–validation to estimate <span class="math inline">\(\mathscr{R}(\hat{\beta})\)</span>, where <span class="math inline">\(\hat{\beta}\)</span> is chosen using OLS. Our CV loss is zero, since <span class="math inline">\(x_{pn} = y_n\)</span> on all the datapoints, even the left–out set, despite the fact that we know the actual risk is <span class="math inline">\(0.25\)</span>.</p>
+<!-- What went wrong?  The problem is that we used the whole dataset
+to choose the regressor first, and then pretended we didn't.  To avoid
+this kind of problem, always do the whole analysis from the start
+with every fresh train / test split. -->
 
 
 
@@ -284,14 +236,8 @@ Exercise
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-isl:2021:gareth" class="csl-entry" role="listitem">
-Gareth, J., W. Daniela, H. Trevor, and T. Robert. 2021. <em>An Introduction to Statistical Learning: <span>W</span>ith Applications in <span>Python</span></em>. Spinger.
-</div>
 <div id="ref-esl:2009:hastie" class="csl-entry" role="listitem">
 Hastie, T., R. Tibshirani, and J. Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference and Prediction</em>. 2nd ed. Springer.
-</div>
-<div id="ref-recht:2025:argmin" class="csl-entry" role="listitem">
-Recht, B. 2025. <span>“Argmin Blog.”</span> <a href="https://www.argmin.net/">https://www.argmin.net/</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
