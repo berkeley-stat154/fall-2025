@@ -144,14 +144,14 @@ window.Quarto = {
    
   <ul>
   <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
-  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a></li>
-  <li><a href="#examples-of-integrable-lipschitz-loss" id="toc-examples-of-integrable-lipschitz-loss" class="nav-link" data-scroll-target="#examples-of-integrable-lipschitz-loss">Examples of integrable Lipschitz loss</a>
+  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a>
   <ul class="collapse">
-  <li><a href="#ols-loss" id="toc-ols-loss" class="nav-link" data-scroll-target="#ols-loss">OLS loss</a></li>
-  <li><a href="#bounded-derivatives" id="toc-bounded-derivatives" class="nav-link" data-scroll-target="#bounded-derivatives">Bounded derivatives</a></li>
   <li><a href="#zeroone-loss-functions" id="toc-zeroone-loss-functions" class="nav-link" data-scroll-target="#zeroone-loss-functions">Zero–one loss functions</a></li>
   </ul></li>
-  <li><a href="#vc-dimension" id="toc-vc-dimension" class="nav-link" data-scroll-target="#vc-dimension">VC dimension</a></li>
+  <li><a href="#vc-dimension" id="toc-vc-dimension" class="nav-link" data-scroll-target="#vc-dimension">VC dimension</a>
+  <ul class="collapse">
+  <li><a href="#from-classifiers-to-loss" id="toc-from-classifiers-to-loss" class="nav-link" data-scroll-target="#from-classifiers-to-loss">From classifiers to loss</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -199,92 +199,6 @@ window.Quarto = {
 <section id="reading" class="level1">
 <h1>Reading</h1>
 <p>These notes can be supplemented with <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> Chapter 7.9. The final bound is based on <span class="citation" data-cites="wainwright:2019:high">Wainwright (<a href="#ref-wainwright:2019:high" role="doc-biblioref">2019</a>)</span> Chapter 4.3, which is more advanced by provides a more complete treatment. Finally, if you want to go further, there are nice video tutorials in lectures 7 and 8 of this <a href="https://work.caltech.edu/telecourse.html">online course</a>.</p>
-</section>
-<section id="examples-of-integrable-lipschitz-loss" class="level1">
-<h1>Examples of integrable Lipschitz loss</h1>
-<p>Recall that we proved a ULLN for functions of the form <span class="math inline">\(\phi(z, \theta)\)</span> satisfying</p>
-<p><span class="math display">\[
-\left|\phi(z, \theta) - \phi(z, \theta')\right| \le M(z) \left\Vert\theta - \theta'\right\Vert
-\]</span></p>
-<p>where <span class="math inline">\(\theta \in \Omega\)</span> and <span class="math inline">\(\Omega\)</span> is compact. We called these the “integrable Lipschtiz” (IL) conditions. This is because a Lipschitz function of <span class="math inline">\(\theta\)</span> satisfies</p>
-<p><span class="math display">\[
-\left|g(\theta) - g(\theta')\right| \le L \left\Vert\theta - \theta'\right\Vert
-\]</span></p>
-<p>for some constant <span class="math inline">\(L\)</span>, and the IL condition allows this <span class="math inline">\(L\)</span> to depend on <span class="math inline">\(z\)</span>, but in a way that is “integrable” by an integrable function <span class="math inline">\(M(z)\)</span>.</p>
-<p>To use this result to control generalization error, we want to apply this to functions of the form</p>
-<p><span class="math display">\[
-\sup_{f\in \mathcal{F}}\left|\frac{1}{N} \sum_{n=1}^N\mathscr{L}(f(x_n), y_n) - \mathbb{E}_{\vphantom{}}\left[\mathscr{L}(f(x), y)\right]\right|.
-\]</span></p>
-<p>So we might take <span class="math inline">\(z= (x, y)\)</span>, a parametric learner <span class="math inline">\(f(\cdot, y)\)</span>, and</p>
-<p><span class="math display">\[
-\phi(z, \theta) = \mathscr{L}(f(x, \theta), y).
-\]</span></p>
-<section id="ols-loss" class="level2">
-<h2 class="anchored" data-anchor-id="ols-loss">OLS loss</h2>
-<p>For example, taking squared loss and linear regression, we get</p>
-<p><span class="math display">\[
-\phi(z, \theta) = (\boldsymbol{x}^\intercal\theta - y)^2 = y^2 - 2 y\boldsymbol{x}^\intercal\theta + \mathrm{trace}\left(\boldsymbol{x}\boldsymbol{x}^\intercal\theta \theta^\intercal\right).
-\]</span></p>
-<p>Let us assume that <span class="math inline">\(\Omega\)</span> is compact. (One can show that <span class="math inline">\(\Omega\)</span> can be safely taken to be compact with high probability as <span class="math inline">\(N\)</span> grows, but I will leave that as a potential homework problem.) We then have, by the triangle inequality and Cauchy–Schwartz,</p>
-<p><span class="math display">\[
-\begin{aligned}
-\phi(z, \theta) - \phi(z, \theta')
-={}&amp;
-- 2 y\boldsymbol{x}^\intercal(\theta - \theta') + \mathrm{trace}\left(\boldsymbol{x}\boldsymbol{x}^\intercal(\theta \theta^\intercal- \theta' {\theta'}^\intercal\right).
-\\={}&amp;
-- 2 y\boldsymbol{x}^\intercal(\theta - \theta') + \mathrm{trace}\left(\boldsymbol{x}\boldsymbol{x}^\intercal(\theta + \theta') (\theta - \theta')^\intercal\right)
-\quad\Rightarrow\\
-\left|\phi(z, \theta) - \phi(z, \theta')\right|
-\le{}&amp;
-2 y\left\Vert\boldsymbol{x}\right\Vert \left\Vert\theta - \theta'\right\Vert +
-\left\Vert\boldsymbol{x}\right\Vert^2 \left\Vert\theta + \theta'\right\Vert \left\Vert\theta - \theta'\right\Vert
-\\\le{}&amp;
-\left(
-2 y\left\Vert\boldsymbol{x}\right\Vert \left\Vert\theta - \theta'\right\Vert +
-  \left\Vert\boldsymbol{x}\right\Vert^2 \left\Vert\theta + \theta'\right\Vert
-\right) \left\Vert\theta - \theta'\right\Vert
-\\\le{}&amp;
-2 \left(
-  y\left\Vert\boldsymbol{x}\right\Vert \left\Vert\theta - \theta'\right\Vert +
-  \left\Vert\boldsymbol{x}\right\Vert^2 \sup_{\theta \in \Omega} \left\Vert\theta\right\Vert
-\right) \left\Vert\theta - \theta'\right\Vert
-\end{aligned}
-\]</span></p>
-<p>where <span class="math inline">\(\sup_{\theta \in \Omega} \left\Vert\theta\right\Vert\)</span> is finite because <span class="math inline">\(\Omega\)</span> is compact. We can thus take</p>
-<p><span class="math display">\[
-M(z) = 2 \left(
-  y\left\Vert\boldsymbol{x}\right\Vert \left\Vert\theta - \theta'\right\Vert +
-  \left\Vert\boldsymbol{x}\right\Vert^2 \sup_{\theta \in \Omega} \left\Vert\theta\right\Vert
-\right),
-\]</span></p>
-<p>and see that quadratic loss satisfies the IL condition, and so a ULLN. (Though recall that we can show directly that this loss obeys a ULLN, as you have done in your homework.)</p>
-</section>
-<section id="bounded-derivatives" class="level2">
-<h2 class="anchored" data-anchor-id="bounded-derivatives">Bounded derivatives</h2>
-<p>In general, it suffices to show that the derivative <span class="math inline">\(\frac{\partial \phi(z; \theta)}{\partial \theta}\)</span> is integrable by an integrable <span class="math inline">\(M(z)\)</span>. This is because, for any <span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_0\)</span>, we can define a path <span class="math inline">\(\theta(t) = \theta_0 + (\theta_1 - \theta_0) t\)</span> and write</p>
-<p><span class="math display">\[
-\begin{aligned}
-\phi(z; \theta_1) ={}&amp;
-  \phi(z; \theta_0) + \int_{0}^1 \frac{\partial \phi(z; \theta(t))}{\partial t} d t
-\\={}&amp;
-  \phi(z; \theta_0) + \int_{0}^1 \left. \frac{\partial \phi(z; \theta)}{\partial \theta} \right|_{\theta(t)} (\theta_1 - \theta_0) d t,
-\end{aligned}
-\]</span></p>
-<p>giving</p>
-<p><span class="math display">\[
-\begin{aligned}
-\left|\phi(z; \theta_1) - \phi(z; \theta_0)\right|
-\le{}&amp; \int_{0}^1 \left|\left. \frac{\partial \phi(z; \theta)}{\partial \theta} \right|_{\theta(t)} (\theta_1 - \theta_0)\right| d t
-\\\le{}&amp; \int_{0}^1 \left\Vert\left. \frac{\partial \phi(z; \theta)}{\partial \theta} \right|_{\theta(t)}\right\Vert  d t\left\Vert\theta_1 - \theta_0\right\Vert
-\\\le{}&amp; \sup_{\theta \in \Omega} \left\Vert\left. \frac{\partial \phi(z; \theta)}{\partial \theta} \right|_{\theta}\right\Vert  d t\left\Vert\theta_1 - \theta_0\right\Vert
-\end{aligned}
-\]</span></p>
-<p>Therefore, if we can take</p>
-<p><span class="math display">\[
-M(z) = \sup_{\theta \in \Omega} \left\Vert\left. \frac{\partial \phi(z; \theta)}{\partial \theta} \right|_{\theta}\right\Vert,
-\]</span></p>
-<p>and show that <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[M(z)\right] &lt; \infty\)</span>, then the IL property follows.</p>
-</section>
 <section id="zeroone-loss-functions" class="level2">
 <h2 class="anchored" data-anchor-id="zeroone-loss-functions">Zero–one loss functions</h2>
 <p>Unfortunately, zero–one losses are <em>not</em> typically IL, since they depend non–smoothly on the classification function <span class="math inline">\(f\)</span>. For a simple example, take <span class="math inline">\(x\in \mathbb{R}^{}\)</span>, <span class="math inline">\(y\in \{0,1\}\)</span> (so it’s a classification problem), and <span class="math inline">\(\mathscr{L}(\hat{y}, y) = \mathrm{I}\left(\hat{y}\ne y\right)\)</span>. Consider the simple threshold classifier</p>
@@ -341,22 +255,13 @@ VC Dimension
 <li>Theorem 4.10 (Rademacher complexity controls the ULLN)</li>
 </ul>
 <p>Note that this result is stronger than our asymptotic results, in the sense that it is a finite–sample exact bound, rather than an (otherwise uncontrolled) guarantee as <span class="math inline">\(N \rightarrow \infty\)</span>. Finite–sample bounds are much easier to obtain when the function <span class="math inline">\(f(x)\)</span> is bounded as a function of <span class="math inline">\(x\)</span>, as is the case for zero–one loss, but which is not typically the case for regression loss.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Exercise:</strong> Show that if a function class <span class="math inline">\(f(\boldsymbol{x})\)</span> for <span class="math inline">\(f\in \mathcal{F}\)</span> has finite VC dimension, then the function class <span class="math inline">\(\{ \phi(\boldsymbol{x}, y) = \mathrm{I}\left(f(\boldsymbol{x}) \ne y\right) \textrm{ for }f\in \mathcal{F}\}\)</span> also has finite VC dimension. Conclude that a ULLN holds for zero–one loss when using a classifier with finite VC dimension.</p>
-</div>
-</div>
+<section id="from-classifiers-to-loss" class="level2">
+<h2 class="anchored" data-anchor-id="from-classifiers-to-loss">From classifiers to loss</h2>
+<p>You will show in your homework that if a classifier has finite VC dimension then its zero–one loss function also has finite VC dimension, and vice-versa.</p>
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">

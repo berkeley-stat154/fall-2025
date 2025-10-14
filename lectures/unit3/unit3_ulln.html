@@ -147,11 +147,12 @@ window.Quarto = {
   <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading">Reading</a></li>
   <li><a href="#uniform-laws-of-large-numbers-for-smooth-function-classes" id="toc-uniform-laws-of-large-numbers-for-smooth-function-classes" class="nav-link" data-scroll-target="#uniform-laws-of-large-numbers-for-smooth-function-classes">Uniform laws of large numbers for smooth function classes</a>
   <ul class="collapse">
-  <li><a href="#some-examples" id="toc-some-examples" class="nav-link" data-scroll-target="#some-examples">Some examples</a></li>
   <li><a href="#a-finite-set-of-functions" id="toc-a-finite-set-of-functions" class="nav-link" data-scroll-target="#a-finite-set-of-functions">A finite set of functions</a></li>
   <li><a href="#a-covering" id="toc-a-covering" class="nav-link" data-scroll-target="#a-covering">A covering</a></li>
   <li><a href="#using-the-tiling-to-produce-a-ulln" id="toc-using-the-tiling-to-produce-a-ulln" class="nav-link" data-scroll-target="#using-the-tiling-to-produce-a-ulln">Using the tiling to produce a ULLN</a></li>
   <li><a href="#general-covering-arguments" id="toc-general-covering-arguments" class="nav-link" data-scroll-target="#general-covering-arguments">General covering arguments</a></li>
+  <li><a href="#proving-the-integrable-lipschitz-condition" id="toc-proving-the-integrable-lipschitz-condition" class="nav-link" data-scroll-target="#proving-the-integrable-lipschitz-condition">Proving the Integrable Lipschitz condition</a></li>
+  <li><a href="#ols-loss-example" id="toc-ols-loss-example" class="nav-link" data-scroll-target="#ols-loss-example">OLS loss example</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -197,7 +198,7 @@ window.Quarto = {
 </section>
 <section id="reading" class="level1">
 <h1>Reading</h1>
-<p>This is a simplified exposition of <span class="citation" data-cites="van:2000:asymptotic">Van der Vaart (<a href="#ref-van:2000:asymptotic" role="doc-biblioref">2000</a>)</span> Example 19.7. One can find a different perspective on the same class of problems in <span class="citation" data-cites="keener:2010:theoretical">Keener (<a href="#ref-keener:2010:theoretical" role="doc-biblioref">2010</a>)</span> Chapter 9. A more advanced approach that is finite–sample but limited to bounded functions can be found in <span class="citation" data-cites="wainwright:2019:high">Wainwright (<a href="#ref-wainwright:2019:high" role="doc-biblioref">2019</a>)</span> Chapter 4.</p>
+<p>This is a simplified exposition of <span class="citation" data-cites="van:2000:asymptotic">Van der Vaart (<a href="#ref-van:2000:asymptotic" role="doc-biblioref">2000</a>)</span> Example 19.7. One can find a different perspective on the same class of problems in <span class="citation" data-cites="keener:2010:theoretical">Keener (<a href="#ref-keener:2010:theoretical" role="doc-biblioref">2010</a>)</span> Chapter 9. A more advanced approach that is finite-sample but limited to bounded functions can be found in <span class="citation" data-cites="wainwright:2019:high">Wainwright (<a href="#ref-wainwright:2019:high" role="doc-biblioref">2019</a>)</span> Chapter 4.</p>
 </section>
 <section id="uniform-laws-of-large-numbers-for-smooth-function-classes" class="level1">
 <h1>Uniform laws of large numbers for smooth function classes</h1>
@@ -213,48 +214,52 @@ window.Quarto = {
 \right|.
 \end{aligned}
 \]</span></p>
-<p>Note that the ULLN depends on the function <span class="math inline">\(f\)</span> only through <span class="math inline">\(f\mapsto \mathscr{L}(f(x), y)\)</span>. And so the above ULLN is a special case of the more general problem of controlling</p>
+<p>Note that the ULLN depends on the function <span class="math inline">\(f\)</span> only through <span class="math inline">\(f\mapsto \mathscr{L}(f(x), y)\)</span>. Given this, we can define</p>
 <p><span class="math display">\[
-\sup_{f\in \mathcal{F}} \left|\frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\vphantom{}}\left[f(z)\right]\right|
-=\sup_{f\in \mathcal{F}} \err(f, N)
+\begin{aligned}
+z_n :={}&amp; (x_n, y_n)\\
+g(z_n; f) :={}&amp; \mathscr{L}(f(x_n), y_n)\\
+\mathcal{G}:={}&amp; \{ g: g(z) = g(z; f) \textrm{ for some }f\in \mathcal{F}\}.
+\end{aligned}
+\]</span></p>
+<p>With these transformations, we can rewrite our generalization error in the following more general form:</p>
+<p><span class="math display">\[
+\sup_{g\in \mathcal{G}} \left|\frac{1}{N} \sum_{n=1}^Ng(z_n) - \mathbb{E}_{\vphantom{}}\left[g(z)\right]\right|
+=\sup_{g\in \mathcal{G}} \err(g, N)
 \]</span></p>
 <p>where we define</p>
 <p><span class="math display">\[
-\err(f,N) := \left|\frac{1}{N} \sum_{n=1}^Nf(z_n) - \mathbb{E}_{\vphantom{}}\left[f(z)\right]\right|.
+\err(g,N) := \left|\frac{1}{N} \sum_{n=1}^Ng(z_n) - \mathbb{E}_{\vphantom{}}\left[g(z)\right]\right|.
 \]</span></p>
-<p>Note that <span class="math inline">\(\err(f,N)\)</span> is random, since it depends on <span class="math inline">\(z_1, \ldots, z_N\)</span>.</p>
-<section id="some-examples" class="level2">
-<h2 class="anchored" data-anchor-id="some-examples">Some examples</h2>
-<p>Although we will develop an abstract result, it’s worth keeping in mind a few parametric examples. The linear case is functions of the form <span class="math inline">\(\mathcal{F}= \{ f(x) = \boldsymbol{\beta}^\intercal x\textrm{ for some } \boldsymbol{\beta}\}\)</span>. An estimator of a class probability from logistic regression might be <span class="math inline">\(\mathcal{F}= \{ f(x) = \textrm{Logit}^{-1}(\boldsymbol{\beta}^\intercal x) \textrm{ for some } \boldsymbol{\beta}\}\)</span>. Similarly, a <span class="math inline">\(0--1\)</span> valued classifer would be <span class="math inline">\(\mathcal{F}= \{ f(x) = \mathrm{I}\left(\boldsymbol{\beta}^\intercal x&gt; \alpha\right) \textrm{ for some } \boldsymbol{\beta}, \alpha \}\)</span>. Finally, you might take <span class="math inline">\(\mathcal{F}= \{ \log p(\cdot | \theta) \textrm{ for some parameter } \theta \}\)</span> for a probability distribution <span class="math inline">\(p(z| \theta)\)</span>, corresponding to maximum likelihood.</p>
-</section>
+<p>Note that <span class="math inline">\(\err(g,N)\)</span> is random, since it depends on <span class="math inline">\(z_1, \ldots, z_N\)</span>.</p>
 <section id="a-finite-set-of-functions" class="level2">
 <h2 class="anchored" data-anchor-id="a-finite-set-of-functions">A finite set of functions</h2>
-<p>We first note that the problem is easy if <span class="math inline">\(\mathcal{F}\)</span> is finite, i.e., <span class="math inline">\(\mathcal{F}= \{ f_k \textrm{ for }k=1,\ldots,K &lt; \infty \}\)</span>, where each <span class="math inline">\(f_k\)</span> satisfies <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[|f_k(z)|\right] \infty\)</span>. In that case,</p>
+<p>We first note that the problem is easy if <span class="math inline">\(\mathcal{G}\)</span> is finite, i.e., <span class="math inline">\(\mathcal{G}= \{ g_k \textrm{ for }k=1,\ldots,K &lt; \infty \}\)</span>, where each <span class="math inline">\(g_k\)</span> satisfies <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[|g_k(z)|\right] \infty\)</span>. In that case,</p>
 <p><span class="math display">\[
-\sup_{f\in \mathcal{F}} \err(f,N) = \max_{k=1,\ldots,K} \err(f_k, N).
+\sup_{g\in \mathcal{G}} \err(f,N) = \max_{k=1,\ldots,K} \err(g_k, N).
 \]</span></p>
-<p>Since <span class="math inline">\(\err(f_k, N) \rightarrow 0\)</span> by the ordinary LLN, it follows that <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 0\)</span> as well, since <span class="math inline">\(K\)</span> is finite.</p>
-<p>Specifically, <span class="math inline">\(\err(f_k, N) \rightarrow 0\)</span> means that, for any <span class="math inline">\(\varepsilon &gt; 0\)</span> and <span class="math inline">\(\delta &gt; 0\)</span>, there exists an <span class="math inline">\(N_k\)</span> such that</p>
+<p>Since <span class="math inline">\(\err(g_k, N) \rightarrow 0\)</span> by the ordinary LLN, it follows that <span class="math inline">\(\max_{k=1,\ldots,K} \err(g_k, N) \rightarrow 0\)</span> as well, since <span class="math inline">\(K\)</span> is finite.</p>
+<p>Specifically, <span class="math inline">\(\err(g_k, N) \rightarrow 0\)</span> means that, for any <span class="math inline">\(\varepsilon &gt; 0\)</span> and <span class="math inline">\(\delta &gt; 0\)</span>, there exists an <span class="math inline">\(N_k\)</span> such that</p>
 <p><span class="math display">\[
 N &gt; N_k \Rightarrow
-\mathbb{P}_{\,}\left(\err(f_k, N) \ge \varepsilon\right) \le \delta.
+\mathbb{P}_{\,}\left(\err(g_k, N) \ge \varepsilon\right) \le \delta.
 \]</span></p>
 <p>Take <span class="math inline">\(N &gt; \max_{k =1,\ldots,K} N_k\)</span>. Then</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{P}_{\,}\left(\max_{k=1,\ldots,K} \err(f_k, N) \ge \varepsilon \right) ={}&amp;
-\mathbb{P}_{\,}\left(\bigcup_{k=1}^K \err(f_k, N) \ge \varepsilon\right)
+\mathbb{P}_{\,}\left(\max_{k=1,\ldots,K} \err(g_k, N) \ge \varepsilon \right) ={}&amp;
+\mathbb{P}_{\,}\left(\bigcup_{k=1}^K \err(g_k, N) \ge \varepsilon\right)
 \\\le{}&amp;
-\sum_{k=1}^K \mathbb{P}_{\,}\left(\err(f_k, N) \ge \varepsilon\right)
+\sum_{k=1}^K \mathbb{P}_{\,}\left(\err(g_k, N) \ge \varepsilon\right)
 \\\le{}&amp; K \delta.
 \end{aligned}
 \]</span></p>
-<p>Since we can tak <span class="math inline">\(\delta = \delta' / K\)</span> for any <span class="math inline">\(\delta'\)</span>, we have proven that <span class="math inline">\(\sup_{f\in \mathcal{F}} \err(f,N) \rightarrow 0\)</span> in probability.</p>
+<p>Since we can tak <span class="math inline">\(\delta = \delta' / K\)</span> for any <span class="math inline">\(\delta'\)</span>, we have proven that <span class="math inline">\(\sup_{g\in \mathcal{G}} \err(f,N) \rightarrow 0\)</span> in probability.</p>
 </section>
 <section id="a-covering" class="level2">
 <h2 class="anchored" data-anchor-id="a-covering">A covering</h2>
-<p>The previous trick cannot be applied when <span class="math inline">\(\mathcal{F}\)</span> is infinite — as is the case in any of our examples, which are parameterized by a continuous parameter and so contain an infinite class of functions.</p>
-<p>A classical approach is to finite a finite “cover” of <span class="math inline">\(\mathcal{F}\)</span>. There are many ways to do so, but here we will focus on a particular example (<span class="citation" data-cites="van:2000:asymptotic">Van der Vaart (<a href="#ref-van:2000:asymptotic" role="doc-biblioref">2000</a>)</span> Example 19.7). Suppose that: <span class="math inline">\(\mathcal{F}= \{ f(\cdot; \theta) \textrm{ for some }\theta \in \Omega \}\)</span>. Assume:</p>
+<p>The previous trick cannot be applied when <span class="math inline">\(\mathcal{G}\)</span> is infinite — as is the case in any of our examples, which are parameterized by a continuous parameter and so contain an infinite class of functions.</p>
+<p>A classical approach is to finite a finite “cover” of <span class="math inline">\(\mathcal{G}\)</span>. There are many ways to do so, but here we will focus on a particular example (<span class="citation" data-cites="van:2000:asymptotic">Van der Vaart (<a href="#ref-van:2000:asymptotic" role="doc-biblioref">2000</a>)</span> Example 19.7). Suppose that: <span class="math inline">\(\mathcal{G}= \{ f(\cdot; \theta) \textrm{ for some }\theta \in \Omega \}\)</span>. Assume:</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Integrable Lipschitz Assumption">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -266,11 +271,11 @@ Integrable Lipschitz Assumption
 </div>
 <div class="callout-body-container callout-body">
 <p>Assume that <span class="math inline">\(\Omega\)</span> is compact, and assume that, for each <span class="math inline">\(z\)</span>, <span class="math display">\[
-\left|f(z; \theta) - f(z; \theta')\right| \le{} M(z) \left\Vert\theta - \theta'\right\Vert,
+\left|g(z; \theta) - g(z; \theta')\right| \le{} M(z) \left\Vert\theta - \theta'\right\Vert,
 \]</span> where <span class="math inline">\(M(z) \ge 0\)</span> and <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[M(z)\right] &lt; \infty\)</span>.</p>
 </div>
 </div>
-<p>This means that the depednence of <span class="math inline">\(f(z; \theta)\)</span> can be decomposed into a smooth part depending on <span class="math inline">\(\theta\)</span>, and an integral part depending on <span class="math inline">\(z\)</span>. When this is true, for a fixed <span class="math inline">\(\gamma &gt; 0\)</span>, we can always find a set of <span class="math inline">\(K(\gamma)\)</span> parameters <span class="math inline">\(\theta_k\)</span> (depending on <span class="math inline">\(\gamma\)</span>) such that</p>
+<p>This means that the depednence of <span class="math inline">\(g(z; \theta)\)</span> can be decomposed into a smooth part depending on <span class="math inline">\(\theta\)</span>, and an integral part depending on <span class="math inline">\(z\)</span>. When this is true, for a fixed <span class="math inline">\(\gamma &gt; 0\)</span>, we can always find a set of <span class="math inline">\(K(\gamma)\)</span> parameters <span class="math inline">\(\theta_k\)</span> (depending on <span class="math inline">\(\gamma\)</span>) such that</p>
 <p><span class="math display">\[
 \textrm{For each }\theta \in \Omega\textrm{, there exists }\theta_k
 \textrm{ such that }\left\Vert\theta_k - \theta\right\Vert &lt; \gamma.
@@ -289,48 +294,136 @@ Exercise
 <p>Recall that if <span class="math inline">\(\Omega\)</span> is compact, then every open cover has a finite sub–cover. Using this fact, prove that <span class="math inline">\(K(\gamma) &lt; \infty\)</span> for each <span class="math inline">\(\gamma &gt; 0\)</span>.</p>
 </div>
 </div>
-<p>Given this “covering,” for a given <span class="math inline">\(\theta\)</span> and its associated <span class="math inline">\(\theta_k\)</span> with <span class="math inline">\(\left\Vert\theta - \theta_k\right\Vert &lt; \gamma\)</span>, we can identify <span class="math inline">\(f_k(\cdot) = f(\cdot; \theta_k)\)</span>.</p>
+<p>Given this “covering,” for a given <span class="math inline">\(\theta\)</span> and its associated <span class="math inline">\(\theta_k\)</span> with <span class="math inline">\(\left\Vert\theta - \theta_k\right\Vert &lt; \gamma\)</span>, we can identify <span class="math inline">\(g_k(\cdot) = g(\cdot; \theta_k)\)</span>.</p>
 </section>
 <section id="using-the-tiling-to-produce-a-ulln" class="level2">
 <h2 class="anchored" data-anchor-id="using-the-tiling-to-produce-a-ulln">Using the tiling to produce a ULLN</h2>
 <p><span class="math display">\[
 \begin{aligned}
-\err(f, N) ={}&amp;
-\left|\frac{1}{N} \sum_{n=1}^Nf(z_n; \theta) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta)\right]\right|
+\err(g, N) ={}&amp;
+\left|\frac{1}{N} \sum_{n=1}^Ng(z_n; \theta) - \mathbb{E}_{\vphantom{}}\left[g(z; \theta)\right]\right|
 \\={}&amp;
-\left|\frac{1}{N} \sum_{n=1}^Nf(z_n; \theta) - f(z_n; \theta_k) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta) - f(z; \theta_k)\right] + f(z_n; \theta_k) - \mathbb{E}_{\vphantom{}}\left[f(z; \theta_k)\right]\right|
+\left|\frac{1}{N} \sum_{n=1}^Ng(z_n; \theta) - g(z_n; \theta_k) - \mathbb{E}_{\vphantom{}}\left[g(z; \theta) - g(z; \theta_k)\right] + g(z_n; \theta_k) - \mathbb{E}_{\vphantom{}}\left[g(z; \theta_k)\right]\right|
 \\ \le{}&amp;
-\frac{1}{N} \sum_{n=1}^N\left|f(z_n; \theta) - f(z_n; \theta_k)\right|  +
-\mathbb{E}_{\vphantom{}}\left[\left|f(z; \theta) - f(z; \theta_k)\right|\right] +
-\err(f_k, N)
+\frac{1}{N} \sum_{n=1}^N\left|g(z_n; \theta) - g(z_n; \theta_k)\right|  +
+\mathbb{E}_{\vphantom{}}\left[\left|g(z; \theta) - g(z; \theta_k)\right|\right] +
+\err(g_k, N)
 \\ \le{}&amp;
 \left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \left\Vert\theta - \theta_k\right\Vert +
-\err(f_k, N)
+\err(g_k, N)
 \\ \le{}&amp;
 \left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
-\max_{k=1,\ldots,K} \err(f_k, N).
+\max_{k=1,\ldots,K} \err(g_k, N).
 \end{aligned}
 \]</span></p>
-<p>The right hand side now does not depend on <span class="math inline">\(f\)</span>, so</p>
+<p>The right hand side now does not depend on <span class="math inline">\(g\)</span>, so</p>
 <p><span class="math display">\[
-\sup_{f\in \mathcal{F}} \err(f, N) \le
+\sup_{g\in \mathcal{G}} \err(g, N) \le
 \left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
-\max_{k=1,\ldots,K} \err(f_k, N).
+\max_{k=1,\ldots,K} \err(g_k, N).
 \]</span></p>
-<p>For any fixed <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 0\)</span>, as shown above. So since <span class="math inline">\(\frac{1}{N} \sum_{n=1}^NM(z_n) \rightarrow \mathbb{E}_{\vphantom{}}\left[M(z)\right]\)</span>, we have that, for any fixed <span class="math inline">\(\gamma\)</span>,</p>
+<p>For any fixed <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\max_{k=1,\ldots,K} \err(g_k, N) \rightarrow 0\)</span>, as shown above. So since <span class="math inline">\(\frac{1}{N} \sum_{n=1}^NM(z_n) \rightarrow \mathbb{E}_{\vphantom{}}\left[M(z)\right]\)</span>, we have that, for any fixed <span class="math inline">\(\gamma\)</span>,</p>
 <p><span class="math display">\[
 \left( \frac{1}{N} \sum_{n=1}^NM(z_n) + \mathbb{E}_{\vphantom{}}\left[M(z)\right] \right)  \gamma +
-\max_{k=1,\ldots,K} \err(f_k, N) \rightarrow 2 \mathbb{E}_{\vphantom{}}\left[M(z)\right] \gamma.
+\max_{k=1,\ldots,K} \err(g_k, N) \rightarrow 2 \mathbb{E}_{\vphantom{}}\left[M(z)\right] \gamma.
 \]</span></p>
-<p>Since <span class="math inline">\(\gamma\)</span> can be made arbitrarily small (at the cost of requiring even greater <span class="math inline">\(N\)</span> to make <span class="math inline">\(\max_{k=1,\ldots,K} \err(f_k, N)\)</span> small), for any <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\delta\)</span> we can choose <span class="math inline">\(\gamma = \varepsilon / 2 \mathbb{E}_{\vphantom{}}\left[M(z)\right]\)</span> and find an <span class="math inline">\(N\)</span> large enough that</p>
+<p>Since <span class="math inline">\(\gamma\)</span> can be made arbitrarily small (at the cost of requiring even greater <span class="math inline">\(N\)</span> to make <span class="math inline">\(\max_{k=1,\ldots,K} \err(g_k, N)\)</span> small), for any <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\delta\)</span> we can choose <span class="math inline">\(\gamma = \varepsilon / 2 \mathbb{E}_{\vphantom{}}\left[M(z)\right]\)</span> and find an <span class="math inline">\(N\)</span> large enough that</p>
 <p><span class="math display">\[
-\mathbb{P}_{\,}\left(\sup_{f\in \mathcal{F}} \err(f, N) \ge \varepsilon\right) \le \delta.
+\mathbb{P}_{\,}\left(\sup_{g\in \mathcal{G}} \err(g, N) \ge \varepsilon\right) \le \delta.
 \]</span></p>
-<p>It follows that <span class="math inline">\(\sup_{f\in \mathcal{F}} \err(f, N) \rightarrow 0\)</span> in probability.</p>
+<p>It follows that <span class="math inline">\(\sup_{g\in \mathcal{G}} \err(g, N) \rightarrow 0\)</span> in probability.</p>
 </section>
 <section id="general-covering-arguments" class="level2">
 <h2 class="anchored" data-anchor-id="general-covering-arguments">General covering arguments</h2>
-<p>Note that the above argument relied on having a covering of the parameter space to give a covering of the function space. The key idea is the covering, not the parameters! Many ULLNs for generic function classes proceed by studying the number of functions it takes to “cover” the function class <span class="math inline">\(\mathcal{F}\)</span> using some notion of distance between functions, rather than the distance between parameters.</p>
+<p>Note that the above argument relied on having a covering of the parameter space to give a covering of the function space. The key idea is the covering, not the parameters! Many ULLNs for generic function classes proceed by studying the number of functions it takes to “cover” the function class <span class="math inline">\(\mathcal{G}\)</span> using some notion of distance between functions, rather than the distance between parameters.</p>
+</section>
+<section id="proving-the-integrable-lipschitz-condition" class="level2">
+<h2 class="anchored" data-anchor-id="proving-the-integrable-lipschitz-condition">Proving the Integrable Lipschitz condition</h2>
+<p>It may seem mysterious how to show that a problem satisfies the IL condition directly. An easy way is to bound the derivative with respect to <span class="math inline">\(\theta\)</span> in terms of a function of <span class="math inline">\(z\)</span> with finite expectation. Specifically,</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Integrable Lipschitz Sufficient condition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Integrable Lipschitz Sufficient condition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assume that <span class="math inline">\(\Omega\)</span> is compact. Assume that, for each <span class="math inline">\(z\)</span>, <span class="math display">\[
+\frac{\partial g(z; \theta)}{\partial \theta} \textrm{ exists and }
+\left\Vert\frac{\partial g(z; \theta)}{\partial \theta}\right\Vert_2^2 \le M(z)
+\]</span> where <span class="math inline">\(M(z) \ge 0\)</span> and <span class="math inline">\(\mathbb{E}_{\vphantom{}}\left[M(z)\right] &lt; \infty\)</span>. Then <span class="math inline">\(g(z; \theta)\)</span> satisfies the integrable Lipschitz condition.</p>
+</div>
+</div>
+<p>The proof goes via the fundamental theroem of calculus. For any <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\theta'\)</span> in <span class="math inline">\(\Omega\)</span>, let <span class="math inline">\(\theta(t) = \theta' t+ (1 - t) \theta\)</span> for <span class="math inline">\(t\in [0,1]\)</span> denote a parameterized path from <span class="math inline">\(\theta\)</span> to <span class="math inline">\(\theta'\)</span>. Then, for any <span class="math inline">\(z\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left|g(z; \theta') - g(z; \theta)\right| ={}&amp;
+\left|g(z; \theta(1)) - g(z; \theta(0))\right| \\={}&amp;
+\left|\int_{0}^1 \frac{\partial g(z; \theta(t))}{\partial t} dt\right|
+&amp; \textrm{(by the fundamental theorem of calculus)} \\={}&amp;
+\left|\int_{0}^1 \left. \frac{\partial g(z; \theta)}{\partial \theta^\intercal} \right|_{\theta = \theta(t)}
+  \frac{\partial \theta(t)}{\partial t} dt\right| &amp; \textrm{(by the chain rule)} \\={}&amp;
+\left|\left( \int_{0}^1
+  \left. \frac{\partial g(z; \theta)}{\partial \theta^\intercal} \right|_{\theta = \theta(t)}
+  dt\right) (\theta' - \theta)\right|   &amp; \textrm{(by the definition of $\theta(t)$)}
+  \\\le{}&amp;
+\left\Vert\sup_{t\in [0,1]} \left. \frac{\partial g(z; \theta)}{\partial \theta^\intercal} \right|_{\theta = \theta(t)} \right\Vert_2
+  \left\Vert\theta' - \theta\right\Vert_2  &amp; \textrm{(by Cauchy-Schwarz)}\\\le{}&amp;
+M(z) \left\Vert\theta' - \theta\right\Vert_2. &amp; \textrm{(by assumption)}
+\end{aligned}
+\]</span></p>
+<p>Often it’s easier to show that the norm of the partial derivative is bounded by a function of <span class="math inline">\(z\)</span> (that is, of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>) with finite expectation than to prove the stronger IL condition.</p>
+</section>
+<section id="ols-loss-example" class="level2">
+<h2 class="anchored" data-anchor-id="ols-loss-example">OLS loss example</h2>
+<p>For example, taking squared loss and linear regression, we get</p>
+<p><span class="math display">\[
+g(z, \theta) = \mathscr{L}(f(\boldsymbol{x}), y) = (\boldsymbol{x}^\intercal\theta - y)^2 = y^2 - 2 y\boldsymbol{x}^\intercal\theta + \mathrm{trace}\left(\boldsymbol{x}\boldsymbol{x}^\intercal\theta \theta^\intercal\right).
+\]</span></p>
+<p>Let us assume that <span class="math inline">\(\Omega\)</span> is compact. (One can show that <span class="math inline">\(\Omega\)</span> can be safely taken to be compact with high probability as <span class="math inline">\(N\)</span> grows, but I will leave that as a potential homework problem.)</p>
+<p>Recall that we can show directly in your homework that this loss obeys a ULLN. We can also the IL condition directly by the triangle inequality and Cauchy–Schwartz:</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(z, \theta) - g(z, \theta')
+={}&amp;
+- 2 y\boldsymbol{x}^\intercal(\theta - \theta') + \mathrm{trace}\left(\boldsymbol{x}\boldsymbol{x}^\intercal(\theta \theta^\intercal- \theta' {\theta'}^\intercal)\right).
+\\={}&amp;
+- 2 y\boldsymbol{x}^\intercal(\theta - \theta') + \mathrm{trace}\left(\boldsymbol{x}\boldsymbol{x}^\intercal(\theta + \theta') (\theta - \theta')^\intercal\right)
+\quad\Rightarrow\\
+\left|g(z, \theta) - g(z, \theta')\right|
+\le{}&amp;
+  2 \left|y\right| \left\Vert\boldsymbol{x}\right\Vert_2 \left\Vert\theta - \theta'\right\Vert_2 +
+  \left\Vert\boldsymbol{x}\right\Vert^2_2 \left\Vert\theta + \theta'\right\Vert_2 \left\Vert\theta - \theta'\right\Vert_2
+\\\le{}&amp;
+\left(
+2 \left|y\right| \left\Vert\boldsymbol{x}\right\Vert_2  +
+  \left\Vert\boldsymbol{x}\right\Vert^2_2 \left\Vert\theta + \theta'\right\Vert_2
+\right) \left\Vert\theta - \theta'\right\Vert_2
+\\\le{}&amp;
+2 \left(
+  \left|y\right| \left\Vert\boldsymbol{x}\right\Vert_2 +
+  \left\Vert\boldsymbol{x}\right\Vert^2_2 \sup_{\theta \in \Omega} \left\Vert\theta\right\Vert_2
+\right) \left\Vert\theta - \theta'\right\Vert_2
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(\sup_{\theta \in \Omega} \left\Vert\theta\right\Vert\)</span> is finite because <span class="math inline">\(\Omega\)</span> is compact, and the operator norm of <span class="math inline">\(\boldsymbol{x}\boldsymbol{x}\intercal\)</span> is equal to <span class="math inline">\(\left\Vert\boldsymbol{x}\right\Vert_2^2\)</span>. We can thus take</p>
+<p><span class="math display">\[
+M(z) = 2 \left(
+  \left|y\right| \left\Vert\boldsymbol{x}\right\Vert_2  +
+  \left\Vert\boldsymbol{x}\right\Vert^2_2 \sup_{\theta \in \Omega} \left\Vert\theta\right\Vert_2
+\right),
+\]</span></p>
+<p>and see that quadratic loss satisfies the IL condition, and so a ULLN, under standard conditions on the moments of <span class="math inline">\(\boldsymbol{x}\)</span> and <span class="math inline">\(y\)</span>.</p>
+<p>Alternatively, we can prove the IL condition by simply taking the derivative,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left\Vert\frac{\partial g(z, \theta)}{\partial \theta}\right\Vert_2 ={}&amp;
+\left\Vert-2 y\boldsymbol{x}+ 2 \boldsymbol{x}\boldsymbol{x}^\intercal\theta\right\Vert_2 \\\le{}&amp;
+2 \left|y\right| \left\Vert\boldsymbol{x}\right\Vert_2 + 2 \left\Vert\boldsymbol{x}\right\Vert_2^2 \sup_{\theta \in \Omega} \left\Vert\theta\right\Vert_2,
+\end{aligned}
+\]</span> which in this case gives the same bound as the more tedious computation above.</p>
 
 
 
