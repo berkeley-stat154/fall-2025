@@ -254,6 +254,15 @@ VC Dimension
 <li>Lemma 4.14 and equation 4.24 (polynomial discrimination controls Rademacher complexity)</li>
 <li>Theorem 4.10 (Rademacher complexity controls the ULLN)</li>
 </ul>
+<p>Alternatively, see Section 6.5.2 of <span class="citation" data-cites="shalev:2014:understandingml">Shalev-Shwartz and Ben-David (<a href="#ref-shalev:2014:understandingml" role="doc-biblioref">2014</a>)</span>.</p>
+<!--
+TODO: Find some way to simply and formally connect this with the fact that,
+by Hoeffding you'd expect N to be logarithmic in the number of function
+classes, together with VC dimension controlling the effective number of
+function classes via Sauer's lemma.  I think a simplification of Shalev + Schwartz,
+omtting the finite sample constants, could probably do the trick and provide
+good intuition to the students.
+-->
 <p>Note that this result is stronger than our asymptotic results, in the sense that it is a finite–sample exact bound, rather than an (otherwise uncontrolled) guarantee as <span class="math inline">\(N \rightarrow \infty\)</span>. Finite–sample bounds are much easier to obtain when the function <span class="math inline">\(f(x)\)</span> is bounded as a function of <span class="math inline">\(x\)</span>, as is the case for zero–one loss, but which is not typically the case for regression loss.</p>
 <section id="from-classifiers-to-loss" class="level2">
 <h2 class="anchored" data-anchor-id="from-classifiers-to-loss">From classifiers to loss</h2>
@@ -267,6 +276,9 @@ VC Dimension
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-esl:2009:hastie" class="csl-entry" role="listitem">
 Hastie, T., R. Tibshirani, and J. Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference and Prediction</em>. 2nd ed. Springer.
+</div>
+<div id="ref-shalev:2014:understandingml" class="csl-entry" role="listitem">
+Shalev-Shwartz, S., and S. Ben-David. 2014. <em>Understanding Machine Learning: <span>From</span> Theory to Algorithms</em>. Cambridge university press.
 </div>
 <div id="ref-van:2000:asymptotic" class="csl-entry" role="listitem">
 Van der Vaart, A. 2000. <em>Asymptotic Statistics</em>. Vol. 3. Cambridge university press.
