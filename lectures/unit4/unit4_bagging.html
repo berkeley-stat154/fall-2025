@@ -148,8 +148,8 @@ window.Quarto = {
   <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging">Bagging</a>
   <ul class="collapse">
   <li><a href="#linear-estimators-are-unaffected-by-bagging" id="toc-linear-estimators-are-unaffected-by-bagging" class="nav-link" data-scroll-target="#linear-estimators-are-unaffected-by-bagging">Linear estimators are unaffected by bagging</a></li>
-  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests">Random forests</a></li>
   </ul></li>
+  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests">Random forests</a></li>
   </ul>
 </nav>
     </div>
@@ -251,13 +251,13 @@ window.Quarto = {
 <p>This is nothing more than our original estimator! Bagging has done nothing other than <em>increase</em> our variance (by using <span class="math inline">\(B &lt; \infty\)</span> bootstrap samples).</p>
 <p>The fact that bagging only makes things worse in this case has nothing to do with the bias or variance of <span class="math inline">\(\hat{\mu}\)</span>, it only depends on the fact that <span class="math inline">\(\hat{\mu}\)</span> is a linear function of sample moments of the data. It follows that boosting can only have an effect on estimators that are nonlinear functions of the sample moments of the data. Linear regression is only weakly nonlinear (through the nonlinearity of <span class="math inline">\((\boldsymbol{X}^\intercal\boldsymbol{X})^{-1}\)</span>), and are mostly not improved by bagging. But random forests are more highly nonlinear through the selection of the tree structure.</p>
 </section>
-<section id="random-forests" class="level2">
-<h2 class="anchored" data-anchor-id="random-forests">Random forests</h2>
+</section>
+<section id="random-forests" class="level1">
+<h1>Random forests</h1>
 <p>If the models are highly correlated, we don’t gain much. An example is if there is one “best” predictor that always gets chosen first. We can add variance by restricting each tree to use only a randomly chosen subset of the explanatory variables.</p>
 
 
 
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
