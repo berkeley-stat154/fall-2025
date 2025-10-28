@@ -270,6 +270,7 @@ window.Quarto = {
 \frac{1}{B^2} \sum_{b \ne b'} \mathrm{Cov}_{u,u'}\left(\epsilon(u_b), \epsilon(u_{b'})\right).
 \end{aligned}
 \]</span></p>
+<p>Note that the covariance term contributes to the squared loss in average over <span class="math inline">\(x\)</span>. So intuitively, two estimators are correlated if <span class="math inline">\(\mathrm{Cov}_{u,u'}\left(\epsilon(u_b), \epsilon(u_{b'})\right)\)</span> tends to take the same value for all <span class="math inline">\(x\)</span>. The deleterious effect of covariance can be reduced by having positive covariance in some area of the space but negative covariance in another — that is, erring relative to the mean in different ways for different <span class="math inline">\(x\)</span>.</p>
 <p>It follows that, as long as the random estimators are “not too correlated on average”, then by averaging them we keep their low bias the same, but reduce their variance. Of course, if there’s no randomness at all, you can see that the covarainces are all variances, and no reduction happens.</p>
 <section id="bagging" class="level2">
 <h2 class="anchored" data-anchor-id="bagging">Bagging</h2>
