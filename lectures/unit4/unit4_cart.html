@@ -242,7 +242,7 @@ window.Quarto = {
 <p>The generated trees in our example are still not very efficient, in that we use more splits than are necessary for the left than for the right. (Note that in this case I happened to generate every possible split up to the specified depth.)</p>
 <p>In order to choose a more optimal tree, we “trim” the tree back by regularizing the size of the tree. Given a starting tree <span class="math inline">\(T\)</span> and a cost complexity parameter <span class="math inline">\(\alpha\)</span>, we find the subtree that minimizes</p>
 <p><span class="math display">\[
-\textrm{Cost complexity }(T') = \sum_{t\in T'} \sum_{n \in t} (y_n - \hat{y}_{t})^2 + \alpha |T'|,
+\textrm{Cost complexity empirical risk}(T') = \sum_{t\in T'} \sum_{n \in t} (y_n - \hat{y}_{t})^2 + \alpha |T'|,
 \]</span></p>
 <p>where <span class="math inline">\(t\in T'\)</span> means <span class="math inline">\(t\)</span> is a leaf node of <span class="math inline">\(T'\)</span>, <span class="math inline">\(n \in t\)</span> means <span class="math inline">\(\boldsymbol{x}_n\)</span> is assigned to leaf node <span class="math inline">\(t\)</span>, and <span class="math inline">\(|T'|\)</span> counts the number of leaf nodes.</p>
 <p><img src="../../assets/unit4_cart/tree_fits_combined.png" class="img-fluid"></p>
