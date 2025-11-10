@@ -2,290 +2,294 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_bias_variance_example.html</loc>
-    <lastmod>2025-11-06T19:07:57.786Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/labs/taxi-challenge/roundup.html</loc>
-    <lastmod>2025-11-06T19:07:57.778Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.365Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/classification-challenge/lab10_presentation.html</loc>
-    <lastmod>2025-11-06T19:07:57.772Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.359Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/labs/linreg-challenge/presentation.html</loc>
-    <lastmod>2025-11-06T19:07:57.744Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.332Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/datasets/taxi/random_x.html</loc>
-    <lastmod>2025-11-06T19:07:57.355Z</lastmod>
+    <lastmod>2025-11-10T18:44:37.947Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/schedule.html</loc>
-    <lastmod>2025-11-06T19:07:57.790Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.377Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/jMxbrRUL2qSHPEGg1ChnewJOfyv4TFz10oilYp9s0X8AND7uc6K.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.377Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/l1orXSVe8hznFE79jRwOHKsDaJiUg6pGM2qBkLAdCm10vtWIcPN.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.376Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/Q3n1OIqANp4vXBgJtiPa2z9Cc7K10xR0mTkYu6FbGDdoyVWSMEZ.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.376Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/qtg7k4dXsLZ5jbPf10iEzTM8uoxyShFI3JmU6RQHOcYGlCvAKrN.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.376Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/license.html</loc>
-    <lastmod>2025-11-06T19:07:57.788Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.375Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit5/unit5_rkhs.html</loc>
-    <lastmod>2025-11-06T19:07:57.788Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.375Z</lastmod>
   </url>
   <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit4/unit4_cart.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit4/unit4_bagging.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_ulln.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_generalization.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_cv.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit2/unit2_svm.html</loc>
-    <lastmod>2025-11-06T19:07:57.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit2/unit2_false_positives_negatives.html</loc>
-    <lastmod>2025-11-06T19:07:57.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit1/unit1_splines.html</loc>
-    <lastmod>2025-11-06T19:07:57.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit1/unit1_ols.html</loc>
-    <lastmod>2025-11-06T19:07:57.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/slides.html</loc>
-    <lastmod>2025-11-06T19:07:57.779Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/linalg_review.html</loc>
-    <lastmod>2025-11-06T19:07:57.778Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/lecture_intro.html</loc>
-    <lastmod>2025-11-06T19:07:57.778Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/warmup-exercise/exercise.html</loc>
-    <lastmod>2025-11-06T19:07:57.778Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/cross-validation-challenge/lab6_exercise.html</loc>
-    <lastmod>2025-11-06T19:07:57.772Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/cross-validation-challenge/lab5_exercise.html</loc>
-    <lastmod>2025-11-06T19:07:57.772Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/overfitting-reading/exercise.html</loc>
-    <lastmod>2025-11-06T19:07:57.771Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/labs.html</loc>
-    <lastmod>2025-11-06T19:07:57.743Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/byo-dataset-challenge/exercise-score.html</loc>
-    <lastmod>2025-11-06T19:07:57.701Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/byo-dataset-challenge/exercise-build.html</loc>
-    <lastmod>2025-11-06T19:07:57.701Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/grading.html</loc>
-    <lastmod>2025-11-06T19:07:57.697Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/course_policies.html</loc>
-    <lastmod>2025-11-06T19:07:57.119Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw4.html</loc>
-    <lastmod>2025-11-06T19:07:57.119Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw2.html</loc>
-    <lastmod>2025-11-06T19:07:57.118Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw0.html</loc>
-    <lastmod>2025-11-06T19:07:57.118Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/assignments/assignments.html</loc>
-    <lastmod>2025-11-06T19:07:57.117Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw1.html</loc>
-    <lastmod>2025-11-06T19:07:57.118Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw3.html</loc>
-    <lastmod>2025-11-06T19:07:57.119Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw5.html</loc>
-    <lastmod>2025-11-06T19:07:57.119Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/datasets/data.html</loc>
-    <lastmod>2025-11-06T19:07:57.120Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/index.html</loc>
-    <lastmod>2025-11-06T19:07:57.701Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/byo-dataset-challenge/exercise-predict.html</loc>
-    <lastmod>2025-11-06T19:07:57.701Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/earthquake-reading/exercise.html</loc>
-    <lastmod>2025-11-06T19:07:57.743Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/linreg-challenge/exercise.html</loc>
-    <lastmod>2025-11-06T19:07:57.743Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/classification-challenge/lab8_exercise.html</loc>
-    <lastmod>2025-11-06T19:07:57.772Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/cross-validation-challenge/lab5_presentation.html</loc>
-    <lastmod>2025-11-06T19:07:57.772Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/labs/taxi-challenge/exercise.html</loc>
-    <lastmod>2025-11-06T19:07:57.772Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/key_concepts.html</loc>
-    <lastmod>2025-11-06T19:07:57.778Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/lectures.html</loc>
-    <lastmod>2025-11-06T19:07:57.778Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/optimization.html</loc>
-    <lastmod>2025-11-06T19:07:57.778Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit1/unit1_l1l2.html</loc>
-    <lastmod>2025-11-06T19:07:57.779Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit1/unit1_ols_matrix_notation.html</loc>
-    <lastmod>2025-11-06T19:07:57.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit2/unit2_classification_loss.html</loc>
-    <lastmod>2025-11-06T19:07:57.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit2/unit2_perceptron.html</loc>
-    <lastmod>2025-11-06T19:07:57.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_biasvar.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_cv_cautionary.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_regret_decomposition.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_vc_dimension.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit5/unit5_kernel_smoothing.html</loc>
+    <lastmod>2025-11-10T18:44:38.375Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit4/unit4_boosting.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_vc_dimension.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_regret_decomposition.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_cv_cautionary.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_biasvar.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit2/unit2_perceptron.html</loc>
+    <lastmod>2025-11-10T18:44:38.370Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit2/unit2_classification_loss.html</loc>
+    <lastmod>2025-11-10T18:44:38.369Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit1/unit1_ols_matrix_notation.html</loc>
+    <lastmod>2025-11-10T18:44:38.369Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit1/unit1_l1l2.html</loc>
+    <lastmod>2025-11-10T18:44:38.366Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/optimization.html</loc>
+    <lastmod>2025-11-10T18:44:38.366Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/lectures.html</loc>
+    <lastmod>2025-11-10T18:44:38.366Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/key_concepts.html</loc>
+    <lastmod>2025-11-10T18:44:38.365Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/taxi-challenge/exercise.html</loc>
+    <lastmod>2025-11-10T18:44:38.360Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/cross-validation-challenge/lab5_presentation.html</loc>
+    <lastmod>2025-11-10T18:44:38.359Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/classification-challenge/lab8_exercise.html</loc>
+    <lastmod>2025-11-10T18:44:38.359Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/linreg-challenge/exercise.html</loc>
+    <lastmod>2025-11-10T18:44:38.331Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/earthquake-reading/exercise.html</loc>
+    <lastmod>2025-11-10T18:44:38.331Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/byo-dataset-challenge/exercise-predict.html</loc>
+    <lastmod>2025-11-10T18:44:38.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/index.html</loc>
+    <lastmod>2025-11-10T18:44:38.288Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/datasets/data.html</loc>
+    <lastmod>2025-11-10T18:44:37.722Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw5.html</loc>
+    <lastmod>2025-11-10T18:44:37.722Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw3.html</loc>
+    <lastmod>2025-11-10T18:44:37.721Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw1.html</loc>
+    <lastmod>2025-11-10T18:44:37.721Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/assignments/assignments.html</loc>
+    <lastmod>2025-11-10T18:44:37.720Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw0.html</loc>
+    <lastmod>2025-11-10T18:44:37.721Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw2.html</loc>
+    <lastmod>2025-11-10T18:44:37.721Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/assignments/hw4.html</loc>
+    <lastmod>2025-11-10T18:44:37.721Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/course_policies.html</loc>
+    <lastmod>2025-11-10T18:44:37.722Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/grading.html</loc>
+    <lastmod>2025-11-10T18:44:38.284Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/byo-dataset-challenge/exercise-build.html</loc>
+    <lastmod>2025-11-10T18:44:38.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/byo-dataset-challenge/exercise-score.html</loc>
+    <lastmod>2025-11-10T18:44:38.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/labs.html</loc>
+    <lastmod>2025-11-10T18:44:38.331Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/overfitting-reading/exercise.html</loc>
+    <lastmod>2025-11-10T18:44:38.358Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/cross-validation-challenge/lab5_exercise.html</loc>
+    <lastmod>2025-11-10T18:44:38.359Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/cross-validation-challenge/lab6_exercise.html</loc>
+    <lastmod>2025-11-10T18:44:38.359Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/labs/warmup-exercise/exercise.html</loc>
+    <lastmod>2025-11-10T18:44:38.365Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/lecture_intro.html</loc>
+    <lastmod>2025-11-10T18:44:38.366Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/linalg_review.html</loc>
+    <lastmod>2025-11-10T18:44:38.366Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/slides.html</loc>
+    <lastmod>2025-11-10T18:44:38.366Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit1/unit1_ols.html</loc>
+    <lastmod>2025-11-10T18:44:38.369Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit1/unit1_splines.html</loc>
+    <lastmod>2025-11-10T18:44:38.369Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit2/unit2_false_positives_negatives.html</loc>
+    <lastmod>2025-11-10T18:44:38.369Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit2/unit2_svm.html</loc>
+    <lastmod>2025-11-10T18:44:38.370Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_cv.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_generalization.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit3/unit3_ulln.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit4/unit4_bagging.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit4/unit4_cart.html</loc>
+    <lastmod>2025-11-10T18:44:38.374Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit5/unit5_kerneltrick.html</loc>
-    <lastmod>2025-11-06T19:07:57.787Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.375Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/lectures/unit5/unit5_validkernels.html</loc>
-    <lastmod>2025-11-06T19:07:57.788Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.375Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/QyLtlUEa6z5h8SrGJVB3fXTg10WoR0qb14C2wZxFMvi9OPDpAns.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.376Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/quiz0.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.376Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/0KVZW42HgURPEyj6eC10ztBYq8JTFohdukNGfmLQMOa7Xwis5Sv.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.376Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/0tvCNEO10wIDcizehYHldbrxMq7uB2jkWL31SQFKJ84XRyG6Uan.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.376Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/quizzes/quizzes.html</loc>
-    <lastmod>2025-11-06T19:07:57.789Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.377Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/datasets/linreg/winner.html</loc>
-    <lastmod>2025-11-06T19:07:57.165Z</lastmod>
+    <lastmod>2025-11-10T18:44:37.765Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/datasets/west_nile_virus/create_cv_data.html</loc>
-    <lastmod>2025-11-06T19:07:57.693Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.281Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/labs/linreg-challenge/roundup.html</loc>
-    <lastmod>2025-11-06T19:07:57.768Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.355Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/labs/spring-2025/cross-validation-challenge/lab7_presentation.html</loc>
-    <lastmod>2025-11-06T19:07:57.772Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.360Z</lastmod>
   </url>
   <url>
     <loc>https://stat154.berkeley.edu/fall-2025/labs/warmup-exercise/solution.html</loc>
-    <lastmod>2025-11-06T19:07:57.778Z</lastmod>
+    <lastmod>2025-11-10T18:44:38.365Z</lastmod>
   </url>
 </urlset>
