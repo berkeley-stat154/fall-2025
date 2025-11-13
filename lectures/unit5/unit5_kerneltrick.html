@@ -150,10 +150,6 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#the-polynomial-kernel" id="toc-the-polynomial-kernel" class="nav-link" data-scroll-target="#the-polynomial-kernel">The polynomial kernel</a></li>
   </ul></li>
-  <li><a href="#kernelizing-classification-with-support-vector-machines" id="toc-kernelizing-classification-with-support-vector-machines" class="nav-link" data-scroll-target="#kernelizing-classification-with-support-vector-machines">Kernelizing classification with support vector machines</a>
-  <ul class="collapse">
-  <li><a href="#slack-variables" id="toc-slack-variables" class="nav-link" data-scroll-target="#slack-variables">Slack variables</a></li>
-  </ul></li>
   <li><a href="#the-kernel-trick" id="toc-the-kernel-trick" class="nav-link" data-scroll-target="#the-kernel-trick">The kernel trick</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -211,7 +207,7 @@ which is available online through the [UC library website](https://direct.mit.ed
 z_{rm} = \mathrm{I}\left(\boldsymbol{r}_{r} \in \Delta_m\right)
 \textrm{ for }r=1,\ldots,R \textrm{ and }m=1,\ldots,M,
 \textrm{ where }\Delta_m = [(m-1) / M, m / M).
-\]</span> There are <span class="math inline">\(D = RM\)</span> such indicators, and <span class="math inline">\(\boldsymbol{z}\in \mathbb{R}^{D}\)</span>, stacking them linearly.</p>
+\]</span> There are <span class="math inline">\(D = RM\)</span> such indicators. Stacking them vertically in a vector <span class="math inline">\(z\)</span>, we have that <span class="math inline">\(\boldsymbol{z}\in \mathbb{R}^{D}\)</span>, stacking them linearly.</p>
 <p>Of course, the <span class="math inline">\(z_{rm}\)</span> only check whether a single component (given by <span class="math inline">\(r\)</span>) is in a region (given by <span class="math inline">\(m\)</span>). To check whether a pair of components are in a region, you can consider the pairwise products <span class="math inline">\(z_{rm} z_{r'm'}\)</span>. Similar, trios of points are given by third–order monomials, and so on. You can represent the precise bin of the point <span class="math inline">\(\boldsymbol{r}\)</span> with the product of all <span class="math inline">\(R\)</span> indicators <span class="math inline">\(\prod_{r=1}^R z_{rm_{r}}\)</span>, where <span class="math inline">\(m_r\)</span> picks out a bin for regressor <span class="math inline">\(r\)</span>.</p>
 <p>Thinking this way, suppose we decide to regress on all possible <span class="math inline">\(K\)</span>–th order monomials, that is, on the non–linear feature maps <span class="math inline">\(z_{r_1 m_1} z_{r_2 m_2} ... z_{r_K m_K}\)</span>, for every possible <span class="math inline">\(r_1, \ldots, r_K\)</span> and <span class="math inline">\(m_1, \ldots, m_K\)</span>. There are <span class="math inline">\(P = (DM)^K\)</span> such terms (note that there will be repeats). That’s a lot — and it’s not hard to imagine that there will be <span class="math inline">\(P \gg N\)</span>, so we have many more regressors than data points.</p>
 <p>Let’s examine regressing on this transformation in both regression and classification.</p>
@@ -243,13 +239,13 @@ z_{rm} = \mathrm{I}\left(\boldsymbol{r}_{r} \in \Delta_m\right)
 <p><span class="math display">\[
 (\boldsymbol{X}\boldsymbol{X}^\intercal)_{n n'} = \boldsymbol{x}_n^\intercal\boldsymbol{x}_{n'}.
 \]</span></p>
-<p>We need to compute <span class="math inline">\(N (N + 1) / 2\)</span> of these, and each inner product is dimension <span class="math inline">\(P\)</span>. Since the inverse is only size <span class="math inline">\(N\)</span>, we have gained in computational efficiency. But another gain, which has much wider implications, is an efficient way to compute the <span class="math inline">\(P\)</span>–dimensional inner product.</p>
+<p>Naively, there are <span class="math inline">\(N^2\)</span> entries on <span class="math inline">\(\boldsymbol{X}\boldsymbol{X}^\intercal\)</span>, and each inner product is dimension <span class="math inline">\(P\)</span>, so the cost of computing <span class="math inline">\(\boldsymbol{X}\boldsymbol{X}^\intercal\)</span> is order <span class="math inline">\(P N^2\)</span>.. (In fact, we know that <span class="math inline">\(\boldsymbol{X}\boldsymbol{X}^\intercal\)</span> is symmetric, so we only need to compute <span class="math inline">\(N (N + 1) / 2\)</span> inner products, but this is still order <span class="math inline">\(N^2\)</span>, so I’ll ignore this detail.) Contrast this with computing <span class="math inline">\(X^\intercal\boldsymbol{X}\)</span>, which takes order <span class="math inline">\(P^2 N\)</span> computations. Similarly, the inverse of <span class="math inline">\(\boldsymbol{X}\boldsymbol{X}^\intercal+ \lambda \boldsymbol{I}_{N}\)</span> is only size <span class="math inline">\(N\)</span>, and so we pay a cost of roughtly <span class="math inline">\(N^3\)</span> to perform the inverse, instead of the cost <span class="math inline">\(P^3\)</span> to invert <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{P}\)</span>.</p>
+<p><span class="math inline">\(N^3\)</span> is still a lot! But it’s much better than <span class="math inline">\(P^3\)</span>. But another gain, which has much wider implications, is an efficient way to compute the <span class="math inline">\(P\)</span>–dimensional inner product, reducing the whole problem to order <span class="math inline">\(N^3\)</span>. This trick will eventually allow us to solve ML problems with <span class="math inline">\(P=\infty\)</span> — an infinite number of regressors — while only paying an <span class="math inline">\(N^3\)</span> order computational cost.</p>
 <section id="the-polynomial-kernel" class="level2">
 <h2 class="anchored" data-anchor-id="the-polynomial-kernel">The polynomial kernel</h2>
-<p>Let’s go back to assuming that each entry of <span class="math inline">\(\boldsymbol{x}\)</span> is <span class="math inline">\(K\)</span>–th order monomial of some feature vector <span class="math inline">\(\boldsymbol{z}\)</span>, so that for a vectror <span class="math inline">\(s= \{1, ... , D\}^{K}\)</span> of indices</p>
-<p><span class="math display">\[
-\boldsymbol{x}_{\boldsymbol{s}} = \prod_{k=1}^K \boldsymbol{z}_{\boldsymbol{s}_k} = \boldsymbol{z}_{s_1} \boldsymbol{z}_{s_2} \ldots \boldsymbol{z}_{s_K}.
-\]</span></p>
+<p>Let’s go back to assuming that each entry of <span class="math inline">\(\boldsymbol{x}\)</span> is <span class="math inline">\(K\)</span>–th order monomial of some feature vector <span class="math inline">\(\boldsymbol{z}\)</span>, so that for a vectror <span class="math inline">\(s= \{1, ... , D\}^{K}\)</span> of indices <span class="math display">\[
+x_{\boldsymbol{s}} = \prod_{k=1}^K z_{\boldsymbol{s}_k} = z_{s_1} z_{s_2} \ldots z_{s_K}.
+\]</span> There are <span class="math inline">\(D^K\)</span> such possible orderings, so stacking up all the monomials into a vector <span class="math inline">\(\boldsymbol{x}\)</span> we get that <span class="math inline">\(\boldsymbol{x}\in \mathbb{R}^{D^K}\)</span>.</p>
 <p>Let <span class="math inline">\(S\)</span> be the <span class="math inline">\(D^K\)</span>–sized set of all possible orderings, i.e., all possible values of <span class="math inline">\(\boldsymbol{s}\)</span>. Then we can write</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -275,129 +271,222 @@ z_{rm} = \mathrm{I}\left(\boldsymbol{r}_{r} \in \Delta_m\right)
 \left(\boldsymbol{z}_n^\intercal\boldsymbol{z}_m \right)^K.
 \end{aligned}
 \]</span></p>
-<p>This simple re-write transformed a sum of <span class="math inline">\(P = D^K\)</span> terms with a single sum of <span class="math inline">\(D\)</span> terms, raised to the power <span class="math inline">\(K\)</span>! Let us define the “kernel function” <span class="math display">\[
+<p>This simple re-write transformed a sum of <span class="math inline">\(P = D^K\)</span> terms with a single sum of <span class="math inline">\(D\)</span> terms, raised to the power <span class="math inline">\(K\)</span>. That’s a big computational savings when <span class="math inline">\(D\)</span> is large! Let us define the “kernel function” <span class="math display">\[
 \mathcal{K}_{\,}(\boldsymbol{z}, \boldsymbol{z}') = \left(\boldsymbol{z}_n^\intercal\boldsymbol{z}_m \right)^K.
 \]</span></p>
 <p>We can then write</p>
 <p><span class="math display">\[
 (\boldsymbol{X}\boldsymbol{X}^\intercal)_{nm} = \mathcal{K}_{\,}(\boldsymbol{z}_n, \boldsymbol{z}_m),
 \]</span></p>
-<p>so that evaluating <span class="math inline">\(\boldsymbol{X}\boldsymbol{X}^\intercal\)</span> costs only order <span class="math inline">\(P N (N + 1) / 2\)</span> rather than order <span class="math inline">\((P^K) N (N + 1) / 2\)</span>. This is a massive savings when <span class="math inline">\(P\)</span> is large.</p>
-<p>Note that we don’t even need to comput the inner product when forming a prediction at a new datapoint, since</p>
+<p>so that evaluating <span class="math inline">\(\boldsymbol{X}\boldsymbol{X}^\intercal\)</span> costs only order <span class="math inline">\(P N^2\)</span> rather than order <span class="math inline">\((P^K) N^2\)</span>. This is a massive savings when <span class="math inline">\(P\)</span> is large.</p>
+<p>Note that we don’t even need to compute the inner product when forming a prediction at a new datapoint, since</p>
 <p><span class="math display">\[
 \boldsymbol{x}_{\mathrm{new}}^\intercal\hat{\boldsymbol{\beta}}=
 \boldsymbol{x}_{\mathrm{new}}^\intercal\boldsymbol{X}(\boldsymbol{X}\boldsymbol{X}^\intercal+ \lambda \boldsymbol{I}_{\,}{N})^{-1} \boldsymbol{Y},
 \]</span></p>
 <p>and the <span class="math inline">\(n\)</span>–th entry of <span class="math inline">\(\boldsymbol{x}_{\mathrm{new}}^\intercal\boldsymbol{X}\)</span> is given by <span class="math inline">\(\mathcal{K}_{\,}(\boldsymbol{x}_{\mathrm{new}}, \boldsymbol{x}_n)\)</span>.</p>
-</section>
-</section>
-<section id="kernelizing-classification-with-support-vector-machines" class="level1">
-<h1>Kernelizing classification with support vector machines</h1>
-<p>We cannot use the above trick directly with logisitc regression, since we don’t have a simple closed form for the solution. In order to kernelize logistic regression we’ll need to take this approach to a higher level of mathematical abstraction. But support vector classifiers <em>are</em> expressible in terms of inner products, and so are amenable to the kernel trick. In fact, historically, SVCs were the entry point for kernel methods into machine learning.</p>
-<p>Suppose we have a binary classification problem, and encode our responses as <span class="math inline">\(y_n \in \{-1, 1\}\)</span> rather than our usual <span class="math inline">\(\{0, 1\}\)</span>, and classify with a linear function</p>
-<p><span class="math display">\[
-\hat{y}_n = \mathrm{I}\left(\boldsymbol{\beta}^\intercal\boldsymbol{x}+ \beta_0 \ge 0\right),
-\]</span></p>
-<p>so that a point is correctly classified if and only if <span class="math inline">\(y_n (\boldsymbol{\beta}^\intercal\boldsymbol{x}+ \beta_0) &gt; 0\)</span>. Supposing that the admits a separating hyperplane — that is, there exists at least one (and typically many) <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\boldsymbol{\beta}\)</span> such that all the points are correctly classified. The support vector classifier finds the separating hyperplane that maximizes the minimum distance from any point to the separating hyperplane, which we formulated as finding</p>
-<p><span class="math display">\[
-\underset{\boldsymbol{\beta}}{\mathrm{argmin}}\, \frac{1}{2}\left\Vert\boldsymbol{\beta}\right\Vert_2^2
-\quad\textrm{such that}\quad
-y_n(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \beta_0) \ge 1.
-\]</span></p>
-<p>Using the Lagrange multipliers <span class="math inline">\(\boldsymbol{\alpha}\in [0,\infty)^N\)</span> to enforce the constraint, we can equivalently write the SVC problem as</p>
-<p><span class="math display">\[
-\underset{\boldsymbol{\alpha}}{\mathrm{argmax}}\, \underset{\boldsymbol{\beta}}{\mathrm{argmin}}\,
-\left(\frac{1}{2}\left\Vert\boldsymbol{\beta}\right\Vert_2^2 - \sum_{n=1}^N\alpha_n (y_n(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \beta_0) - 1)\right)
-\quad\textrm{such that}\quad\alpha_n \ge 0.
-\]</span></p>
-<p>(See <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> 4.5.) Setting to zero the derivatives with respect to <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\beta_0\)</span>, respectively, gives (for a given <span class="math inline">\(\boldsymbol{\alpha}\)</span>),</p>
-<p><span class="math display">\[
+<!--
+
+# Kernelizing classification with support vector machines
+
+We cannot use the above trick directly with logisitc regression, since
+we don't have a simple closed form for the solution.  In order
+to kernelize logistic regression we'll need to take this approach
+to a higher level of mathematical abstraction.  But support
+vector classifiers *are* expressible in terms of inner products,
+and so are amenable to the kernel trick.  In fact, historically,
+SVCs were the entry point for kernel methods into machine learning.
+
+Suppose we have a binary classification problem, and encode our
+responses as $\y_n \in \{-1, 1\}$ rather than our usual $\{0, 1\}$, 
+and classify with a linear function
+
+$$
+\yhat_n = \ind{\betav^\trans \xv + \beta_0 \ge 0},
+$$
+
+so that a point is correctly classified if and only if
+$\y_n (\betav^\trans \xv + \beta_0) > 0$.  Supposing that
+the admits a separating hyperplane --- that is,
+there exists at least one (and typically many) $\beta_0$ and $\betav$ such that 
+all the points are correctly classified.  The support vector classifier
+finds the separating hyperplane that maximizes the minimum
+distance from any point to the separating hyperplane, which
+we formulated as finding
+
+$$
+\argmin{\betav} \frac{1}{2}\norm{\betav}_2^2
+\intertxt{such that}
+\y_n(\betav^\trans \xv_n + \beta_0) \ge 1.
+$$
+
+Using the Lagrange multipliers $\alphav \in [0,\infty)^N$ to enforce
+the constraint, we can equivalently write the SVC problem as
+
+$$
+\argmax{\alphav} \argmin{\betav}
+\left(\frac{1}{2}\norm{\betav}_2^2 - \sumn \alpha_n (\y_n(\betav^\trans \xv_n + \beta_0) - 1)\right)
+\intertxt{such that}\alpha_n \ge 0.
+$$
+
+(See @esl:2009:hastie 4.5.)  Setting to zero the derivatives with respect to 
+$\betav$ and $\beta_0$, respectively, gives (for a given $\alphav$),
+
+$$
 \begin{aligned}
-\hat{\boldsymbol{\beta}}- \sum_{n=1}^N\alpha_n y_n \boldsymbol{x}_n ={}&amp; 0 &amp;
-\sum_{n=1}^N\alpha_n y_n ={}&amp; 0.
+\betavhat - \sumn \alpha_n \y_n \xv_n ={}& 0 &
+\sumn \alpha_n \y_n ={}& 0.
 \end{aligned}
-\]</span></p>
-<p>These identities must hold for any <span class="math inline">\(\boldsymbol{\alpha}\)</span>, so we can plug in to get the dual objective:</p>
-<p><span class="math display">\[
+$$
+
+These identities must hold for any $\alphav$, so we can plug in to get the
+dual objective:
+
+$$
 \begin{aligned}
-\mathscr{L}(\boldsymbol{\alpha}) :={}&amp;
-\frac{1}{2}\left\Vert\sum_{n=1}^N\alpha_n y_n \boldsymbol{x}\right\Vert_2^2 -
-\sum_{n=1}^N\alpha_n \left(y_n \left(\left(\sum_{n'=1}^N\alpha_{n'} y_{n'} \boldsymbol{x}_{n'} \right)^\intercal\boldsymbol{x}_n + \beta_0 \right) - 1 \right)
-\\={}&amp;
-\frac{1}{2}\sum_{n=1}^N\sum_{n'=1}^N\alpha_n \alpha_{n'} y_n y_{n'} \boldsymbol{x}_n^\intercal\boldsymbol{x}_{n'} -
-\sum_{n=1}^N\sum_{n'=1}^N\alpha_n \alpha_{n'} y_n y_{n'} \boldsymbol{x}_{n} ^\intercal\boldsymbol{x}_{n'} + \beta_0 \sum_{n'=1}^N\alpha_{n'} y_{n'} + \sum_{n=1}^N\alpha_n
-\\={}&amp;
-\sum_{n=1}^N\alpha_n -\frac{1}{2}\sum_{n=1}^N\sum_{n'=1}^N\alpha_n \alpha_{n'} y_n y_{n'} \boldsymbol{x}_n^\intercal\boldsymbol{x}_{n'}.
+\loss(\alphav) :={}&
+\frac{1}{2}\norm{\sumn \alpha_n \y_n \xv}_2^2 - 
+\sumn \alpha_n \left(\y_n \left(\left(\sumnp \alpha_{n'} \y_{n'} \xv_{n'} \right)^\trans \xv_n + \beta_0 \right) - 1 \right)
+\\={}&
+\frac{1}{2}\sumn \sumnp \alpha_n \alpha_{n'} \y_n \y_{n'} \xv_n^\trans \xv_{n'} - 
+\sumn \sumnp \alpha_n \alpha_{n'} \y_n \y_{n'} \xv_{n} ^\trans \xv_{n'} + \beta_0 \sumnp \alpha_{n'} \y_{n'} + \sumn \alpha_n
+\\={}&
+ \sumn \alpha_n -\frac{1}{2}\sumn \sumnp \alpha_n \alpha_{n'} \y_n \y_{n'} \xv_n^\trans \xv_{n'}.
 \end{aligned}
-\]</span></p>
-<p>We thus find our hyperplane by solving</p>
-<p><span class="math display">\[
+$$
+
+We thus find our hyperplane by solving
+
+$$
 \begin{aligned}
-\hat{\boldsymbol{a}}:={}&amp; \underset{\boldsymbol{\alpha}}{\mathrm{argmax}}\, \left(  \sum_{n=1}^N\alpha_n -\frac{1}{2}\sum_{n=1}^N\sum_{n'=1}^N\alpha_n \alpha_{n'} y_n y_{n'} \boldsymbol{x}_n^\intercal\boldsymbol{x}_{n'} \right) \textrm{ subject to} \\
-&amp; \alpha_n \ge{} 0 \textrm{ and }
-\sum_{n=1}^N\alpha_n y_n ={} 0.
+\alphavhat :={}& \argmax{\alphav} \left(  \sumn \alpha_n -\frac{1}{2}\sumn \sumnp \alpha_n \alpha_{n'} \y_n \y_{n'} \xv_n^\trans \xv_{n'} \right) \textrm{ subject to} \\
+& \alpha_n \ge{} 0 \textrm{ and }
+\sumn \alpha_n \y_n ={} 0.
 \end{aligned}
-\]</span></p>
-<p>This is a linearly constrained quadratic optimization problem that can be solved Once we have a solution <span class="math inline">\(\hat{\boldsymbol{a}}\)</span>, we can plug into the first–order conditions to compute the <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>, and then plug into the final constraint to find <span class="math inline">\(\hat{\beta}_0\)</span>. Since the solution will satisfy <span class="math inline">\(\alpha_n(y_n(\hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x}+ \hat{\beta}_0) - 1) ={} 0\)</span>, the <span class="math inline">\(\alpha_n\)</span> that are non–zero identify the “support vectors” that are on the margin; it is only these vectors that determine the classifier.</p>
-<p>Importantly, by eliminating <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>, the dual of the SVC algorithm is formulated only in terms of the inner products <span class="math inline">\(\boldsymbol{x}_n^\intercal\boldsymbol{x}_{n'}\)</span>. We can thus replace this inner product with our kernel function. This is such a big step that it gets a new name: a “support vector machine” (SVM). For a particular kernel <span class="math inline">\(\mathcal{K}_{\,}(\cdot, \cdot)\)</span> which evaluates our inner product,</p>
-<p><span class="math display">\[
+$$
+
+This is a linearly constrained quadratic optimization problem that can
+be solved
+Once we have a solution $\alphavhat$, we can plug into the first--order conditions
+to compute the $\betavhat$, and then plug into the final constraint to find
+$\betahat_0$.  Since the solution will satisfy
+$\alpha_n(\y_n(\betavhat^\trans \xv + \betahat_0) - 1) ={} 0$, the $\alpha_n$
+that are non--zero identify the "support vectors" that are on the margin;
+it is only these vectors that determine the classifier.
+
+Importantly, by eliminating $\betavhat$, the dual of the SVC algorithm is 
+formulated only in terms of the inner products $\xv_n^\trans \xv_{n'}$.  We
+can thus replace this inner product with our kernel function.  This is 
+such a big step that it gets a new name: a "support vector machine" (SVM).
+For a particular kernel $\krn(\cdot, \cdot)$ which evaluates
+our inner product,
+
+$$
 \begin{aligned}
-\hat{\boldsymbol{a}}:={}&amp; \underset{\boldsymbol{\alpha}}{\mathrm{argmax}}\, \left(  \sum_{n=1}^N\alpha_n -\frac{1}{2}\sum_{n=1}^N\sum_{n'=1}^N\alpha_n \alpha_{n'} y_n y_{n'} \mathcal{K}_{\,}(\boldsymbol{x}_n, \boldsymbol{x}_{n'}) \right) \textrm{ subject to} \\
-&amp; \alpha_n \ge{} 0 \textrm{ and }
-\sum_{n=1}^N\alpha_n y_n ={} 0.
+\alphavhat :={}& \argmax{\alphav} \left(  \sumn \alpha_n -\frac{1}{2}\sumn \sumnp \alpha_n \alpha_{n'} \y_n \y_{n'} \krn(\xv_n, \xv_{n'}) \right) \textrm{ subject to} \\
+& \alpha_n \ge{} 0 \textrm{ and }
+\sumn \alpha_n \y_n ={} 0.
 \end{aligned}
-\]</span></p>
-<p>Note that we do not even need to evaluate <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> in this setting, since we only really use <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> to predict a new datapoint, <span class="math inline">\(\boldsymbol{x}_{\mathrm{new}}\)</span>, and the first–order conditions require that</p>
-<p><span class="math display">\[
-\boldsymbol{x}_{\mathrm{new}}^\intercal\hat{\boldsymbol{\beta}}=
-\boldsymbol{x}_{\mathrm{new}}^\intercal\sum_{n=1}^N\hat{\alpha}_n y_n \boldsymbol{x}_n =
-\sum_{n=1}^N\hat{\alpha}_n y_n \boldsymbol{x}_{\mathrm{new}}^\intercal\boldsymbol{x}_n =
-\sum_{n=1}^N\hat{\alpha}_n y_n \mathcal{K}_{\,}(\boldsymbol{x}_{\mathrm{new}}, \boldsymbol{x}_n).
-\]</span></p>
-<p>So we have expressed our problem entirely in terms of the kernel, eliminating our inner products altogether.</p>
-<section id="slack-variables" class="level2">
-<h2 class="anchored" data-anchor-id="slack-variables">Slack variables</h2>
-<p>Following <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> 12.2, we can allow some violations of the margin by slightly modifying the SVC formulation. Suppose we allow <span class="math inline">\(N\)</span> different “slack” variables <span class="math inline">\(\varepsilon_n = 1 - y_n(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \beta_0)\)</span>. Note that enforcing <span class="math inline">\(\varepsilon_n \le 0\)</span> for all <span class="math inline">\(n\)</span> is the same as enforcing <span class="math inline">\(y_n(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \beta_0) \ge 1\)</span>. If we allow some of the <span class="math inline">\(\varepsilon_n\)</span> to be positive, then we can allow some margin violations, which we can try to make as small as possible. This can be written as</p>
-<p><span class="math display">\[
-\mathscr{L}(\boldsymbol{\beta}) =
-    \frac{1}{2} \left\Vert\boldsymbol{\beta}\right\Vert_2^2 + C \sum_{n=1}^N(\varepsilon_n)^+ =
-    \frac{1}{2} \left\Vert\boldsymbol{\beta}\right\Vert_2^2 + C \sum_{n=1}^N(1 - y_n(\boldsymbol{\beta}^\intercal\boldsymbol{x}_n + \beta_0))^+,
-\]</span></p>
-<p>where</p>
-<p><span class="math display">\[
+$$
+
+Note that we do not even need to evaluate $\betavhat$ in this setting, since we only really
+use $\betavhat$ to predict a new datapoint, $\xv_{\new}$, and the first--order conditions
+require that
+
+$$
+\xv_{\new}^\trans \betavhat = 
+\xv_{\new}^\trans \sumn \alphahat_n \y_n \xv_n =
+\sumn \alphahat_n \y_n \xv_{\new}^\trans  \xv_n =
+\sumn \alphahat_n \y_n \krn(\xv_{\new}, \xv_n).
+$$
+
+So we have expressed our problem entirely in terms of the kernel, eliminating our
+inner products altogether.
+
+
+
+## Slack variables
+
+Following @esl:2009:hastie 12.2, we can allow some violations of the
+margin by slightly modifying the SVC formulation.  Suppose we allow
+$N$ different "slack" variables $\varepsilon_n = 1 - \y_n(\betav^\trans \xv_n + \beta_0)$.
+Note that enforcing $\varepsilon_n \le 0$ for all $n$ is the same
+as enforcing $\y_n(\betav^\trans \xv_n + \beta_0) \ge 1$.  If
+we allow some of the $\varepsilon_n$ to be positive, then we
+can allow some margin violations, which we can try to make
+as small as possible.  This can be written as
+
+$$
+\loss(\betav) = 
+    \frac{1}{2} \norm{\betav}_2^2 + C \sumn (\varepsilon_n)^+ =
+    \frac{1}{2} \norm{\betav}_2^2 + C \sumn (1 - \y_n(\betav^\trans \xv_n + \beta_0))^+,
+$$
+
+where
+
+$$
 (\varepsilon)^+ = \begin{cases}
-\varepsilon &amp; \textrm{ when }\varepsilon \ge 0 \\
-0 &amp; \textrm{ when }\varepsilon &lt; 0 \\
+\varepsilon & \textrm{ when }\varepsilon \ge 0 \\
+0 & \textrm{ when }\varepsilon < 0 \\
 \end{cases}
-\]</span></p>
-<p>is the “hinge loss” or ReLU (rectified linear unit) function. This can be written equivalently in a SVC–like formulation by minimizing a positive upper bound on <span class="math inline">\(\varepsilon_n\)</span> (see <span class="citation" data-cites="esl:2009:hastie">Hastie, Tibshirani, and Friedman (<a href="#ref-esl:2009:hastie" role="doc-biblioref">2009</a>)</span> eq 12.8 in section 12.2.1), which leads to the dual</p>
-<p><span class="math display">\[
+$$
+
+is the "hinge loss" or ReLU (rectified linear unit) function.  This 
+can be written equivalently in a SVC--like formulation
+by minimizing a positive upper bound on $\varepsilon_n$
+(see @esl:2009:hastie eq 12.8 in section 12.2.1), which leads to
+the dual
+
+$$
 \begin{aligned}
-\mathscr{L}(\boldsymbol{\alpha}) ={}&amp; \sum_{n=1}^N\alpha_n - \frac{1}{2} \sum_{n=1}^N\sum_{n'=1}^N\alpha_n \alpha_{n'} y_n y_{n'} \boldsymbol{x}_{n}^\intercal\boldsymbol{x}_{n'} \\
-&amp;\textrm{ such that }0\le \alpha_n \le C \textrm{ and }\sum_{n=1}^N\alpha_n y_n = 0.
+\loss(\alphav) ={}& \sumn \alpha_n - \frac{1}{2} \sumn \sumnp \alpha_n \alpha_{n'} \y_n \y_{n'} \xv_{n}^\trans \xv_{n'} \\
+&\textrm{ such that }0\le \alpha_n \le C \textrm{ and }\sumn \alpha_n \y_n = 0.
 \end{aligned}
-\]</span></p>
-<p>From this it follows again that, for any <span class="math inline">\(\boldsymbol{\alpha}\)</span>, <span class="math inline">\(\hat{\boldsymbol{\beta}}= \sum_{n=1}^N\alpha_n y_n \boldsymbol{x}_n\)</span>, and so <span class="math display">\[
-\left\Vert\hat{\boldsymbol{\beta}}\right\Vert_2^2 = \sum_{n=1}^N\sum_{n'=1}^N\alpha_n^2 y_n y_{n'} \boldsymbol{x}_n^\intercal\boldsymbol{x}_{n'}
-\quad\textrm{and}\quad
-1 - y_n(\hat{\boldsymbol{\beta}}^\intercal\boldsymbol{x}_n + \beta_0) =
-1 - y_n \left(\sum_{n'=1}^N\alpha_{n'} y_{n'} \boldsymbol{x}_{n'}^\intercal\boldsymbol{x}_n + \beta_0 \right).
-\]</span></p>
-<p>is measured entirely in terms of the inner product <span class="math inline">\(\boldsymbol{x}_n^\intercal\boldsymbol{x}_{n'}\)</span>, which can be kernelized. Writing this way motivates thinking of <span class="math inline">\(f(\boldsymbol{x})\)</span> as living in the class of functions <span class="math inline">\(\mathcal{F}:= \{ f: f(\boldsymbol{x}) = \boldsymbol{\beta}^\intercal\boldsymbol{x}+ \beta_0\}\)</span>, whose “size” is measured by <span class="math inline">\(\left\Vert\boldsymbol{\beta}\right\Vert_2^2\)</span> under the identity above.</p>
-<p>Given this, one might imagine changing the ReLU function for others. In particular, the function <span class="math inline">\(\phi(f) = \log(1 + \exp(-y f))\)</span> gives rise to the familiar logistic loss under the transformation from <span class="math inline">\(y\in \{-1, 1\}\)</span> to <span class="math inline">\(b \in \{0,1\}\)</span> given by <span class="math inline">\(b = \frac{1}{2} y+ \frac{1}{2}\)</span>, since</p>
-<p><span class="math display">\[
+$$
+
+From this it follows again that, for any $\alphav$, $\betavhat = \sumn \alpha_n \y_n \xv_n$,
+and so
+$$ 
+\norm{\betavhat}_2^2 = \sumn \sumnp \alpha_n^2 \y_n \y_{n'} \xv_n^\trans \xv_{n'}
+\intertxt{and}
+1 - \y_n(\betavhat^\trans \xv_n + \beta_0) =
+1 - \y_n \left(\sumnp \alpha_{n'} \y_{n'} \xv_{n'}^\trans \xv_n + \beta_0 \right).
+$$
+
+
+is measured entirely in terms of the inner product $\xv_n^\trans \xv_{n'}$,
+which can be kernelized.  Writing this way motivates thinking
+of $\f(\xv)$ as living in the class of functions
+$\fclass := \{ \f: \f(\xv) = \betav^\trans \xv + \beta_0\}$, whose
+"size" is measured by $\norm{\betav}_2^2$ under the identity
+above.
+
+Given this, one might imagine changing the ReLU function for others.  In particular,
+the function $\phi(\f) = \log(1 + \exp(-y \f))$ gives rise to 
+the familiar logistic
+loss under the transformation from $\y \in \{-1, 1\}$ to
+$b \in \{0,1\}$ given by $b = \frac{1}{2} \y + \frac{1}{2}$,
+since
+
+$$
 \begin{aligned}
-\phi(f) ={}&amp;
-    b \log(1 + \exp(-f))  + (1 - b) \log(1 + \exp(f))
-\\={}&amp;
-    b \log\left(\frac{1 + \exp(-f)}{1 + \exp(f)}\right)  + \log(1 + \exp(f))
-\\={}&amp;
-    b \log\exp(-f) \left(\frac{1 + \exp(f)}{1 + \exp(f)}\right)  + \log(1 + \exp(f))
-\\={}&amp;
-    - b f+ \log(1 + \exp(f)).
+\phi(\f) ={}&
+    b \log(1 + \exp(-\f))  + (1 - b) \log(1 + \exp(f))
+\\={}&
+    b \log\left(\frac{1 + \exp(-\f)}{1 + \exp(f)}\right)  + \log(1 + \exp(f))
+\\={}&
+    b \log\exp(-\f) \left(\frac{1 + \exp(\f)}{1 + \exp(f)}\right)  + \log(1 + \exp(f))
+\\={}&
+    - b \f + \log(1 + \exp(f)).
 \end{aligned}
-\]</span></p>
-<p>At this point, this only tentatively suggests the possibility of generalizing the SVM kerneli trick to logistic regression by considering <span class="math inline">\(\left\Vert\boldsymbol{\beta}\right\Vert_2^2\)</span> a “size” of <span class="math inline">\(f\)</span> induced by the kernel. We will make this connection careful in the coming lectures.</p>
+$$
+
+At this point, this only tentatively suggests the possibility of generalizing
+the SVM kerneli trick to logistic regression by considering $\norm{\betav}_2^2$
+a "size" of $\f$ induced by the kernel. We will make this connection
+careful in the coming lectures.
+
+-->
 </section>
 </section>
 <section id="the-kernel-trick" class="level1">
