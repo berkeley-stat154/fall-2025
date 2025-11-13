@@ -215,7 +215,7 @@ window.Quarto = {
 <p><span class="math display">\[
 \begin{aligned}
 \mathcal{K}_{Poly}(\boldsymbol{z}, \boldsymbol{z}') ={}&amp; (C + \boldsymbol{z}^\intercal\boldsymbol{z}')^K &amp; \textrm{Polynomial kernel} \\
-\mathcal{K}_{RBF}(\boldsymbol{z}, \boldsymbol{z}') ={}&amp; \exp\left( - \frac{\left\Vert z- z'\right\Vert_2^2}{2\ell} \right) &amp; \textrm{Radial basis function kernel} \\
+\mathcal{K}_{RBF}(\boldsymbol{z}, \boldsymbol{z}') ={}&amp; \exp\left( - \frac{\left\Vert\boldsymbol{z}- \boldsymbol{z}'\right\Vert_2^2}{2\ell} \right) &amp; \textrm{Radial basis function kernel} \\
 \mathcal{K}_{Mat}(\boldsymbol{z}, \boldsymbol{z}') ={}&amp; \frac{1}{2^{\nu - 1}\Gamma(\nu)}
     \left(\frac{\sqrt{2 \nu}}{\ell} \left\Vert\boldsymbol{z}- \boldsymbol{z}'\right\Vert_2 \right)^\nu B_\nu
         \left(\frac{\sqrt{2\nu}}{\ell} \left\Vert\boldsymbol{z}- \boldsymbol{z}'\right\Vert_2
@@ -240,30 +240,30 @@ window.Quarto = {
 &amp; \textrm{Invalid kernel}.
 \end{aligned}
 \]</span></p>
-<p>Below, we will show that there can be no feature representation <span class="math inline">\(\boldsymbol{x}= \phi(\boldsymbol{z})\)</span> and inner product such that <span class="math inline">\(\mathcal{K}_{Bad}(\boldsymbol{z}, \boldsymbol{z}') = &lt;\phi(\boldsymbol{z}), \phi(\boldsymbol{z}')&gt;\)</span>, in any space.</p>
+<p>Below, we will show that there can be no feature representation <span class="math inline">\(\boldsymbol{x}= \phi(\boldsymbol{z})\)</span> and inner product such that <span class="math inline">\(\mathcal{K}_{Bad}(\boldsymbol{z}, \boldsymbol{z}') = \left&lt;\phi(\boldsymbol{z}), \phi(\boldsymbol{z}')\right&gt;\)</span>, in any space.</p>
 </section>
 <section id="inner-product-spaces" class="level1">
 <h1>Inner product spaces</h1>
 <p>To proceed, we need to move beyond the dot product <span class="math inline">\(\boldsymbol{x}^\intercal\boldsymbol{x}\)</span>, which is defined in terms of a mechanical operation on finite vectors, and define an abstract inner product, as well as an inner product space.</p>
-<p>An inner product on a space <span class="math inline">\(\mathcal{X}\)</span> is a function <span class="math inline">\(&lt;\cdot, \cdot&gt;: \mathcal{X}\times \mathcal{X}\mapsto \mathbb{R}^{}\)</span> that satisfies the following properties:</p>
+<p>An inner product on a space <span class="math inline">\(\mathcal{X}\)</span> is a function <span class="math inline">\(\left&lt;\cdot, \cdot\right&gt;: \mathcal{X}\times \mathcal{X}\mapsto \mathbb{R}^{}\)</span> that satisfies the following properties:</p>
 <p><span class="math display">\[
 \begin{aligned}
-&lt;x, x'&gt; ={}&amp; &lt;x', x&gt; &amp; \textrm{Symmetry} \\
-&lt;a x+ b x'', x'&gt; ={}&amp; a &lt;x, x'&gt; + b &lt;x'', x'&gt; &amp; \textrm{Linearity} \\
-&lt;x, x&gt; \ge{}&amp; 0 \textrm{ with }&lt;x, x&gt; = 0 \textrm{ only if }x= 0.  &amp; \textrm{Positive definiteness}.
+\left&lt;x, x'\right&gt; ={}&amp; \left&lt;x', x\right&gt; &amp; \textrm{Symmetry} \\
+\left&lt;a x+ b x'', x'\right&gt; ={}&amp; a \left&lt;x, x'\right&gt; + b \left&lt;x'', x'\right&gt; &amp; \textrm{Linearity} \\
+\left&lt;x, x\right&gt; \ge{}&amp; 0 \textrm{ with }\left&lt;x, x\right&gt; = 0 \textrm{ only if }x= 0.  &amp; \textrm{Positive definiteness}.
 \end{aligned}
 \]</span></p>
-<p>Note that the dot product <span class="math inline">\(\boldsymbol{x}^\intercal\boldsymbol{x}\)</span> is an inner product when <span class="math inline">\(\mathcal{X}= \mathbb{R}^{P}\)</span>, but so is <span class="math inline">\(&lt;\boldsymbol{x}, \boldsymbol{x}&gt;_\boldsymbol{A}:= \boldsymbol{x}^\intercal\boldsymbol{A}\boldsymbol{x}\)</span> when <span class="math inline">\(\boldsymbol{A}\)</span> is any positive definite matrix.</p>
-<p>A vector space is a set of objects (e.g.&nbsp;<span class="math inline">\(\mathbb{R}^{P}\)</span>, where the objects are lists of <span class="math inline">\(P\)</span> real numbers), together with rules for adding those objects and multiplying them by scalars. An <em>inner product space</em> is a vector space associated with an inner product, which we can write as the pair <span class="math inline">\((\mathcal{X}, &lt;\cdot, \cdot&gt;)\)</span>. An inner product space that is complete with respect to the norm induced by <span class="math inline">\(&lt;\cdot, \cdot&gt;\)</span> is called a “Hilbert space.”</p>
-<p>Note that a given vector space could be associated with many different inner product spaces! These inner product spaces contain the same objects, but have different metrics, meaning different notions of distance and size. For example, if <span class="math inline">\(A\)</span> is a positive definite matrix not equal to the identity, the inner product spaces <span class="math inline">\((\mathcal{X}, &lt;\cdot, \cdot&gt;_{\boldsymbol{I}_{\,}{P}})\)</span> and <span class="math inline">\((\mathcal{X}, &lt;\cdot, \cdot&gt;_{\boldsymbol{I}_{\,}{A}})\)</span> both contain <span class="math inline">\(P\)</span>–vectors, but in general have different measures of the “size” of <span class="math inline">\(\boldsymbol{x}\)</span>: <span class="math inline">\(&lt;\boldsymbol{x}, \boldsymbol{x}&gt;_{\boldsymbol{I}_{\,}{P}} = \boldsymbol{x}^\intercal\boldsymbol{x}\)</span> and <span class="math inline">\(&lt;\boldsymbol{x}, \boldsymbol{x}&gt;_{\boldsymbol{A}} = \boldsymbol{x}^\intercal\boldsymbol{A}\boldsymbol{x}\)</span>, respectively.</p>
+<p>Note that the dot product <span class="math inline">\(\boldsymbol{x}^\intercal\boldsymbol{x}\)</span> is an inner product when <span class="math inline">\(\mathcal{X}= \mathbb{R}^{P}\)</span>, but so is <span class="math inline">\(\left&lt;\boldsymbol{x}, \boldsymbol{x}\right&gt;_\boldsymbol{A}:= \boldsymbol{x}^\intercal\boldsymbol{A}\boldsymbol{x}\)</span> when <span class="math inline">\(\boldsymbol{A}\)</span> is any positive definite matrix.</p>
+<p>A vector space is a set of objects (e.g.&nbsp;<span class="math inline">\(\mathbb{R}^{P}\)</span>, where the objects are lists of <span class="math inline">\(P\)</span> real numbers), together with rules for adding those objects and multiplying them by scalars. An <em>inner product space</em> is a vector space associated with an inner product, which we can write as the pair <span class="math inline">\((\mathcal{X}, \left&lt;\cdot, \cdot\right&gt;)\)</span>. An inner product space that is complete with respect to the norm induced by <span class="math inline">\(\left&lt;\cdot, \cdot\right&gt;\)</span> is called a “Hilbert space.”</p>
+<p>Note that a given vector space could be associated with many different inner product spaces! These inner product spaces contain the same objects, but have different metrics, meaning different notions of distance and size. For example, if <span class="math inline">\(A\)</span> is a positive definite matrix not equal to the identity, the inner product spaces <span class="math inline">\((\mathcal{X}, \left&lt;\cdot, \cdot\right&gt;_{{\boldsymbol{I}_{P}}})\)</span> and <span class="math inline">\((\mathcal{X}, \left&lt;\cdot, \cdot\right&gt;_{\boldsymbol{A}})\)</span> both contain <span class="math inline">\(P\)</span>–vectors, but in general have different measures of the “size” of <span class="math inline">\(\boldsymbol{x}\)</span>: <span class="math inline">\(\left&lt;\boldsymbol{x}, \boldsymbol{x}\right&gt;_{{\boldsymbol{I}_{P}}} = \boldsymbol{x}^\intercal\boldsymbol{x}\)</span> and <span class="math inline">\(\left&lt;\boldsymbol{x}, \boldsymbol{x}\right&gt;_{\boldsymbol{A}} = \boldsymbol{x}^\intercal\boldsymbol{A}\boldsymbol{x}\)</span>, respectively.</p>
 <p>Similarly, if you have objects which you wish to associate with a well–defined size and similarity, the same measurement of size and similarity could be equally represented by different inner product spaces. As an example, consider the second–order monomials on <span class="math inline">\(\mathcal{Z}= \mathbb{R}^{2}\)</span>, where <span class="math inline">\(\boldsymbol{z}\in \mathcal{Z}\)</span> is written <span class="math inline">\(\boldsymbol{z}= (z_1, z_2)^\intercal\)</span>. Last lectures, we studied the ordered second–order monomial feature map <span class="math inline">\(\phi(\boldsymbol{z}): \mathbb{R}^{2} \mapsto \mathbb{R}^{4}\)</span> as <span class="math inline">\(\phi(\boldsymbol{z}) = (z_1^2, z_1 z_2, z_2 z_1, z_2^2)^\intercal\)</span>, which we use to define the inner product</p>
 <p><span class="math display">\[
 \begin{aligned}
 \mathcal{K}_{poly}(\boldsymbol{z}, \boldsymbol{s}) ={}&amp;
-\\={}&amp; &lt;\phi(\boldsymbol{z}), \phi(\boldsymbol{s})&gt;
+\left&lt;\phi(\boldsymbol{z}), \phi(\boldsymbol{s})\right&gt;
 \\={}&amp; z_1^2 s_1^2 + z_1 z_2 s_1 s_2 + z_2 z_1 s_2 s_1 + z_2^2 s_2^2
 \\={}&amp; z_1^2 s_1^2 + 2 z_1 z_2 s_1 s_2  + z_2^2 s_2^2
-\\={}&amp; &lt;\tilde{\phi}(\boldsymbol{z}), \tilde{\phi}(\boldsymbol{s})&gt;_{\boldsymbol{A}},
+\\={}&amp; \left&lt;\tilde{\phi}(\boldsymbol{z}), \tilde{\phi}(\boldsymbol{s})\right&gt;_{\boldsymbol{A}},
 \end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\(\tilde{\phi}(\boldsymbol{z}) = (z_1^2, z_1 z_2, z_2^2) \in \mathbb{R}^{3}\)</span> is the <em>unordered</em> monomial map that treats <span class="math inline">\(z_1 z_2\)</span> the same as <span class="math inline">\(z_2 z_1\)</span>, and the matrix</p>
@@ -275,14 +275,14 @@ window.Quarto = {
 0 &amp; 0 &amp; 1 \\
 \end{pmatrix}
 \]</span></p>
-<p>appropriately accounts for the double counting of the mixed term. Our notion of size and distance could equally well be represented by <span class="math inline">\((\mathbb{R}^{4}, &lt;\cdot,\cdot&gt;)\)</span> or <span class="math inline">\((\mathbb{R}^{3}, &lt;\cdot,\cdot&gt;)_\boldsymbol{A}\)</span>.</p>
-<p>We can also define inner products on spaces that are not <span class="math inline">\(\mathbb{R}^{P}\)</span>. For example, we could take <span class="math inline">\(\mathcal{X}= \{\boldsymbol{x}= (x_1, x_2, \ldots): \sum_{p=1}^\infty x_p^2 &lt; \infty\}\)</span> to be square–summable, infinitely long sequences of numbers, and define <span class="math inline">\(&lt;\boldsymbol{x}, \boldsymbol{x}'&gt; := \sum_{p=1}^\infty x_p x_p'\)</span>. This is sometimes called <span class="math inline">\(\ell_2\)</span>.</p>
-<p>We can also take spaces of functions. Loosely speaking, we can let <span class="math inline">\(\mathcal{X}= \{ f(\boldsymbol{x}): \int f(\boldsymbol{x})^2 d\boldsymbol{x}&lt; \infty \}\)</span>, and define <span class="math inline">\(&lt;f, g&gt; = \int f(\boldsymbol{x}), g(\boldsymbol{x}) d\boldsymbol{x}\)</span>. Up to measure theoretic details, this space is sometimes called <span class="math inline">\(L_2\)</span>.</p>
+<p>appropriately accounts for the double counting of the mixed term. Our notion of size and distance could equally well be represented by <span class="math inline">\((\mathbb{R}^{4}, \left&lt;\cdot,\cdot\right&gt;)\)</span> or <span class="math inline">\((\mathbb{R}^{3}, \left&lt;\cdot,\cdot\right&gt;)_\boldsymbol{A}\)</span>.</p>
+<p>We can also define inner products on spaces that are not <span class="math inline">\(\mathbb{R}^{P}\)</span>. For example, we could take <span class="math inline">\(\mathcal{X}= \{\boldsymbol{x}= (x_1, x_2, \ldots): \sum_{p=1}^\infty x_p^2 &lt; \infty\}\)</span> to be square–summable, infinitely long sequences of numbers, and define <span class="math inline">\(\left&lt;\boldsymbol{x}, \boldsymbol{x}'\right&gt; := \sum_{p=1}^\infty x_p x_p'\)</span>. This is sometimes called <span class="math inline">\(\ell_2\)</span>.</p>
+<p>We can also take spaces of functions. Loosely speaking, we can let <span class="math inline">\(\mathcal{X}= \{ f(\boldsymbol{x}): \int f(\boldsymbol{x})^2 d\boldsymbol{x}&lt; \infty \}\)</span>, and define <span class="math inline">\(\left&lt;f, g\right&gt; = \int f(\boldsymbol{x}), g(\boldsymbol{x}) d\boldsymbol{x}\)</span>. Up to measure theoretic details, this space is sometimes called <span class="math inline">\(L_2\)</span>.</p>
 </section>
 <section id="valid-kernels" class="level1">
 <h1>Valid kernels</h1>
-<p>For a given kernel <span class="math inline">\(\mathcal{K}_{\,}: \mathcal{Z}\times\mathcal{Z}\mapsto\mathbb{R}^{}\)</span>, we would like to establish whether there exists any inner product space <span class="math inline">\((\mathcal{X}, &lt;\cdot, \cdot&gt;)\)</span> such that <span class="math inline">\(\mathcal{X}\supseteq \{ \boldsymbol{x}: \boldsymbol{x}= \phi(\boldsymbol{z}), \boldsymbol{z}\in \mathcal{Z}\}\)</span>, and <span class="math inline">\(\mathcal{K}_{\,}(\boldsymbol{z}, \boldsymbol{s}) = &lt;\phi(\boldsymbol{z}), \phi(\boldsymbol{s})&gt;\)</span>. Per our discussion above, there may be many such spaces, but if there isn’t at least one, then it does not make much sense to use <span class="math inline">\(\mathcal{K}_{\,}\)</span> for the kernel trick.</p>
-<p>Obviously it would be enough to identify a particular <span class="math inline">\(\phi\)</span> and <span class="math inline">\(&lt;\cdot,\cdot&gt;\)</span> that does the trick. But that may be hard in general, and we need a way of proving the converse, which is that there exists no such <span class="math inline">\(\phi\)</span>.</p>
+<p>For a given kernel <span class="math inline">\(\mathcal{K}_{\,}: \mathcal{Z}\times\mathcal{Z}\mapsto\mathbb{R}^{}\)</span>, we would like to establish whether there exists any inner product space <span class="math inline">\((\mathcal{X}, \left&lt;\cdot, \cdot\right&gt;)\)</span> such that <span class="math inline">\(\mathcal{X}\supseteq \{ \boldsymbol{x}: \boldsymbol{x}= \phi(\boldsymbol{z}), \boldsymbol{z}\in \mathcal{Z}\}\)</span>, and <span class="math inline">\(\mathcal{K}_{\,}(\boldsymbol{z}, \boldsymbol{s}) = \left&lt;\phi(\boldsymbol{z}), \phi(\boldsymbol{s})\right&gt;\)</span>. Per our discussion above, there may be many such spaces, but if there isn’t at least one, then it does not make much sense to use <span class="math inline">\(\mathcal{K}_{\,}\)</span> for the kernel trick.</p>
+<p>Obviously it would be enough to identify a particular <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\left&lt;\cdot,\cdot\right&gt;\)</span> that does the trick. But that may be hard in general, and we need a way of proving the converse, which is that there exists no such <span class="math inline">\(\phi\)</span>.</p>
 <p>The key is to define the quantity called the <strong>gram matrix</strong>, which is the kernel evaluated at a set of observations <span class="math inline">\(\boldsymbol{Z}= (\boldsymbol{z}_1, \ldots, \boldsymbol{z}_N)^\intercal\)</span>:</p>
 <p><span class="math display">\[
 \mathcal{K}_{\boldsymbol{Z}} =
@@ -300,15 +300,17 @@ window.Quarto = {
 ={}&amp;
 \sum_{n=1}^N\sum_{m=1}^N \boldsymbol{v}_n \mathcal{K}_{\,}(\boldsymbol{z}_n, \boldsymbol{z}_m) \boldsymbol{v}_m
 \\={}&amp;
-\sum_{n=1}^N\sum_{m=1}^N \mathcal{K}_{\,}(\boldsymbol{v}_n \boldsymbol{z}_n, \boldsymbol{z}_m \boldsymbol{v}_m)  &amp; \textrm{(linearity)}
+\sum_{n=1}^N\sum_{m=1}^N \boldsymbol{v}_n \left&lt;\phi(\boldsymbol{z}_n), \phi(\boldsymbol{z}_m)\right&gt; \boldsymbol{v}_m &amp; \textrm{(by assumption)}
 \\={}&amp;
-\mathcal{K}_{\,}\left(\sum_{n=1}^N\boldsymbol{v}_n \boldsymbol{z}_n, \sum_{m=1}^N \boldsymbol{z}_m \boldsymbol{v}_m\right)  &amp; \textrm{(linearity again)}
+\sum_{n=1}^N\sum_{m=1}^N \left&lt;\boldsymbol{v}_n \phi(\boldsymbol{z}_n), \boldsymbol{v}_m\right&gt; \phi(\boldsymbol{z}_m)   &amp; \textrm{(linearity)}
 \\={}&amp;
-\mathcal{K}_{\,}\left(\sum_{n=1}^N\boldsymbol{v}_n \boldsymbol{z}_n, \sum_n \boldsymbol{z}_n \boldsymbol{v}_n\right)  &amp; \textrm{(renaming an index)}
+\left&lt;\sum_{n=1}^N\boldsymbol{v}_n \phi(\boldsymbol{z}_n), \sum_{m=1}^N \boldsymbol{v}_m \phi(\boldsymbol{z}_m) \right&gt; &amp; \textrm{(linearity again)}
+\\={}&amp;
+\left&lt;\sum_{n=1}^N\boldsymbol{v}_n \phi(\boldsymbol{z}_n), \sum_{n=1}^N\boldsymbol{v}_n \phi(\boldsymbol{z}_n) \right&gt;  &amp; \textrm{(renaming an index)}
 \\\ge{}&amp; 0. &amp; \textrm{(positive definiteness)}
 \end{aligned}
 \]</span></p>
-<p>Note that the preceding construction never used the feature vector itself — it only used properties that <span class="math inline">\(\mathcal{K}_{\,}\)</span> must have if it represents an inner product in some space. Note also that we are not guaranteed that the final line is strictly greater than zero since the feature map may discard information from <span class="math inline">\(\mathcal{Z}\)</span>. For example, we might take <span class="math inline">\(\boldsymbol{z}= (z_1, z_2)\)</span> and <span class="math inline">\(\phi(\boldsymbol{z}) = (z_1)\)</span>, in which case <span class="math inline">\(\mathcal{K}_{\,}((0, 1), (0,1)) = 0\)</span>.</p>
+<p>Note that the preceding construction never used any properties of the feature vector itself, not even the dimension — it only used properties that <span class="math inline">\(\mathcal{K}_{\,}\)</span> must have if it represents an inner product in some space. Note also that we are not guaranteed that the final line is strictly greater than zero since the feature map may discard information from <span class="math inline">\(\mathcal{Z}\)</span>. For example, we might take <span class="math inline">\(\boldsymbol{z}= (z_1, z_2)\)</span> and <span class="math inline">\(\phi(\boldsymbol{z}) = (z_1)\)</span>, in which case <span class="math inline">\(\mathcal{K}_{\,}((0, 1), (0,1)) = 0\)</span>.</p>
 <p>From this we conclude that <em>if</em> <span class="math inline">\(\mathcal{K}_{\,}\)</span> represents an inner product in some space, <em>then</em> every gram matrix is positive semi–definite. This leads to the following definition:</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Defintiion: Positive definite kernels">
 <div class="callout-header d-flex align-content-center">
@@ -344,7 +346,7 @@ Defintiion: Positive definite kernels
 <li>Up to re-indexing and repeated <span class="math inline">\(\lambda_k\)</span>, there is only one way to write this where <span class="math inline">\(v_k\)</span> are orthogonal, and that is the eigen representation.</li>
 </ul>
 <p>All these facts, familiar from matrices, extend to the case of kernel functions. In fact, though we will not prove it here, <strong>Mercer’s theorem</strong> states that any positive definite kernel admits a feature expansion with orthogonal features, where orthogonality is with respect to a function space inner product.</p>
-<p>Note that an expansion of the above form is little more than identifying the (possibly infinite–dimensional) feature vector <span class="math inline">\(\boldsymbol{z}\mapsto \sqrt{\lambda_k} \phi_k(\boldsymbol{z})\)</span>. But it does point to the possibility of using standard series expansion techniques. Below, we will use Fourier series to find series expansions for stationary kernels. For example, taking <span class="math inline">\(z\in \mathbb{R}^{}\)</span>, we can find a series expansion for <span class="math inline">\(\mathcal{K}_{RBF}(z, s) = \exp\left(-\frac{1}{2}(z- s)^2\right)\)</span> using a Taylor series:</p>
+<p>Note that an expansion of the above form is little more than identifying the (possibly infinite–dimensional) feature vector <span class="math inline">\(\boldsymbol{z}\mapsto \sqrt{\lambda_k} \phi_k(\boldsymbol{z})\)</span>. But it does point to the possibility of using standard series expansion techniques. For example, taking <span class="math inline">\(z\in \mathbb{R}^{}\)</span>, we can find a series expansion for <span class="math inline">\(\mathcal{K}_{RBF}(z, s) = \exp\left(-\frac{1}{2}(z- s)^2\right)\)</span> using a Taylor series:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \exp\left(-\frac{1}{2}(z- s)^2\right) ={}&amp;
@@ -357,7 +359,8 @@ Defintiion: Positive definite kernels
     \left(\exp\left(-\frac{1}{2}s^2 \right) s^k \right).
 \end{aligned}
 \]</span></p>
-<p>From this it follows that the kernel <span class="math inline">\(\mathcal{K}_{RBF}(z, s)\)</span> can be featurized with <span class="math inline">\(\phi_k(z) = \exp\left(-\frac{1}{2}z^2 \right) z^k\)</span>.</p>
+<p>From this it follows that the kernel <span class="math inline">\(\mathcal{K}_{RBF}(z, s)\)</span> can be featurized with <span class="math inline">\(\phi_k(z) = \exp\left(-\frac{1}{2}z^2 \right) z^k\)</span>, and so must be a postive definite kernel.</p>
+<p>Below, we will use Fourier series to find series expansions for stationary kernels.</p>
 <section id="an-example-of-an-invalid-kernel" class="level2">
 <h2 class="anchored" data-anchor-id="an-example-of-an-invalid-kernel">An example of an invalid kernel</h2>
 <p>It is often easier to prove that a kernel is <em>not</em> positive definite, since it suffices to find a single set of points for which the gram matrix is not positive definite. This can lead to some necessary conditions on kernels, as we now see.</p>
@@ -420,7 +423,7 @@ F(1) &amp; F(0) \\
 <p><span class="math display">\[
 f(z; \beta) = \sum_{\omega} \beta_\omega (\cos(\omega z) + \sin(\omega z))
 \]</span></p>
-<p>for some coefficients <span class="math inline">\(\beta_\omega\)</span>, then the implicit kernel corresponding to this inner product would be a stationary kernel. (If you’re bothered by the fact that this regression constrains the sine and cosine to have the same coefficient, note that you can avoid this technicality by admitting complex–valued features, use Euler’s identity, and use the standard complex number inner product <span class="math inline">\(&lt;\boldsymbol{z}, \boldsymbol{z}&gt; = \boldsymbol{z}^\intercal\overline{\boldsymbol{z}}\)</span>.)</p>
+<p>for some coefficients <span class="math inline">\(\beta_\omega\)</span>, then the implicit kernel corresponding to this inner product would be a stationary kernel. (If you’re bothered by the fact that this regression constrains the sine and cosine to have the same coefficient, note that you can avoid this technicality by admitting complex–valued features, use Euler’s identity, and use the standard complex number inner product <span class="math inline">\(\left&lt;\boldsymbol{z}, \boldsymbol{z}\right&gt; = \boldsymbol{z}^\intercal\overline{\boldsymbol{z}}\)</span>.)</p>
 <p>This strongly motivates looking for Fourier features as the feature expansions for stationary kernels. In fact, if <span class="math inline">\(\mathcal{K}_{\,}(z, s) = \kappa(z- s)\)</span> is stationary and defined on a finite domain, then we can define <span class="math inline">\(z- s= \Delta\)</span> and assume <span class="math inline">\(\Delta \in [-1,1]\)</span> without loss of generality by defining <span class="math inline">\(\kappa(-\Delta) = \kappa(\Delta)\)</span>. Then we can represent <span class="math inline">\(\kappa(\Delta)\)</span> with a Fourier series:</p>
 <p><span class="math display">\[
 \kappa(\Delta) = \sum_{k=0}^\infty \lambda_k \cos(2\pi k \Delta),

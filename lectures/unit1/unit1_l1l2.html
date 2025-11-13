@@ -234,16 +234,16 @@ window.Quarto = {
 \\={}&amp; \boldsymbol{Y}^\intercal\boldsymbol{Y}-2 \boldsymbol{Y}^\intercal\boldsymbol{X}\boldsymbol{\beta}+
   \boldsymbol{\beta}^\intercal\boldsymbol{X}^\intercal\boldsymbol{X}\boldsymbol{\beta}+ \lambda \boldsymbol{\beta}^\intercal\boldsymbol{\beta}
 \\={}&amp; \boldsymbol{Y}^\intercal\boldsymbol{Y}-2 \boldsymbol{Y}^\intercal\boldsymbol{X}\boldsymbol{\beta}+
-  \boldsymbol{\beta}^\intercal\left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right) \boldsymbol{\beta}
+  \boldsymbol{\beta}^\intercal\left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\right) \boldsymbol{\beta}
   \quad \Rightarrow \\
 \frac{\partial \mathscr{R}_{ridge}(\boldsymbol{\beta}, \lambda)}{\partial \boldsymbol{\beta}} ={}&amp;
--2 \boldsymbol{X}^\intercal\boldsymbol{Y}+ 2 \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right) \boldsymbol{\beta}
+-2 \boldsymbol{X}^\intercal\boldsymbol{Y}+ 2 \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\right) \boldsymbol{\beta}
   \quad\Rightarrow \\
 \hat{\boldsymbol{\beta}}(\lambda) ={}&amp;
-  \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right)^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}.
+  \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\right)^{-1} \boldsymbol{X}^\intercal\boldsymbol{Y}.
 \end{aligned}
 \]</span></p>
-<p>Note that <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\)</span> is <em>always</em> invertible if <span class="math inline">\(\lambda &gt; 0\)</span>, even if <span class="math inline">\(\boldsymbol{X}\)</span> is not full–column rank. In this sense, the ridge regression can deal safely with colinearity.</p>
+<p>Note that <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\)</span> is <em>always</em> invertible if <span class="math inline">\(\lambda &gt; 0\)</span>, even if <span class="math inline">\(\boldsymbol{X}\)</span> is not full–column rank. In this sense, the ridge regression can deal safely with colinearity.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Exercise">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -254,7 +254,7 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Prove that <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\)</span> is invertible if <span class="math inline">\(\lambda &gt; 0\)</span>. Hint: using the fact that <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}\)</span> positive semi–definite because it’s symmetric, find a lower bound on the smallest eigenvalue of <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\)</span>.</p>
+<p>Prove that <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\)</span> is invertible if <span class="math inline">\(\lambda &gt; 0\)</span>. Hint: using the fact that <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}\)</span> positive semi–definite because it’s symmetric, find a lower bound on the smallest eigenvalue of <span class="math inline">\(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\)</span>.</p>
 </div>
 </div>
 <section id="standardizing-regressors" class="level2">
@@ -290,15 +290,15 @@ x'_n := \frac{x_n - \bar{x}_n}{\sqrt{\frac{1}{N} \sum_{n=1}^N(x_n - \bar{x})^2}}
 \mathbb{E}_{\vphantom{}}\left[y_\mathrm{new}- \boldsymbol{x}_\mathrm{new}^\intercal\hat{\boldsymbol{\beta}}(\lambda)\right]  ={}&amp;
 \boldsymbol{x}_\mathrm{new}^\intercal\left(\boldsymbol{\beta}- \mathbb{E}_{\vphantom{}}\left[\hat{\boldsymbol{\beta}}(\lambda)\right]\right)
 \\={}&amp;
-\boldsymbol{x}_\mathrm{new}^\intercal\left(\boldsymbol{I}_{\,}- \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right)^{-1} (\boldsymbol{X}^\intercal\boldsymbol{X})\right) \boldsymbol{\beta}
+\boldsymbol{x}_\mathrm{new}^\intercal\left({\boldsymbol{I}_{\,}}- \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\right)^{-1} (\boldsymbol{X}^\intercal\boldsymbol{X})\right) \boldsymbol{\beta}
 \end{aligned}
 \]</span></p>
 <p>That is, as <span class="math inline">\(\lambda\)</span> grows, <span class="math inline">\(\hat{\boldsymbol{\beta}}(\lambda)\)</span> becomes biased. However, by the same reasoning as in the standard case, under homoskedasticity,</p>
 <p><span class="math display">\[
 \mathrm{Cov}_{\,}\left(\hat{\boldsymbol{\beta}}(\lambda)\right)  = \sigma^2
-\left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right)^{-1}
+\left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\right)^{-1}
   (\boldsymbol{X}^\intercal\boldsymbol{X})
-\left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right)^{-1} ,
+\left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\right)^{-1} ,
 \]</span></p>
 <p>which is smaller that <span class="math inline">\(\mathrm{Cov}_{\,}\left(\hat{\boldsymbol{\beta}}\right)\)</span> in the sense that <span class="math inline">\(\mathrm{Cov}_{\,}\left(\hat{\boldsymbol{\beta}}\right) - \mathrm{Cov}_{\,}\left(\hat{\boldsymbol{\beta}}(\lambda)\right)\)</span> is a positive definite matrix for <span class="math inline">\(\lambda &gt; 0\)</span> and full-rank <span class="math inline">\(\boldsymbol{X}\)</span>. In this sense, the family <span class="math inline">\(\hat{\boldsymbol{\beta}}(\lambda)\)</span> is a one-dimensional family that trades off bias and variance. We can thus use cross validation to choose <span class="math inline">\(\lambda\)</span> that minimizes estimated MSE.</p>
 </section>
@@ -337,16 +337,16 @@ x'_n := \frac{x_n - \bar{x}_n}{\sqrt{\frac{1}{N} \sum_{n=1}^N(x_n - \bar{x})^2}}
 <h2 class="anchored" data-anchor-id="a-bayesian-posterior">A Bayesian posterior</h2>
 <p>Another way to interpret the ridge penalty is as a Bayesian posterior mean. If</p>
 <p><span class="math display">\[
-\boldsymbol{\beta}\sim \mathcal{N}\left(\boldsymbol{0}, \sigma_\beta^2 \boldsymbol{I}_{\,}\right)
+\boldsymbol{\beta}\sim \mathcal{N}\left(\boldsymbol{0}, \sigma_\beta^2 {\boldsymbol{I}_{\,}}\right)
 \quad\textrm{and}\quad
-\boldsymbol{Y}\vert \boldsymbol{\beta}, \boldsymbol{X}\sim \mathcal{N}\left(\boldsymbol{X}\boldsymbol{\beta}, \sigma^2 \boldsymbol{I}_{\,}\right),
+\boldsymbol{Y}\vert \boldsymbol{\beta}, \boldsymbol{X}\sim \mathcal{N}\left(\boldsymbol{X}\boldsymbol{\beta}, \sigma^2 {\boldsymbol{I}_{\,}}\right),
 \]</span></p>
 <p>then</p>
 <p><span class="math display">\[
 \boldsymbol{\beta}\vert \boldsymbol{Y}, \boldsymbol{X}\sim \mathcal{N}\left(
-  \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \frac{\sigma^{2}}{\sigma_\beta^{2}} \boldsymbol{I}_{\,}\right)^{-1}
+  \left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \frac{\sigma^{2}}{\sigma_\beta^{2}} {\boldsymbol{I}_{\,}}\right)^{-1}
     \boldsymbol{X}^\intercal\boldsymbol{Y},
-  \sigma^{2}\left( \boldsymbol{X}^\intercal\boldsymbol{X}+ \frac{\sigma^{2}}{\sigma_\beta^{2}} \boldsymbol{I}_{\,}\right)^{-1} \right).
+  \sigma^{2}\left( \boldsymbol{X}^\intercal\boldsymbol{X}+ \frac{\sigma^{2}}{\sigma_\beta^{2}} {\boldsymbol{I}_{\,}}\right)^{-1} \right).
 \]</span></p>
 <p>One way to derive this is to recognize that, if <span class="math inline">\(\boldsymbol{\beta}\sim \mathcal{N}\left(\mu, \Sigma\right)\)</span>, then</p>
 <p><span class="math display">\[
@@ -368,7 +368,7 @@ x'_n := \frac{x_n - \bar{x}_n}{\sqrt{\frac{1}{N} \sum_{n=1}^N(x_n - \bar{x})^2}}
   \textrm{Terms that do not depend on }\beta
 \\={}&amp;
   -\frac{1}{2}  
-    \beta^\intercal\left(\sigma^{-2} \boldsymbol{X}^\intercal\boldsymbol{X}+ \sigma_\beta^{-2} \boldsymbol{I}_{\,}\right) \beta +
+    \beta^\intercal\left(\sigma^{-2} \boldsymbol{X}^\intercal\boldsymbol{X}+ \sigma_\beta^{-2} {\boldsymbol{I}_{\,}}\right) \beta +
   \sigma^{-2} \beta^\intercal\boldsymbol{X}^\intercal\boldsymbol{Y}+
   \textrm{Terms that do not depend on }\beta.
 \end{aligned}
@@ -377,7 +377,7 @@ x'_n := \frac{x_n - \bar{x}_n}{\sqrt{\frac{1}{N} \sum_{n=1}^N(x_n - \bar{x})^2}}
 <p>If we take <span class="math inline">\(\lambda = \sigma^2 / \sigma_\beta^2\)</span>, then we can see that</p>
 <p><span class="math display">\[
 \mathbb{E}_{\vphantom{}}\left[\beta | \boldsymbol{Y}\right] =
-\left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda \boldsymbol{I}_{\,}\right)^{-1}
+\left(\boldsymbol{X}^\intercal\boldsymbol{X}+ \lambda {\boldsymbol{I}_{\,}}\right)^{-1}
     \boldsymbol{X}^\intercal\boldsymbol{Y}= \hat{\beta}(\lambda).
 \]</span></p>
 <p>This gives the ridge procedure some interpretability. First of all, the use of the ridge penalty corresponds to a prior belief that <span class="math inline">\(\beta\)</span> is not too large.</p>

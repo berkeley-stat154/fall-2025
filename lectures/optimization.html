@@ -286,7 +286,7 @@ f(\boldsymbol{\theta}) = a+ \gv^\intercal\boldsymbol{\theta}+ \frac{1}{2}\boldsy
 \quad\Rightarrow\quad
 \boldsymbol{\theta}^{t+1} =
     \boldsymbol{\theta}^{t} - \alpha (\H \boldsymbol{\theta}^{t} - \gv) =
-    (\boldsymbol{I}_{\,}- \alpha \H) \boldsymbol{\theta}^{t} - \alpha \gv.
+    ({\boldsymbol{I}_{\,}}- \alpha \H) \boldsymbol{\theta}^{t} - \alpha \gv.
 \]</span></p>
 <p>If we write</p>
 <p><span class="math display">\[
@@ -294,17 +294,17 @@ f(\boldsymbol{\theta}) = a+ \gv^\intercal\boldsymbol{\theta}+ \frac{1}{2}\boldsy
 \]</span></p>
 <p>where <span class="math inline">\(\left. \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \right|_{\thetavstar} = \boldsymbol{0}\)</span>, then</p>
 <p><span class="math display">\[
-\Delta^{t+ 1} = (\boldsymbol{I}_{\,}- \alpha \H) \Delta^{t}
+\Delta^{t+ 1} = ({\boldsymbol{I}_{\,}}- \alpha \H) \Delta^{t}
 \quad\textrm{$\Rightarrow$}\quad
-\Delta^{t} = (\boldsymbol{I}_{\,}- \alpha \H)^{t} \Delta^{0},
+\Delta^{t} = ({\boldsymbol{I}_{\,}}- \alpha \H)^{t} \Delta^{0},
 \]</span></p>
 <p>where</p>
 <p><span class="math display">\[
-(\boldsymbol{I}_{\,}- \alpha \H)^{t}  = \underbrace{(\boldsymbol{I}_{\,}- \alpha \H) \ldots (\boldsymbol{I}_{\,}- \alpha \H)}_{t\rm\ times}.
+({\boldsymbol{I}_{\,}}- \alpha \H)^{t}  = \underbrace{({\boldsymbol{I}_{\,}}- \alpha \H) \ldots ({\boldsymbol{I}_{\,}}- \alpha \H)}_{t\rm\ times}.
 \]</span></p>
-<p>Note that the eigenvalues and eigenvectors of <span class="math inline">\((\boldsymbol{I}_{\,}- \alpha \H)\)</span> are inherited from <span class="math inline">\(\H\)</span>:</p>
+<p>Note that the eigenvalues and eigenvectors of <span class="math inline">\(({\boldsymbol{I}_{\,}}- \alpha \H)\)</span> are inherited from <span class="math inline">\(\H\)</span>:</p>
 <p><span class="math display">\[
-(\boldsymbol{I}_{\,}- \alpha \H) \boldsymbol{v}_d = \boldsymbol{v}_d - \alpha \lambda_d \boldsymbol{v}_d = (1 - \alpha \lambda_d) \boldsymbol{v}_d.
+({\boldsymbol{I}_{\,}}- \alpha \H) \boldsymbol{v}_d = \boldsymbol{v}_d - \alpha \lambda_d \boldsymbol{v}_d = (1 - \alpha \lambda_d) \boldsymbol{v}_d.
 \]</span></p>
 <p>Define <span class="math inline">\(\gamma_d := (1 - \alpha \lambda_d)\)</span>, and write out <span class="math inline">\(\Delta^0 = \sum_{d=1}^D a_d \boldsymbol{v}_d\)</span>. With random initialization <span class="math inline">\(a_d \ne 0\)</span> with high probability. Then</p>
 <p><span class="math display">\[
@@ -400,16 +400,16 @@ g(\boldsymbol{\theta}) =  \H \boldsymbol{\theta}- \gv + \varepsilon,
 <p><span class="math display">\[
 \boldsymbol{\theta}^{t+1} =
     \boldsymbol{\theta}^{t} - \alpha (\H \boldsymbol{\theta}^{t} - \gv + \varepsilon^t) =
-    (\boldsymbol{I}_{\,}- \alpha \H) \boldsymbol{\theta}^{t} - \alpha \gv - \alpha \varepsilon^t.
+    ({\boldsymbol{I}_{\,}}- \alpha \H) \boldsymbol{\theta}^{t} - \alpha \gv - \alpha \varepsilon^t.
 \]</span></p>
 <p>Again subtracting <span class="math inline">\(\thetavstar\)</span> and <span class="math inline">\(\alpha (\H \thetavstar - \gv)\)</span> from both sides,</p>
 <p><span class="math display">\[
 \boldsymbol{\theta}^{t+1} - \thetavstar =
-    (\boldsymbol{I}_{\,}- \alpha \H) (\boldsymbol{\theta}^{t} - \thetavstar) + \alpha \varepsilon^t.
+    ({\boldsymbol{I}_{\,}}- \alpha \H) (\boldsymbol{\theta}^{t} - \thetavstar) + \alpha \varepsilon^t.
 \]</span></p>
 <p>The noise is independent of all previous <span class="math inline">\(\boldsymbol{\theta}^{t}\)</span> (but not independent of subsequent ones!), so</p>
 <p><span class="math display">\[
-\mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t+1} - \thetavstar\right\Vert^2\right] \le \left\Vert\boldsymbol{I}_{\,}- \alpha \H\right\Vert_{op}^2 \mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t} - \thetavstar\right\Vert^2\right] + \alpha^2 \sigma^2.
+\mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t+1} - \thetavstar\right\Vert^2\right] \le \left\Vert{\boldsymbol{I}_{\,}}- \alpha \H\right\Vert_{op}^2 \mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t} - \thetavstar\right\Vert^2\right] + \alpha^2 \sigma^2.
 \]</span></p>
 <p>Previously, we were able to recursively expand the error to get an expontially decaying distance to <span class="math inline">\(\thetavstar\)</span>, but we cannot in this case due to the <span class="math inline">\(\alpha^2 \sigma^2\)</span> term.</p>
 <!--
