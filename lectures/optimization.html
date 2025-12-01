@@ -238,12 +238,6 @@ window.Quarto = {
 </ul></li>
 <li>Learn what “back–propagation” actually means</li>
 </ul>
-<p><span class="math display">\[
-\def\gv{\boldsymbol{g}}
-\def\H{\boldsymbol{H}}
-\def\boldsymbol{\theta}{\boldsymbol{\theta}}
-\def\thetavstar{\boldsymbol{\theta}^{\star}}
-\]</span></p>
 </section>
 <section id="reading" class="level1">
 <h1>Reading</h1>
@@ -262,15 +256,15 @@ window.Quarto = {
 </ul>
 <p>The most robust theory is for convex functions, which can be understood in terms of quadratics. So we’ll gain intuition by studying the problem</p>
 <p><span class="math display">\[
-f(\boldsymbol{\theta}) = a+ \gv^\intercal\boldsymbol{\theta}+ \frac{1}{2}\boldsymbol{\theta}^\intercal\H \boldsymbol{\theta}.
+f(\boldsymbol{\theta}) = a+ \boldsymbol{g}^\intercal\boldsymbol{\theta}+ \frac{1}{2}\boldsymbol{\theta}^\intercal\boldsymbol{H}\boldsymbol{\theta}.
 \]</span></p>
 <p>Note the similarity to a second–order Taylor expansion.</p>
-<p>Let the eigenvalues of <span class="math inline">\(\H\)</span> be <span class="math inline">\(\lambda_1 \ge \ldots \lambda_D\)</span>, with corresponding eigenvectors <span class="math inline">\(\boldsymbol{v}_d\)</span>. Contrast four cases:</p>
+<p>Let the eigenvalues of <span class="math inline">\(\boldsymbol{H}\)</span> be <span class="math inline">\(\lambda_1 \ge \ldots \ge \lambda_D\)</span>, with corresponding eigenvectors <span class="math inline">\(\boldsymbol{v}_d\)</span>. Contrast four cases:</p>
 <ul>
 <li><span class="math inline">\(\lambda_D &gt; 0\)</span>: Convex</li>
 <li><span class="math inline">\(\lambda_1 &lt; 0\)</span>: Concave</li>
 <li><span class="math inline">\(\lambda_1 &gt; 0 &gt; \lambda_D\)</span>: Saddle point</li>
-<li><span class="math inline">\(\lambda_1 &gt; 0 = \lambda_{D-1} = \lambda_d\)</span>: Multiple minima</li>
+<li><span class="math inline">\(\lambda_1 &gt; 0,\)</span> <span class="math inline">\(\lambda_d = \lambda_{d -1} = ... = \lambda_{D} = 0\)</span>: Multiple minima</li>
 </ul>
 </section>
 <section id="gradient-descent" class="level1">
@@ -282,29 +276,29 @@ f(\boldsymbol{\theta}) = a+ \gv^\intercal\boldsymbol{\theta}+ \frac{1}{2}\boldsy
 \]</span></p>
 <p>For our quadratic case, this looks like</p>
 <p><span class="math display">\[
-\frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} = \H \boldsymbol{\theta}- \gv
+\frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} = \boldsymbol{H}\boldsymbol{\theta}- \boldsymbol{g}
 \quad\Rightarrow\quad
 \boldsymbol{\theta}^{t+1} =
-    \boldsymbol{\theta}^{t} - \alpha (\H \boldsymbol{\theta}^{t} - \gv) =
-    ({\boldsymbol{I}_{\,}}- \alpha \H) \boldsymbol{\theta}^{t} - \alpha \gv.
+    \boldsymbol{\theta}^{t} - \alpha (\boldsymbol{H}\boldsymbol{\theta}^{t} - \boldsymbol{g}) =
+    ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \boldsymbol{\theta}^{t} - \alpha \boldsymbol{g}.
 \]</span></p>
 <p>If we write</p>
 <p><span class="math display">\[
-\Delta^{t} = \boldsymbol{\theta}^t - \thetavstar,
+\Delta^{t} = \boldsymbol{\theta}^t - \boldsymbol{\theta}^{\star},
 \]</span></p>
-<p>where <span class="math inline">\(\left. \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \right|_{\thetavstar} = \boldsymbol{0}\)</span>, then</p>
+<p>where <span class="math inline">\(\left. \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \right|_{\boldsymbol{\theta}^{\star}} = \boldsymbol{0}\)</span>, then</p>
 <p><span class="math display">\[
-\Delta^{t+ 1} = ({\boldsymbol{I}_{\,}}- \alpha \H) \Delta^{t}
+\Delta^{t+ 1} = ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \Delta^{t}
 \quad\textrm{$\Rightarrow$}\quad
-\Delta^{t} = ({\boldsymbol{I}_{\,}}- \alpha \H)^{t} \Delta^{0},
+\Delta^{t} = ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H})^{t} \Delta^{0},
 \]</span></p>
 <p>where</p>
 <p><span class="math display">\[
-({\boldsymbol{I}_{\,}}- \alpha \H)^{t}  = \underbrace{({\boldsymbol{I}_{\,}}- \alpha \H) \ldots ({\boldsymbol{I}_{\,}}- \alpha \H)}_{t\rm\ times}.
+({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H})^{t}  = \underbrace{({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \ldots ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H})}_{t\rm\ times}.
 \]</span></p>
-<p>Note that the eigenvalues and eigenvectors of <span class="math inline">\(({\boldsymbol{I}_{\,}}- \alpha \H)\)</span> are inherited from <span class="math inline">\(\H\)</span>:</p>
+<p>Note that the eigenvalues and eigenvectors of <span class="math inline">\(({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H})\)</span> are inherited from <span class="math inline">\(\boldsymbol{H}\)</span>:</p>
 <p><span class="math display">\[
-({\boldsymbol{I}_{\,}}- \alpha \H) \boldsymbol{v}_d = \boldsymbol{v}_d - \alpha \lambda_d \boldsymbol{v}_d = (1 - \alpha \lambda_d) \boldsymbol{v}_d.
+({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \boldsymbol{v}_d = \boldsymbol{v}_d - \alpha \lambda_d \boldsymbol{v}_d = (1 - \alpha \lambda_d) \boldsymbol{v}_d.
 \]</span></p>
 <p>Define <span class="math inline">\(\gamma_d := (1 - \alpha \lambda_d)\)</span>, and write out <span class="math inline">\(\Delta^0 = \sum_{d=1}^D a_d \boldsymbol{v}_d\)</span>. With random initialization <span class="math inline">\(a_d \ne 0\)</span> with high probability. Then</p>
 <p><span class="math display">\[
@@ -390,28 +384,28 @@ f(\theta) = \frac{1}{2} \frac{1}{N} \sum_{n=1}^N(y_n - \theta)^2
 <h2 class="anchored" data-anchor-id="minimizing-a-quadratic-with-a-fixed-step-size">Minimizing a quadratic with a fixed step size</h2>
 <p>Recall again our quadratic example, where we showed that</p>
 <p><span class="math display">\[
-\frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} = \H \boldsymbol{\theta}- \gv.
+\frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} = \boldsymbol{H}\boldsymbol{\theta}- \boldsymbol{g}.
 \]</span></p>
 <p>Suppose we update with the stochastic gradient</p>
 <p><span class="math display">\[
-g(\boldsymbol{\theta}) =  \H \boldsymbol{\theta}- \gv + \varepsilon,
+g(\boldsymbol{\theta}) =  \boldsymbol{H}\boldsymbol{\theta}- \boldsymbol{g}+ \varepsilon,
 \]</span></p>
 <p>for IID mean zero <span class="math inline">\(\varepsilon\)</span> with variance <span class="math inline">\(\sigma^2\)</span>. Then</p>
 <p><span class="math display">\[
 \boldsymbol{\theta}^{t+1} =
-    \boldsymbol{\theta}^{t} - \alpha (\H \boldsymbol{\theta}^{t} - \gv + \varepsilon^t) =
-    ({\boldsymbol{I}_{\,}}- \alpha \H) \boldsymbol{\theta}^{t} - \alpha \gv - \alpha \varepsilon^t.
+    \boldsymbol{\theta}^{t} - \alpha (\boldsymbol{H}\boldsymbol{\theta}^{t} - \boldsymbol{g}+ \varepsilon^t) =
+    ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \boldsymbol{\theta}^{t} - \alpha \boldsymbol{g}- \alpha \varepsilon^t.
 \]</span></p>
-<p>Again subtracting <span class="math inline">\(\thetavstar\)</span> and <span class="math inline">\(\alpha (\H \thetavstar - \gv)\)</span> from both sides,</p>
+<p>Again subtracting <span class="math inline">\(\boldsymbol{\theta}^{\star}\)</span> and <span class="math inline">\(\alpha (\boldsymbol{H}\boldsymbol{\theta}^{\star}- \boldsymbol{g})\)</span> from both sides,</p>
 <p><span class="math display">\[
-\boldsymbol{\theta}^{t+1} - \thetavstar =
-    ({\boldsymbol{I}_{\,}}- \alpha \H) (\boldsymbol{\theta}^{t} - \thetavstar) + \alpha \varepsilon^t.
+\boldsymbol{\theta}^{t+1} - \boldsymbol{\theta}^{\star}=
+    ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) (\boldsymbol{\theta}^{t} - \boldsymbol{\theta}^{\star}) + \alpha \varepsilon^t.
 \]</span></p>
 <p>The noise is independent of all previous <span class="math inline">\(\boldsymbol{\theta}^{t}\)</span> (but not independent of subsequent ones!), so</p>
 <p><span class="math display">\[
-\mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t+1} - \thetavstar\right\Vert^2\right] \le \left\Vert{\boldsymbol{I}_{\,}}- \alpha \H\right\Vert_{op}^2 \mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t} - \thetavstar\right\Vert^2\right] + \alpha^2 \sigma^2.
+\mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t+1} - \boldsymbol{\theta}^{\star}\right\Vert^2\right] \le \left\Vert{\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}\right\Vert_{op}^2 \mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t} - \boldsymbol{\theta}^{\star}\right\Vert^2\right] + \alpha^2 \sigma^2.
 \]</span></p>
-<p>Previously, we were able to recursively expand the error to get an expontially decaying distance to <span class="math inline">\(\thetavstar\)</span>, but we cannot in this case due to the <span class="math inline">\(\alpha^2 \sigma^2\)</span> term.</p>
+<p>Previously, we were able to recursively expand the error to get an expontially decaying distance to <span class="math inline">\(\boldsymbol{\theta}^{\star}\)</span>, but we cannot in this case due to the <span class="math inline">\(\alpha^2 \sigma^2\)</span> term.</p>
 <!--
 Note that
 
@@ -430,7 +424,7 @@ $$
 <h2 class="anchored" data-anchor-id="generalization-bounds">Generalization bounds</h2>
 <p>Theorem 3 of the reading states that, on a convex objective with bounded gradients,</p>
 <p><span class="math display">\[
-\mathbb{E}_{\vphantom{}}\left[f(\boldsymbol{\theta}^t) - f(\thetavstar)\right] \le \frac{C}{\sqrt{t}}.
+\mathbb{E}_{\vphantom{}}\left[f(\boldsymbol{\theta}^t) - f(\boldsymbol{\theta}^{\star})\right] \le \frac{C}{\sqrt{t}}.
 \]</span></p>
 <p>Astonishingly, in the case that we see each sample only once, this reasoning can be applied both to the empirical risk and population risk. In this sense, we get a generalization bound for SGD, using only the optimization algorithm.</p>
 </section>
