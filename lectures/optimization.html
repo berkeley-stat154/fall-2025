@@ -274,20 +274,23 @@ f(\boldsymbol{\theta}) = a+ \boldsymbol{g}^\intercal\boldsymbol{\theta}+ \frac{1
 \boldsymbol{\theta}^{t+1} = \boldsymbol{\theta}^{t} - \alpha \left. \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \right|_{\boldsymbol{\theta}^{t}}
 \quad\textrm{for}\quad\alpha &gt; 0.
 \]</span></p>
-<p>For our quadratic case, this looks like</p>
+<p>For our quadratic case, it is useful to re-write the objective function in terms of the optimal value, <span class="math inline">\(\boldsymbol{\theta}^{\star}= \boldsymbol{H}^{-1} g\)</span>:</p>
 <p><span class="math display">\[
-\frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} = \boldsymbol{H}\boldsymbol{\theta}- \boldsymbol{g}
-\quad\Rightarrow\quad
-\boldsymbol{\theta}^{t+1} =
-    \boldsymbol{\theta}^{t} - \alpha (\boldsymbol{H}\boldsymbol{\theta}^{t} - \boldsymbol{g}) =
-    ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \boldsymbol{\theta}^{t} - \alpha \boldsymbol{g}.
+a+ \frac{1}{2}(\boldsymbol{\theta}- \boldsymbol{\theta}^{\star})^\intercal\boldsymbol{H}(\boldsymbol{\theta}- \boldsymbol{\theta}^{\star}).
 \]</span></p>
-<p>If we write</p>
+<p>Then the gradient is</p>
 <p><span class="math display">\[
+\begin{aligned}
+\frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} = \boldsymbol{H}\boldsymbol{\theta}- \boldsymbol{g}=
+\boldsymbol{H}(\boldsymbol{\theta}- \boldsymbol{\theta}^{\star})
+\quad\Rightarrow\quad\\
+\boldsymbol{\theta}^{t+1} - \boldsymbol{\theta}^{\star}=
+    \boldsymbol{\theta}^{t} - \boldsymbol{\theta}^{\star}- \alpha \boldsymbol{H}(\boldsymbol{\theta}^{t} - \boldsymbol{\theta}^{\star}) =
+    ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) (\boldsymbol{\theta}^{t} - \boldsymbol{\theta}^{\star}).
+\end{aligned}
+\]</span> If we write <span class="math display">\[
 \Delta^{t} = \boldsymbol{\theta}^t - \boldsymbol{\theta}^{\star},
-\]</span></p>
-<p>where <span class="math inline">\(\left. \frac{\partial f(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \right|_{\boldsymbol{\theta}^{\star}} = \boldsymbol{0}\)</span>, then</p>
-<p><span class="math display">\[
+\]</span> then <span class="math display">\[
 \Delta^{t+ 1} = ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \Delta^{t}
 \quad\textrm{$\Rightarrow$}\quad
 \Delta^{t} = ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H})^{t} \Delta^{0},
@@ -362,8 +365,8 @@ f(\theta) = \frac{1}{2} \frac{1}{N} \sum_{n=1}^N(y_n - \theta)^2
 <p><span class="math display">\[
 \begin{aligned}
 \theta^{t+ 1} ={}&amp; \theta^t+ \frac{1}{t+ 1} (y_{t+ 1} - \theta^t)
-    \\={}&amp; \left(1 -  \frac{1}{t+ 1}\right) \theta^t- \frac{1}{t+ 1} y_{t+ 1}
-    \\={}&amp; \frac{t}{t+ 1} \frac{1}{t} \sum_{n=1}^ty_n - \frac{1}{t+ 1} y_{t+ 1}
+    \\={}&amp; \left(1 -  \frac{1}{t+ 1}\right) \theta^t+ \frac{1}{t+ 1} y_{t+ 1}
+    \\={}&amp; \frac{t}{t+ 1} \frac{1}{t} \sum_{n=1}^ty_n + \frac{1}{t+ 1} y_{t+ 1}
     \\={}&amp; \frac{1}{t+ 1} \sum_{n=1}^{t+ 1} y_n.
 \end{aligned}
 \]</span></p>
@@ -388,22 +391,19 @@ f(\theta) = \frac{1}{2} \frac{1}{N} \sum_{n=1}^N(y_n - \theta)^2
 \]</span></p>
 <p>Suppose we update with the stochastic gradient</p>
 <p><span class="math display">\[
-g(\boldsymbol{\theta}) =  \boldsymbol{H}\boldsymbol{\theta}- \boldsymbol{g}+ \varepsilon,
+g(\boldsymbol{\theta}) =  \boldsymbol{H}(\boldsymbol{\theta}- \boldsymbol{\theta}^{\star}) + \varepsilon,
 \]</span></p>
-<p>for IID mean zero <span class="math inline">\(\varepsilon\)</span> with variance <span class="math inline">\(\sigma^2\)</span>. Then</p>
+<p>for IID mean zero <span class="math inline">\(\varepsilon\)</span> with variance <span class="math inline">\(\sigma^2\)</span>. Then, as before,</p>
 <p><span class="math display">\[
-\boldsymbol{\theta}^{t+1} =
-    \boldsymbol{\theta}^{t} - \alpha (\boldsymbol{H}\boldsymbol{\theta}^{t} - \boldsymbol{g}+ \varepsilon^t) =
-    ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \boldsymbol{\theta}^{t} - \alpha \boldsymbol{g}- \alpha \varepsilon^t.
+\Delta^{t+1}  =
+    \Delta^{t}  - \alpha (\boldsymbol{H}\Delta^t + \varepsilon^t) =
+    ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) \Delta^{t} - \alpha \varepsilon^t.
 \]</span></p>
-<p>Again subtracting <span class="math inline">\(\boldsymbol{\theta}^{\star}\)</span> and <span class="math inline">\(\alpha (\boldsymbol{H}\boldsymbol{\theta}^{\star}- \boldsymbol{g})\)</span> from both sides,</p>
+<p>The noise <span class="math inline">\(\varepsilon^t\)</span> is independent of all previous <span class="math inline">\(\Delta^{t}\)</span> (but not independent of subsequent ones!), so</p>
 <p><span class="math display">\[
-\boldsymbol{\theta}^{t+1} - \boldsymbol{\theta}^{\star}=
-    ({\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}) (\boldsymbol{\theta}^{t} - \boldsymbol{\theta}^{\star}) + \alpha \varepsilon^t.
-\]</span></p>
-<p>The noise is independent of all previous <span class="math inline">\(\boldsymbol{\theta}^{t}\)</span> (but not independent of subsequent ones!), so</p>
-<p><span class="math display">\[
-\mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t+1} - \boldsymbol{\theta}^{\star}\right\Vert^2\right] \le \left\Vert{\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}\right\Vert_{op}^2 \mathbb{E}_{\vphantom{}}\left[\left\Vert\boldsymbol{\theta}^{t} - \boldsymbol{\theta}^{\star}\right\Vert^2\right] + \alpha^2 \sigma^2.
+\mathbb{E}_{\vphantom{}}\left[\left\Vert\Delta^{t+1} \right\Vert^2\right] \le
+    \left\Vert{\boldsymbol{I}_{\,}}- \alpha \boldsymbol{H}\right\Vert_{op}^2
+    \mathbb{E}_{\vphantom{}}\left[\left\Vert\Delta^{t}\right\Vert^2\right] + \alpha^2 \sigma^2.
 \]</span></p>
 <p>Previously, we were able to recursively expand the error to get an expontially decaying distance to <span class="math inline">\(\boldsymbol{\theta}^{\star}\)</span>, but we cannot in this case due to the <span class="math inline">\(\alpha^2 \sigma^2\)</span> term.</p>
 <!--
