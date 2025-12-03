@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ryan Giordano">
 
-<title>Lectures</title>
+<title>A Neural Network Example</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -38,7 +39,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-07b640563f3c9a07366a2f68b82e54ef.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9ca244728582364b54b6a88cc4015eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -110,115 +111,34 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lectures.html">Lectures</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../assets/stat_bear.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Fall 2025 STAT154/154</a> 
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course schedule</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lectures/lectures.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Lectures</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../labs/labs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Labs</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../assignments/assignments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Assignments</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../course_policies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Course Policies</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#unit-1-regression-in-a-machine-learning-setting" id="toc-unit-1-regression-in-a-machine-learning-setting" class="nav-link" data-scroll-target="#unit-1-regression-in-a-machine-learning-setting">Unit 1: Regression in a machine learning setting</a></li>
-  <li><a href="#unit-2-classification" id="toc-unit-2-classification" class="nav-link" data-scroll-target="#unit-2-classification">Unit 2: Classification</a></li>
-  <li><a href="#unit-3-risk-and-complexity" id="toc-unit-3-risk-and-complexity" class="nav-link" data-scroll-target="#unit-3-risk-and-complexity">Unit 3: Risk and complexity</a></li>
-  <li><a href="#unit-4-trees-and-weak-learners" id="toc-unit-4-trees-and-weak-learners" class="nav-link" data-scroll-target="#unit-4-trees-and-weak-learners">Unit 4: Trees and weak learners</a></li>
-  <li><a href="#unit-5-kernel-methods" id="toc-unit-5-kernel-methods" class="nav-link" data-scroll-target="#unit-5-kernel-methods">Unit 5: Kernel methods</a></li>
-  <li><a href="#unit-6-optimization-and-neural-networks" id="toc-unit-6-optimization-and-neural-networks" class="nav-link" data-scroll-target="#unit-6-optimization-and-neural-networks">Unit 6: Optimization and neural networks</a>
-  <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lectures</h1>
-<p class="subtitle lead">Stat 154/254: Statistical Machine Learning</p>
+<h1 class="title">A Neural Network Example</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryan Giordano </p>
+          </div>
+  </div>
     
   
     
@@ -229,82 +149,23 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Lectures marked with <span class="math inline">\(\star\)</span> are still in progress.</strong></p>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<ul>
-<li><a href="../lectures/lecture_intro.html">Class introduction</a></li>
-<li><a href="../lectures/key_concepts.html">List of key concepts</a></li>
-</ul>
-</section>
-<section id="unit-1-regression-in-a-machine-learning-setting" class="level1">
-<h1>Unit 1: Regression in a machine learning setting</h1>
-<ul>
-<li><a href="../lectures/unit1/unit1_ols_matrix_notation.html">Linear regression in matrix notation (review)</a></li>
-<li><a href="../lectures/unit1/unit1_ols.html">Linear regression in an ML setting</a></li>
-<li><a href="../lectures/unit1/unit1_splines.html">Basis expansions and splines for linear regression</a></li>
-<li><a href="../lectures/unit1/unit1_l1l2.html">L1 and L2 penalization</a></li>
-</ul>
-</section>
-<section id="unit-2-classification" class="level1">
-<h1>Unit 2: Classification</h1>
-<ul>
-<li><a href="../lectures/unit2/unit2_classification_loss.html">Empirical risk minimization for classification</a></li>
-<li><a href="../lectures/unit2/unit2_false_positives_negatives.html">Trading off false positives and negatives</a></li>
-<li><a href="../lectures/unit2/unit2_perceptron.html">Perceptron algorithm <strong>(bonus content)</strong></a></li>
-</ul>
-</section>
-<section id="unit-3-risk-and-complexity" class="level1">
-<h1>Unit 3: Risk and complexity</h1>
-<ul>
-<li><a href="../lectures/unit3/unit3_biasvar.html">Asymptotics and bias–variance tradeoff in linear regression</a></li>
-<li><a href="../lectures/unit3/unit3_regret_decomposition.html">Regret decomposition</a></li>
-<li>Cross validation
-<ul>
-<li><a href="../lectures/unit3/unit3_cv.html">Held-out data and cross-validation</a></li>
-<li><a href="../lectures/unit3/unit3_bias_variance_example.html">Simulated bias–variance tradeoff example</a></li>
-<li><a href="../lectures/unit3/unit3_cv_cautionary.html">Cross–validation cautionary note</a></li>
-</ul></li>
-<li>Generalization bounds
-<ul>
-<li><a href="../lectures/unit3/unit3_generalization.html">Generalization error and uniform laws</a></li>
-<li><a href="../lectures/unit3/unit3_ulln.html">Uniform laws for smooth function classes</a></li>
-<li><a href="../lectures/unit3/unit3_vc_dimension.html">VC dimension and zero–one loss</a></li>
-</ul></li>
-</ul>
-</section>
-<section id="unit-4-trees-and-weak-learners" class="level1">
-<h1>Unit 4: Trees and weak learners</h1>
-<ul>
-<li><a href="../lectures/unit4/unit4_cart.html">Classification and regression trees</a></li>
-<li><a href="../lectures/unit4/unit4_bagging.html">Bagging weak learners</a></li>
-<li><a href="../lectures/unit4/unit4_boosting.html">Boosting weak learners</a></li>
-</ul>
-</section>
-<section id="unit-5-kernel-methods" class="level1">
-<h1>Unit 5: Kernel methods</h1>
-<!-- - [Kernel smoothing](unit5/unit5_kernel_smoothing.qmd)-->
-<ul>
-<li><a href="../lectures/unit5/unit5_kerneltrick.html">The kernel trick</a></li>
-<li><a href="../lectures/unit5/unit5_validkernels.html">Valid kernels and inner products</a></li>
-<li><a href="../lectures/unit5/unit5_rkhs.html">Reproducing kernel Hilbert spaces</a></li>
-</ul>
-</section>
-<section id="unit-6-optimization-and-neural-networks" class="level1">
-<h1>Unit 6: Optimization and neural networks</h1>
-<ul>
-<li><a href="../lectures/optimization.html">Optimization of quadratic functions</a></li>
-<li><a href="../lectures/nn_example.html">An neural network example</a></li>
-</ul>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p>Mathematical statistics, probability, linear algebra, multivariate calculus, and Python are all prerequisites.</p>
-<p>For assistance with mathematics prerequisites, the <a href="https://slc.berkeley.edu/programs/mathematics-and-statistics/upper-division-math-tutoring-program">Student Learning Center</a> provides additional assistance.</p>
-<p>A summary of the required linear algebra skills can be found <a href="../lectures/linalg_review.html">here</a>.</p>
+<p>One of the goals of this class is that you be able to read and understand, at a high level, what a novel machine learning method is doing. Let’s practice!</p>
+<p>Consider this <a href="https://docs.jax.dev/en/latest/notebooks/neural_network_with_tfds_data.html"><code>jax</code> tutorial</a>, with <a href="../assets/neural_network_with_tfds_data.ipynb">corresponding notebook (downloaded Dec 2025)</a>. To run the notebook you’ll need to <a href="https://docs.jax.dev/en/latest/installation.html">install <code>jax</code></a> and <a href="https://www.tensorflow.org/install">install <code>tensorflow</code></a>. Make sure you can run the notebook.</p>
+<p>Here are some questions to answer. You can also think of your own.</p>
+<ol type="1">
+<li>What is the task? Is is classification or prediction? What’s the domain of <span class="math inline">\(x_n\)</span>, and what’s the domain of <span class="math inline">\(y_n\)</span>? Why is it reasonable that <span class="math inline">\(x_n\)</span> should predict <span class="math inline">\(y_n\)</span>?</li>
+<li>Visually display some of the training points. Does its label look right?</li>
+<li>What is the loss function by which the method will ultimately be evaluated? Where in the code is this loss specified? How is it used?</li>
+<li>Where in the code is the empirical risk defined? Does the empirical risk use a proxy loss? If so, what is the proxy loss, and how would you justify it? Can you think of alternative proxy losses?</li>
+<li>What function <span class="math inline">\(f(x; \theta)\)</span> is being learned? What are the parameters, <span class="math inline">\(\theta\)</span>? What is the dimension of <span class="math inline">\(\theta\)</span>?</li>
+<li>What algorithm is being used to minimze the empirical risk? What are its hyperparameters? How is the algorithm initialized? Is there any regularization?</li>
+<li>Intuitively, how expressive is <span class="math inline">\(f(x; \theta)\)</span>? How would you make it more expressive? Less expressive? What aspects of <span class="math inline">\(f(x; \theta)\)</span> seem arbitrary, and how could you imagine changing them? How would you choose among different architectures?</li>
+<li>Find some examples that the learned <span class="math inline">\(f(\cdot; \hat{\theta})\)</span> fails at. Look at them. Does its failure make sense?</li>
+<li>How well does the algorithm work? How do you know? Imagine a real-world use case for this algorithm. Do you have evidence based on this notebook that your estimator is good enough? Why or why not? If not, how would you get better information?</li>
+<li>Imagine a real-world task for which the loss function used in the test set may not be appropriate. (Hint: consider measuring uncertainty.) How would you change the test set evaluation to account for this?</li>
+</ol>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
